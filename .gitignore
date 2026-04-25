@@ -34,3 +34,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# Supabase temp files
+supabase/.temp/
+
+# Claude local settings (keep skills but not local config)
+.claude/settings.local.json
+
+# OS files
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Python (for any scripts)
+__pycache__/
+*.py[cod]
+
+# Progress/session docs (internal only)
+/progress/
