@@ -55,3 +55,5 @@ __pycache__/
 
 # Progress/session docs (internal only)
 /progress/
+# Claude Code local files
+.claude/
