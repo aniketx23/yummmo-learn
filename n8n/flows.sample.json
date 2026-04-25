@@ -1,0 +1,40 @@
+[
+  {
+    "name": "YummmoLearn_NewEnrollment",
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "webhook",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [200, 300],
+        "webhookId": "replace-me"
+      },
+      {
+        "parameters": {
+          "functionCode": "return items;"
+        },
+        "id": "noop",
+        "name": "ProcessPayload",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [420, 300]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [[{ "node": "ProcessPayload", "type": "main", "index": 0 }]]
+      }
+    },
+    "meta": {
+      "description": "Import into n8n and point N8N_ENROLLMENT_WEBHOOK_URL to this webhook URL. Extend with Maytapi/WhatsApp nodes."
+    }
+  },
+  {
+    "name": "YummmoLearn_NewUser",
+    "meta": {
+      "description": "Point N8N_NEW_USER_WEBHOOK_URL here for welcome automations."
+    }
+  }
+]
