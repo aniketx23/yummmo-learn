@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LiveClassEnroll } from "@/components/live-class-enroll";
 import { createClient } from "@/lib/supabase/server";
+import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Live Classes",
@@ -34,7 +35,14 @@ const highlights = [
   },
 ];
 
-export default async function LiveClassesPage() {
+export default async function LiveClassesPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
+  const autoRegister = sp.auto_register === "1";
+
   const supabase = await createClient();
   const { data: batches } = await supabase
     .from("live_classes")
@@ -42,7 +50,25 @@ export default async function LiveClassesPage() {
     .eq("is_active", true)
     .order("created_at", { ascending: false });
 
-  const activeBatches = batches ?? [];
+  const activeBatches = (batches ?? []).map((b) => ({
+    id: b.id as string,
+    title: b.title as string,
+    description: b.description as string | null,
+    class_date: b.class_date as string | null,
+    start_time: b.start_time as string | null,
+    end_time: b.end_time as string | null,
+    time_slot: b.time_slot as string | null,
+    schedule_days: b.schedule_days as string | null,
+    max_spots: b.max_spots as number,
+    price: b.price as string | number,
+    is_active: b.is_active as boolean,
+  }));
+
+  function batchTime(batch: typeof activeBatches[0]) {
+    if (batch.start_time && batch.end_time) return `${batch.start_time} - ${batch.end_time}`;
+    if (batch.time_slot) return batch.time_slot;
+    return null;
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16">
@@ -54,12 +80,11 @@ export default async function LiveClassesPage() {
           <span className="text-primary">In Person</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Join our live cooking classes — weekend and weekday batches at the
-          instructor&apos;s home kitchen. Small groups, personal attention, and
+          Join our live cooking classes — small groups, personal attention, and
           recipes you&apos;ll actually use every day.
         </p>
         <div className="mt-8">
-          <LiveClassEnroll />
+          <LiveClassEnroll batches={activeBatches} autoRegister={autoRegister} />
         </div>
       </section>
 
@@ -111,56 +136,64 @@ export default async function LiveClassesPage() {
           </Card>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2">
-            {activeBatches.map((batch) => (
-              <Card
-                key={batch.id}
-                className="border-primary/20 bg-gradient-to-br from-white to-primary/5"
-              >
-                <CardContent className="space-y-4 p-6">
-                  <div className="flex items-start justify-between gap-2">
-                    <Badge variant="secondary" className="capitalize">
-                      {batch.schedule_type}
-                    </Badge>
-                    {batch.price > 0 ? (
-                      <span className="flex items-center gap-0.5 text-sm font-semibold text-primary">
-                        <IndianRupee className="h-3.5 w-3.5" />
-                        {batch.price}
-                      </span>
-                    ) : (
-                      <Badge variant="outline" className="text-herb border-herb/30">
-                        Free
-                      </Badge>
-                    )}
-                  </div>
+            {activeBatches.map((batch) => {
+              const price = typeof batch.price === "string" ? parseFloat(batch.price) : batch.price;
+              return (
+                <Card
+                  key={batch.id}
+                  className="border-primary/20 bg-gradient-to-br from-white to-primary/5"
+                >
+                  <CardContent className="space-y-4 p-6">
+                    <div className="flex items-start justify-between gap-2">
+                      {batch.class_date && (
+                        <Badge variant="secondary">
+                          {formatDate(batch.class_date)}
+                        </Badge>
+                      )}
+                      {price > 0 ? (
+                        <span className="flex items-center gap-0.5 text-sm font-semibold text-primary">
+                          <IndianRupee className="h-3.5 w-3.5" />
+                          {price}
+                        </span>
+                      ) : (
+                        <Badge variant="outline" className="text-herb border-herb/30">
+                          Free
+                        </Badge>
+                      )}
+                    </div>
 
-                  <h3 className="font-display text-xl font-semibold">
-                    {batch.title}
-                  </h3>
+                    <h3 className="font-display text-xl font-semibold">
+                      {batch.title}
+                    </h3>
 
-                  {batch.description && (
-                    <p className="text-sm text-muted-foreground">
-                      {batch.description}
-                    </p>
-                  )}
-
-                  <div className="space-y-1 text-sm text-muted-foreground">
-                    {batch.schedule_days && (
-                      <p className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 shrink-0" />
-                        {batch.schedule_days}
-                        {batch.time_slot ? ` · ${batch.time_slot}` : ""}
+                    {batch.description && (
+                      <p className="text-sm text-muted-foreground">
+                        {batch.description}
                       </p>
                     )}
-                    <p className="flex items-center gap-2">
-                      <Users className="h-4 w-4 shrink-0" />
-                      {batch.max_spots} spots per batch
-                    </p>
-                  </div>
 
-                  <LiveClassEnroll liveClassId={batch.id} />
-                </CardContent>
-              </Card>
-            ))}
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      {batchTime(batch) && (
+                        <p className="flex items-center gap-2">
+                          <Clock className="h-4 w-4 shrink-0" />
+                          {batchTime(batch)}
+                        </p>
+                      )}
+                      <p className="flex items-center gap-2">
+                        <Users className="h-4 w-4 shrink-0" />
+                        {batch.max_spots} spots per batch
+                      </p>
+                    </div>
+
+                    <LiveClassEnroll
+                      batches={activeBatches}
+                      preSelectedBatchId={batch.id}
+                      buttonLabel="Register for This Batch"
+                    />
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         )}
       </section>
@@ -171,11 +204,11 @@ export default async function LiveClassesPage() {
           Ready to cook healthy?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Pick a date, choose your slot, and join the next batch. No prior
+          Pick a batch, register, and join the next class. No prior
           experience needed — just bring your curiosity and appetite!
         </p>
         <div className="mt-6">
-          <LiveClassEnroll buttonLabel="Register Your Spot" />
+          <LiveClassEnroll batches={activeBatches} buttonLabel="Register Your Spot" />
         </div>
       </section>
     </div>

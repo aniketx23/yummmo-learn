@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-// POST — register for a live class
+// POST — register for a live class (requires auth)
 export async function POST(request: Request) {
   const supabase = await createClient();
   const {
@@ -18,8 +18,6 @@ export async function POST(request: Request) {
     email?: string;
     age?: number;
     gender?: string;
-    preferred_date?: string;
-    preferred_slot?: string;
   };
 
   if (!body.full_name?.trim() || !body.phone?.trim()) {
@@ -39,8 +37,6 @@ export async function POST(request: Request) {
       email: body.email || user.email || null,
       age: body.age || null,
       gender: body.gender || null,
-      preferred_date: body.preferred_date || null,
-      preferred_slot: body.preferred_slot || null,
       status: "pending",
     })
     .select("id")

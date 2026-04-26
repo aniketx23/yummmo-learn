@@ -34,6 +34,9 @@ export async function PUT(
     "schedule_type",
     "schedule_days",
     "time_slot",
+    "class_date",
+    "start_time",
+    "end_time",
     "max_spots",
     "is_active",
   ] as const;

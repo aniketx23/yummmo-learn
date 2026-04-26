@@ -45,6 +45,9 @@ export async function POST(request: Request) {
     schedule_type?: string;
     schedule_days?: string;
     time_slot?: string;
+    class_date?: string;
+    start_time?: string;
+    end_time?: string;
     max_spots?: number;
     price?: number;
     is_active?: boolean;
@@ -54,14 +57,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Title is required" }, { status: 400 });
   }
 
+  const timeSlot =
+    body.time_slot ||
+    (body.start_time && body.end_time
+      ? `${body.start_time} - ${body.end_time}`
+      : null);
+
   const { data, error } = await supabase
     .from("live_classes")
     .insert({
       title: body.title.trim(),
       description: body.description || null,
-      schedule_type: body.schedule_type || "weekend",
+      schedule_type: body.schedule_type || "custom",
       schedule_days: body.schedule_days || null,
-      time_slot: body.time_slot || null,
+      time_slot: timeSlot,
+      class_date: body.class_date || null,
+      start_time: body.start_time || null,
+      end_time: body.end_time || null,
       max_spots: body.max_spots ?? 8,
       price: (body.price ?? 0).toFixed(2),
       is_active: body.is_active ?? true,

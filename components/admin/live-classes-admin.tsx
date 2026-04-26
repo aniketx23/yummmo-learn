@@ -48,6 +48,9 @@ type LiveClass = {
   schedule_type: string;
   schedule_days: string | null;
   time_slot: string | null;
+  class_date: string | null;
+  start_time: string | null;
+  end_time: string | null;
   max_spots: number;
   price: string | number;
   is_active: boolean;
@@ -107,8 +110,9 @@ export function LiveClassesAdmin({
     return true;
   });
 
-  // Class name lookup
+  // Class lookup maps
   const classNames = new Map(classes.map((c) => [c.id, c.title]));
+  const classById = new Map(classes.map((c) => [c.id, c]));
 
   return (
     <div className="space-y-6">
@@ -190,16 +194,18 @@ export function LiveClassesAdmin({
                         <p className="text-charcoal/70">{cls.description}</p>
                       )}
                       <div className="flex flex-wrap gap-4">
-                        {cls.schedule_days && (
+                        {cls.class_date && (
                           <span className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
-                            {cls.schedule_days}
+                            {formatDate(cls.class_date)}
                           </span>
                         )}
-                        {cls.time_slot && (
+                        {(cls.start_time || cls.time_slot) && (
                           <span className="flex items-center gap-1">
                             <Clock className="h-3 w-3" />
-                            {cls.time_slot}
+                            {cls.start_time && cls.end_time
+                              ? `${cls.start_time} - ${cls.end_time}`
+                              : cls.time_slot}
                           </span>
                         )}
                         <span className="flex items-center gap-1">
@@ -286,10 +292,15 @@ export function LiveClassesAdmin({
                       <TableCell>
                         {reg.preferred_date
                           ? formatDate(reg.preferred_date)
-                          : "—"}
+                          : reg.live_class_id && classById.get(reg.live_class_id)?.class_date
+                            ? formatDate(classById.get(reg.live_class_id)!.class_date!)
+                            : "—"}
                       </TableCell>
                       <TableCell className="text-xs">
-                        {reg.preferred_slot ?? "—"}
+                        {reg.preferred_slot
+                          ?? (reg.live_class_id && classById.get(reg.live_class_id)?.start_time
+                            ? `${classById.get(reg.live_class_id)!.start_time} - ${classById.get(reg.live_class_id)!.end_time}`
+                            : "—")}
                       </TableCell>
                       <TableCell>
                         <Badge
@@ -442,6 +453,59 @@ function RegistrationActions({
   );
 }
 
+// ── Time Picker Helper ──────────────────────────────────────────────
+function TimePicker({
+  value,
+  onChange,
+  label,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  label: string;
+}) {
+  const parts = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i) ?? [];
+  const hour = parts[1] ?? "10";
+  const minute = parts[2] ?? "00";
+  const period = parts[3] ?? "AM";
+
+  function update(h: string, m: string, p: string) {
+    onChange(`${h}:${m} ${p}`);
+  }
+
+  return (
+    <div className="space-y-2">
+      <Label>{label}</Label>
+      <div className="flex gap-2">
+        <select
+          className="flex h-10 w-full rounded-md border border-input bg-background px-2 text-sm"
+          value={hour}
+          onChange={(e) => update(e.target.value, minute, period)}
+        >
+          {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
+            <option key={h} value={String(h)}>{h}</option>
+          ))}
+        </select>
+        <select
+          className="flex h-10 w-full rounded-md border border-input bg-background px-2 text-sm"
+          value={minute}
+          onChange={(e) => update(hour, e.target.value, period)}
+        >
+          <option value="00">00</option>
+          <option value="30">30</option>
+        </select>
+        <select
+          className="flex h-10 w-full rounded-md border border-input bg-background px-2 text-sm"
+          value={period}
+          onChange={(e) => update(hour, minute, e.target.value)}
+        >
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+    </div>
+  );
+}
+
 // ── Create Batch Dialog ─────────────────────────────────────────────
 function CreateBatchDialog({
   open,
@@ -455,15 +519,21 @@ function CreateBatchDialog({
   const [busy, setBusy] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [scheduleType, setScheduleType] = useState("weekend");
-  const [scheduleDays, setScheduleDays] = useState("");
-  const [timeSlot, setTimeSlot] = useState("");
+  const [classDate, setClassDate] = useState("");
+  const [startTime, setStartTime] = useState("10:00 AM");
+  const [endTime, setEndTime] = useState("1:00 PM");
   const [maxSpots, setMaxSpots] = useState("8");
   const [price, setPrice] = useState("0");
+
+  const today = new Date().toISOString().split("T")[0];
 
   async function create() {
     if (!title.trim()) {
       toast.error("Title is required");
+      return;
+    }
+    if (!classDate) {
+      toast.error("Please select a date");
       return;
     }
     setBusy(true);
@@ -473,9 +543,9 @@ function CreateBatchDialog({
       body: JSON.stringify({
         title: title.trim(),
         description: description || null,
-        schedule_type: scheduleType,
-        schedule_days: scheduleDays || null,
-        time_slot: timeSlot || null,
+        class_date: classDate,
+        start_time: startTime,
+        end_time: endTime,
         max_spots: parseInt(maxSpots) || 8,
         price: parseFloat(price) || 0,
       }),
@@ -486,8 +556,9 @@ function CreateBatchDialog({
       onOpenChange(false);
       setTitle("");
       setDescription("");
-      setScheduleDays("");
-      setTimeSlot("");
+      setClassDate("");
+      setStartTime("10:00 AM");
+      setEndTime("1:00 PM");
       onCreated();
     } else {
       const j = (await r.json()) as { error?: string };
@@ -507,7 +578,7 @@ function CreateBatchDialog({
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Weekend Baking Batch"
+              placeholder="e.g. Dry Cake Baking Batch"
             />
           </div>
           <div className="space-y-2">
@@ -519,35 +590,20 @@ function CreateBatchDialog({
               placeholder="What will students learn in this batch?"
             />
           </div>
+          <div className="space-y-2">
+            <Label>Class date</Label>
+            <Input
+              type="date"
+              value={classDate}
+              min={today}
+              onChange={(e) => setClassDate(e.target.value)}
+            />
+          </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label>Schedule type</Label>
-              <select
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
-                value={scheduleType}
-                onChange={(e) => setScheduleType(e.target.value)}
-              >
-                <option value="weekend">Weekend</option>
-                <option value="weekday">Weekday</option>
-                <option value="custom">Custom</option>
-              </select>
-            </div>
-            <div className="space-y-2">
-              <Label>Days</Label>
-              <Input
-                value={scheduleDays}
-                onChange={(e) => setScheduleDays(e.target.value)}
-                placeholder="e.g. Saturday & Sunday"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Time slot</Label>
-              <Input
-                value={timeSlot}
-                onChange={(e) => setTimeSlot(e.target.value)}
-                placeholder="e.g. 10:00 AM - 1:00 PM"
-              />
-            </div>
+            <TimePicker label="Start time" value={startTime} onChange={setStartTime} />
+            <TimePicker label="End time" value={endTime} onChange={setEndTime} />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>Max spots</Label>
               <Input
@@ -556,15 +612,15 @@ function CreateBatchDialog({
                 onChange={(e) => setMaxSpots(e.target.value)}
               />
             </div>
-          </div>
-          <div className="space-y-2">
-            <Label>Price (INR, 0 = free)</Label>
-            <Input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="0"
-            />
+            <div className="space-y-2">
+              <Label>Price (INR, 0 = free)</Label>
+              <Input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="0"
+              />
+            </div>
           </div>
         </div>
         <DialogFooter>
