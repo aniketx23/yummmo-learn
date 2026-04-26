@@ -1,31 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export function NewsletterForm() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim()) return;
-    toast.success("Thanks for subscribing! We'll be in touch.");
+    if (!email || !email.includes("@")) {
+      toast.error("Valid email address daalo");
+      return;
+    }
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 800));
+    setLoading(false);
     setEmail("");
+    toast.success("Subscribed! Weekly tips aapke inbox mein aayenge 🎉");
   }
 
   return (
-    <form className="mx-auto mt-6 flex max-w-md flex-col gap-2 sm:flex-row" onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 sm:flex-row"
+    >
       <Input
         type="email"
-        placeholder="Your email address"
-        className="flex-1"
+        placeholder="aapki@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="flex-1 border-white/30 bg-white/20 text-white placeholder:text-white/70"
         required
       />
-      <Button type="submit">Subscribe</Button>
+      <Button
+        type="submit"
+        disabled={loading}
+        className="shrink-0 rounded-full bg-white px-6 font-semibold text-primary hover:bg-white/90"
+      >
+        {loading ? "Subscribing..." : "Subscribe"}
+      </Button>
     </form>
   );
 }
