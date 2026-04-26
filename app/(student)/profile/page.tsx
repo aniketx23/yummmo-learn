@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ProfileForm } from "@/components/profile-form";
 import { ConnectedAccounts } from "@/components/connected-accounts";
+import { LogoutButton } from "@/components/logout-button";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "My Profile" };
@@ -65,6 +66,7 @@ export default async function ProfilePage({
         identities={identities}
         userEmail={user.email ?? ""}
       />
+      <LogoutButton />
     </div>
   );
 }

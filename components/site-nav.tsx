@@ -29,6 +29,13 @@ import {
 } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type Props = {
   email?: string | null;
@@ -88,7 +95,41 @@ export function SiteNav({ email, role, avatarUrl }: Props) {
           <Button variant="ghost" size="icon" className="h-9 w-9" title="Notifications">
             <Bell className="h-5 w-5 text-muted-foreground" />
           </Button>
-          <Link href="/profile">
+          {/* Desktop: avatar with dropdown menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="hidden cursor-pointer lg:block">
+                <Avatar className="h-8 w-8">
+                  {avatarUrl ? <AvatarImage src={avatarUrl} alt="Profile" /> : null}
+                  <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+                </Avatar>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem asChild>
+                <Link href="/profile" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  My Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/my-courses" className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4" />
+                  My Courses
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-destructive focus:text-destructive"
+                onClick={() => void signOut()}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {/* Mobile: plain avatar link */}
+          <Link href="/profile" className="lg:hidden">
             <Avatar className="h-8 w-8 cursor-pointer">
               {avatarUrl ? <AvatarImage src={avatarUrl} alt="Profile" /> : null}
               <AvatarFallback className="text-xs">{initials}</AvatarFallback>
