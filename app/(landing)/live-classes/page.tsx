@@ -36,23 +36,27 @@ const features = [
 const faqs = [
   {
     q: "Kya beginners ke liye suitable hai?",
-    a: "Bilkul! Koi experience zaruri nahi. Akta aapko zero se sikhati hain.",
+    a: "Bilkul! Koi experience zaruri nahi. Akta aapko zero se sikhati hain — basic oven operation se lekar final plating tak.",
   },
   {
     q: "Class mein kya lana hoga?",
-    a: "Kuch nahi! Sab ingredients aur equipment Yummmo provide karega.",
+    a: "Kuch nahi! Saare ingredients, equipment aur recipe cards Yummmo provide karega. Aap sirf seekhne ka mann lekar aao.",
   },
   {
     q: "Kya main kuch ghar le ja sakti hoon?",
-    a: "Haan! Jo bhi aap class mein banate hain, woh sab aap ghar le jaate hain.",
+    a: "Haan zaroor! Jo bhi aap class mein banate hain woh sab aap ghar le jaate hain — packaging ke saath.",
   },
   {
     q: "Registration fee refundable hai?",
-    a: "Ek baar registration ke baad class miss hone pe next batch mein adjust kar sakte hain.",
+    a: "Ek baar registration ke baad class miss hone pe next available batch mein adjust kar sakte hain. Direct refund available nahi hai.",
   },
   {
-    q: "Class ka time kya hoga?",
-    a: "Registration ke baad WhatsApp pe exact time confirm kiya jaata hai.",
+    q: "Class ka exact time kya hoga?",
+    a: "Registration ke baad WhatsApp pe exact timing confirm ki jaati hai. Generally morning 10 AM se 1 PM ya 11 AM se 2 PM hoti hain.",
+  },
+  {
+    q: "Kitne log hote hain ek class mein?",
+    a: "Maximum 5-8 log per batch. Small batches ensure karte hain ki har student ko personal attention mile.",
   },
 ];
 
@@ -278,26 +282,22 @@ export default async function LiveClassesLandingPage({
           </div>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {[
-              { bg: "from-primary/20 to-orange-100", label: "Atta Chocolate Cake" },
-              { bg: "from-herb/20 to-green-100", label: "Ragi Banana Bread" },
-              { bg: "from-secondary/20 to-amber-100", label: "Jaggery Cookies" },
-              { bg: "from-primary/15 to-rose-100", label: "Red Velvet (Healthy)" },
-              { bg: "from-herb/15 to-emerald-100", label: "Oats Muffins" },
-              { bg: "from-secondary/15 to-yellow-100", label: "Date Walnut Cake" },
+              { label: "Atta Chocolate Cake", emoji: "🍫", gradient: "from-amber-600 to-orange-700" },
+              { label: "Ragi Banana Bread", emoji: "🍌", gradient: "from-yellow-500 to-amber-600" },
+              { label: "Jaggery Cookies", emoji: "🍪", gradient: "from-orange-400 to-red-500" },
+              { label: "Healthy Red Velvet", emoji: "❤️", gradient: "from-red-500 to-pink-600" },
+              { label: "Oats Muffins", emoji: "🧁", gradient: "from-teal-400 to-green-500" },
+              { label: "Date Walnut Cake", emoji: "🌰", gradient: "from-amber-700 to-yellow-800" },
             ].map((item) => (
               <div
                 key={item.label}
-                className={`flex aspect-square items-center justify-center rounded-xl bg-gradient-to-br ${item.bg} p-4 text-center`}
+                className={`relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} text-white transition-transform duration-300 hover:scale-105`}
               >
-                <div>
-                  <p className="text-2xl">🎂</p>
-                  <p className="mt-2 text-xs font-medium text-charcoal/70">
-                    {item.label}
-                  </p>
-                  <p className="mt-1 text-[10px] text-muted-foreground">
-                    Photo coming soon
-                  </p>
-                </div>
+                <span className="text-5xl">{item.emoji}</span>
+                <p className="mt-3 px-2 text-center text-sm font-semibold text-white/90">
+                  {item.label}
+                </p>
+                <div className="absolute inset-0 bg-black/10" />
               </div>
             ))}
           </div>
@@ -312,36 +312,41 @@ export default async function LiveClassesLandingPage({
           <h2 className="mb-10 text-center font-display text-3xl font-bold">
             Register Karna Kitna Aasaan Hai
           </h2>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               {
-                step: "1",
-                emoji: "📝",
+                number: "01",
+                icon: "📝",
                 title: "Register Karein",
-                desc: "₹500 pay karke apni spot book karein",
+                desc: "₹500 pay karke apni spot confirm karein. WhatsApp confirmation milega.",
               },
               {
-                step: "2",
-                emoji: "📲",
-                title: "Confirmation Milega",
-                desc: "WhatsApp pe class details aayengi",
+                number: "02",
+                icon: "📲",
+                title: "Details Aayengi",
+                desc: "Class se 24 ghante pehle exact timing, address aur what to expect ka message aayega.",
               },
               {
-                step: "3",
-                emoji: "🎂",
-                title: "Class Attend Karein",
-                desc: "Seekho, banao, enjoy karo!",
+                number: "03",
+                icon: "🎂",
+                title: "Seekho & Banao",
+                desc: "3-4 ghante ki hands-on class. Ghar jaao apna banaya hua healthy cake lekar!",
               },
-            ].map((s) => (
-              <div key={s.step} className="text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-2xl">
-                  {s.emoji}
-                </div>
-                <div className="mt-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                  {s.step}
-                </div>
-                <h3 className="mt-2 font-display text-lg font-semibold">{s.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+            ].map((step) => (
+              <div
+                key={step.number}
+                className="relative flex flex-col items-center rounded-2xl border border-border/60 bg-white p-6 text-center shadow-sm"
+              >
+                <span className="absolute -top-4 left-6 font-display text-5xl font-bold text-primary/10">
+                  {step.number}
+                </span>
+                <span className="mt-4 text-4xl">{step.icon}</span>
+                <h3 className="mt-3 font-display text-lg font-bold text-charcoal">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {step.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -418,13 +423,17 @@ export default async function LiveClassesLandingPage({
           <h2 className="mb-8 text-center font-display text-3xl font-bold">
             Kuch Sawaal?
           </h2>
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible className="w-full space-y-3">
             {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`}>
-                <AccordionTrigger className="text-left">
+              <AccordionItem
+                key={i}
+                value={`faq-${i}`}
+                className="rounded-xl border border-border/60 bg-white px-4 shadow-sm"
+              >
+                <AccordionTrigger className="text-left font-semibold text-charcoal hover:no-underline">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+                <AccordionContent className="leading-relaxed text-muted-foreground">
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>

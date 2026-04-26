@@ -223,7 +223,7 @@ export default async function HomePage() {
             Pick a path — baking, swaps, or everyday Indian cooking.
           </p>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-3">
           {categories.map((c) => (
             <Link key={c.slug} href={`/categories/${c.slug}`}>
               <Card className={`h-full ${c.bg} ${c.border} transition hover:-translate-y-1 hover:shadow-md`}>
@@ -315,8 +315,8 @@ export default async function HomePage() {
       <FadeInSection delay={0.1}>
       <section className="bg-gradient-to-r from-primary/10 via-cream to-herb/10 py-16">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
-          <div className="relative flex items-center justify-center">
-            <div className="relative h-80 w-80 overflow-hidden rounded-3xl border-4 border-primary/20 bg-gradient-to-br from-primary/20 to-amber-100 shadow-2xl">
+          <div className="relative mx-auto flex w-full max-w-xs items-center justify-center md:max-w-none">
+            <div className="relative h-72 w-72 overflow-hidden rounded-3xl border-4 border-primary/20 bg-gradient-to-br from-primary/20 to-amber-100 shadow-2xl sm:h-80 sm:w-80">
               <div className="flex h-full w-full items-center justify-center">
                 <span className="font-display text-9xl font-bold text-primary/30">A</span>
               </div>
