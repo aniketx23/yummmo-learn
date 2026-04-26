@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Baloo_2, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 
 const baloo = Baloo_2({
   subsets: ["latin", "latin-ext"],
@@ -45,7 +46,9 @@ export default function RootLayout({
         className={`${baloo.variable} ${dmSans.variable} min-h-screen bg-cream font-sans text-charcoal antialiased`}
         suppressHydrationWarning
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </Providers>
       </body>
     </html>
   );

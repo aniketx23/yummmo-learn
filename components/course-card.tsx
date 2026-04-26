@@ -32,15 +32,15 @@ export function CourseCard({ course, enrolled }: { course: CourseCardData; enrol
       : null;
 
   return (
-    <Card className="group flex h-full flex-col overflow-hidden border-border/80 transition hover:-translate-y-0.5 hover:shadow-md">
+    <Card className="group flex h-full flex-col overflow-hidden border-border/80 transition-shadow duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-orange-100">
       <Link href={`/courses/${course.slug}`} className="block">
-        <div className="relative aspect-video bg-muted">
+        <div className="relative aspect-video overflow-hidden bg-muted">
           {course.thumbnail_url ? (
             <Image
               src={course.thumbnail_url}
               alt=""
               fill
-              className="object-cover transition group-hover:scale-[1.02]"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               sizes="(max-width:768px) 100vw, 33vw"
             />
           ) : (

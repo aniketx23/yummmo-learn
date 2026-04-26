@@ -114,6 +114,7 @@ export default async function LiveClassesLandingPage({
               batches={activeBatches}
               buttonLabel="Register Now — ₹500 Only →"
               autoRegister={autoRegister}
+              triggerProps={{ "data-register-trigger": "" }}
             />
           </div>
 

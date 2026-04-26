@@ -80,12 +80,14 @@ export function LiveClassEnroll({
   buttonClassName,
   preSelectedBatchId,
   autoRegister,
+  triggerProps,
 }: {
   batches?: Batch[];
   buttonLabel?: string;
   buttonClassName?: string;
   preSelectedBatchId?: string;
   autoRegister?: boolean;
+  triggerProps?: Record<string, string>;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -257,7 +259,7 @@ export function LiveClassEnroll({
       }}
     >
       <DialogTrigger asChild>
-        <Button size="lg" className={buttonClassName ?? "text-lg px-8 py-6"}>
+        <Button size="lg" className={buttonClassName ?? "text-lg px-8 py-6"} {...triggerProps}>
           {buttonLabel ?? "Enroll in Live Class"}
         </Button>
       </DialogTrigger>

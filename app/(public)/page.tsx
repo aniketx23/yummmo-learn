@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ChefHat, Leaf, UtensilsCrossed } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CourseCard } from "@/components/course-card";
+import { Card, CardContent } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Yummmo Learn — Healthy Cooking Courses in Hindi",
@@ -14,10 +18,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-import { Button } from "@/components/ui/button";
-import { CourseCard } from "@/components/course-card";
-import { Card, CardContent } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/server";
 
 const categories = [
   {
@@ -145,6 +145,12 @@ export default async function HomePage() {
   return (
     <div>
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-cream via-white to-primary/10">
+        {/* Animated background blobs */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute -top-20 -left-20 h-80 w-80 rounded-full bg-orange-200/50 blur-3xl animate-blob" />
+          <div className="absolute top-40 -right-20 h-80 w-80 rounded-full bg-amber-200/40 blur-3xl animate-blob-delay-2" />
+          <div className="absolute -bottom-10 left-1/3 h-64 w-64 rounded-full bg-green-100/40 blur-3xl animate-blob-delay-4" />
+        </div>
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 md:flex-row md:items-center md:py-24">
           <div className="flex-1 space-y-6">
             <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl">
@@ -199,17 +205,19 @@ export default async function HomePage() {
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {categories.map((c) => (
-            <Link key={c.slug} href={`/categories/${c.slug}`}>
-              <Card className="h-full border-border/80 transition hover:-translate-y-1 hover:shadow-md">
-                <CardContent className="flex flex-col gap-3 p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <c.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="font-display text-xl font-semibold">{c.name}</h3>
-                  <p className="text-sm text-muted-foreground">{c.blurb}</p>
-                </CardContent>
-              </Card>
-            </Link>
+            <div key={c.slug}>
+              <Link href={`/categories/${c.slug}`}>
+                <Card className="h-full border-border/80 transition hover:-translate-y-1 hover:shadow-md">
+                  <CardContent className="flex flex-col gap-3 p-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <c.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-display text-xl font-semibold">{c.name}</h3>
+                    <p className="text-sm text-muted-foreground">{c.blurb}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
           ))}
         </div>
       </section>
@@ -235,7 +243,9 @@ export default async function HomePage() {
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {popularList.map((c) => (
-                <CourseCard key={c.id as string} course={c as never} enrolled={enrolledIds.has(c.id as string)} />
+                <div key={c.id as string}>
+                  <CourseCard course={c as never} enrolled={enrolledIds.has(c.id as string)} />
+                </div>
               ))}
             </div>
           )}
@@ -296,17 +306,19 @@ export default async function HomePage() {
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((t) => (
-            <Card key={t.name} className="border-border/80 bg-white/80">
-              <CardContent className="space-y-4 p-6">
-                <p className="text-sm leading-relaxed text-charcoal/90">
-                  “{t.quote}”
-                </p>
-                <div>
-                  <p className="font-semibold">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.place}</p>
-                </div>
-              </CardContent>
-            </Card>
+            <div key={t.name}>
+              <Card className="border-border/80 bg-white/80">
+                <CardContent className="space-y-4 p-6">
+                  <p className="text-sm leading-relaxed text-charcoal/90">
+                    {`"${t.quote}"`}
+                  </p>
+                  <div>
+                    <p className="font-semibold">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.place}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           ))}
         </div>
       </section>
