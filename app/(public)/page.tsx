@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChefHat, Leaf, UtensilsCrossed } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/course-card";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,40 +24,28 @@ const categories = [
     name: "Baking",
     slug: "baking",
     blurb: "Atta cakes, healthier bakes",
-    icon: ChefHat,
+    emoji: "🎂",
+    bg: "bg-amber-50",
+    border: "border-l-4 border-amber-400",
+    iconBg: "bg-amber-100",
   },
   {
     name: "Healthy Swaps",
     slug: "healthy-swaps",
     blurb: "Sugar-free mithai, better oils",
-    icon: Leaf,
+    emoji: "🌿",
+    bg: "bg-green-50",
+    border: "border-l-4 border-green-400",
+    iconBg: "bg-green-100",
   },
   {
     name: "Indian Cooking",
     slug: "indian-cooking",
     blurb: "Ghar ka khana, smarter choices",
-    icon: UtensilsCrossed,
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "Pehle lagta tha healthy = boring. Ab family ko pata bhi nahi chalta swap ka!",
-    name: "Priya S.",
-    place: "Pune",
-  },
-  {
-    quote:
-      "Hinglish explain bilkul ghar jaisa. Atta cake finally soft ban gayi.",
-    name: "Neha R.",
-    place: "Delhi NCR",
-  },
-  {
-    quote:
-      "Mom-style tips + science — best combo. Highly recommend.",
-    name: "Kavita M.",
-    place: "Bengaluru",
+    emoji: "🍲",
+    bg: "bg-orange-50",
+    border: "border-l-4 border-orange-400",
+    iconBg: "bg-orange-100",
   },
 ];
 
@@ -130,7 +118,6 @@ export default async function HomePage() {
   const popularList = attachInstructor(popular ?? []);
   const freeList = attachInstructor(freeCourses ?? []);
 
-  // Check enrolled courses for current user
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -144,8 +131,8 @@ export default async function HomePage() {
 
   return (
     <div>
+      {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-cream via-white to-primary/10">
-        {/* Animated background blobs */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-20 -left-20 h-80 w-80 rounded-full bg-orange-200/50 blur-3xl animate-blob" />
           <div className="absolute top-40 -right-20 h-80 w-80 rounded-full bg-amber-200/40 blur-3xl animate-blob-delay-2" />
@@ -179,7 +166,7 @@ export default async function HomePage() {
                 src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
                 alt="Indian kitchen cooking"
                 fill
-                className="object-cover object-center-top"
+                className="object-cover"
                 style={{ objectPosition: "center top" }}
                 priority
                 sizes="(max-width: 768px) 100vw, 400px"
@@ -194,6 +181,7 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Featured Categories (H4) ─────────────────────────── */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="mb-10 text-center">
           <h2 className="font-display text-3xl font-bold text-charcoal">
@@ -205,23 +193,22 @@ export default async function HomePage() {
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {categories.map((c) => (
-            <div key={c.slug}>
-              <Link href={`/categories/${c.slug}`}>
-                <Card className="h-full border-border/80 transition hover:-translate-y-1 hover:shadow-md">
-                  <CardContent className="flex flex-col gap-3 p-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <c.icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="font-display text-xl font-semibold">{c.name}</h3>
-                    <p className="text-sm text-muted-foreground">{c.blurb}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            </div>
+            <Link key={c.slug} href={`/categories/${c.slug}`}>
+              <Card className={`h-full ${c.bg} ${c.border} transition hover:-translate-y-1 hover:shadow-md`}>
+                <CardContent className="flex flex-col gap-3 p-6">
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${c.iconBg} text-2xl`}>
+                    {c.emoji}
+                  </div>
+                  <h3 className="font-display text-xl font-semibold">{c.name}</h3>
+                  <p className="text-sm text-muted-foreground">{c.blurb}</p>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
 
+      {/* ── Popular Courses ──────────────────────────────────── */}
       <section className="border-y bg-white/70 py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
@@ -238,20 +225,19 @@ export default async function HomePage() {
           {popularList.length === 0 ? (
             <p className="rounded-xl border border-dashed bg-cream p-8 text-center text-muted-foreground">
               Courses will appear here once your instructor publishes them in
-              Admin → Courses.
+              Admin &rarr; Courses.
             </p>
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {popularList.map((c) => (
-                <div key={c.id as string}>
-                  <CourseCard course={c as never} enrolled={enrolledIds.has(c.id as string)} />
-                </div>
+                <CourseCard key={c.id as string} course={c as never} enrolled={enrolledIds.has(c.id as string)} />
               ))}
             </div>
           )}
         </div>
       </section>
 
+      {/* ── Free Courses ─────────────────────────────────────── */}
       {freeList.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16">
           <div className="mb-8 flex items-center justify-between gap-4">
@@ -268,58 +254,114 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* ── Live Classes Urgency Strip (H3) ──────────────────── */}
+      <section className="bg-gradient-to-r from-primary to-amber-500 py-5">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
+          <div className="text-center text-white sm:text-left">
+            <p className="font-display text-lg font-bold">
+              🎂 Live Baking Classes — Noida
+            </p>
+            <p className="text-sm text-white/90">
+              Akta Mahajan ke saath seekho &middot; Sirf ₹500 mein &middot; Limited seats!
+            </p>
+          </div>
+          <Button
+            asChild
+            className="shrink-0 rounded-full bg-white px-6 font-bold text-primary hover:bg-white/90"
+          >
+            <Link href="/live-classes">Book Your Spot &rarr;</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* ── Meet Akta Mahajan (H1) ───────────────────────────── */}
       <section className="bg-gradient-to-r from-primary/10 via-cream to-herb/10 py-16">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border bg-white shadow-lg">
-            <Image
-              src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80"
-              alt="Instructor in kitchen"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+          <div className="relative flex items-center justify-center">
+            <div className="relative h-80 w-80 overflow-hidden rounded-3xl border-4 border-primary/20 bg-gradient-to-br from-primary/20 to-amber-100 shadow-2xl">
+              <div className="flex h-full w-full items-center justify-center">
+                <span className="font-display text-9xl font-bold text-primary/30">A</span>
+              </div>
+              <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/90 p-3 shadow-lg backdrop-blur-sm">
+                <p className="text-center text-xs font-semibold text-charcoal">
+                  🏆 Featured in Zee News &amp; Economic Times
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="space-y-4">
-            <h2 className="font-display text-3xl font-bold">
-              Meet your instructor
-            </h2>
-            <p className="text-muted-foreground">
-              Years of home-kitchen experiments turned into structured courses.
-              Every module is crafted for busy families who want{" "}
-              <span className="font-medium text-foreground">sehat</span> without
-              saying goodbye to <span className="font-medium text-foreground">swad</span>.
+
+          <div className="space-y-5">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+                Meet Your Instructor
+              </p>
+              <h2 className="mt-2 font-display text-4xl font-bold text-charcoal">
+                Akta Mahajan
+              </h2>
+              <p className="mt-1 text-lg text-muted-foreground">
+                Founder, Yummmo Bakery &middot; Master Baker &amp; Healthy Food Expert
+              </p>
+            </div>
+
+            <p className="leading-relaxed text-muted-foreground">
+              10+ saalon ki baking expertise ke saath, Akta ne hundreds of
+              families ko sikhaaya hai ki healthy khana boring nahi hota.
+              Zee News aur Economic Times mein featured, Akta ki classes
+              Noida mein ek movement ban gayi hain — ek cake at a time.
             </p>
-            <p className="text-muted-foreground">
-              Lessons blend Hindi & Hinglish — comfortable, conversational, and
-              packed with practical swaps you can use tonight.
-            </p>
-            <Button asChild>
+
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">
+                🏆 Zee News Featured
+              </span>
+              <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+                📰 Economic Times
+              </span>
+              <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+                👩‍🍳 100+ Students Trained
+              </span>
+              <span className="rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-700">
+                🎂 10+ Years Experience
+              </span>
+            </div>
+
+            <Button asChild size="pill">
               <Link href="/courses">Browse courses</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="mb-8 text-center font-display text-3xl font-bold">
-          What students say
-        </h2>
-        <div className="grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <div key={t.name}>
-              <Card className="border-border/80 bg-white/80">
-                <CardContent className="space-y-4 p-6">
-                  <p className="text-sm leading-relaxed text-charcoal/90">
-                    {`"${t.quote}"`}
-                  </p>
-                  <div>
-                    <p className="font-semibold">{t.name}</p>
-                    <p className="text-xs text-muted-foreground">{t.place}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
+      {/* ── Trust Stats (H2) ─────────────────────────────────── */}
+      <section className="border-y bg-white/70 py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-3xl font-bold text-charcoal">
+              Why Yummmo Learn?
+            </h2>
+            <p className="mt-2 text-muted-foreground">
+              Real learning, real results — aapki apni rasoi mein
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[
+              { number: "9", label: "Lessons", sub: "In our first course" },
+              { number: "100%", label: "Free", sub: "Start learning today" },
+              { number: "Hindi", label: "& Hinglish", sub: "Easy to understand" },
+              { number: "0g", label: "Maida", sub: "Healthy swaps only" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border border-border/60 bg-cream p-6 text-center shadow-sm"
+              >
+                <p className="font-display text-4xl font-bold text-primary">
+                  {stat.number}
+                </p>
+                <p className="mt-1 font-semibold text-charcoal">{stat.label}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{stat.sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>

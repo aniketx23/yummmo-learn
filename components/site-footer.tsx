@@ -3,13 +3,16 @@ import Link from "next/link";
 export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
   return (
     <footer className="border-t bg-white/80 py-12">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-4">
         <div>
           <p className="font-display text-lg font-bold text-primary">
             Yummmo Learn
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
             Healthy cooking courses in Hindi & Hinglish — swad bhi, sehat bhi.
+          </p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Featured in Zee News & Economic Times
           </p>
         </div>
         <div className="text-sm">
@@ -21,11 +24,13 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
               </Link>
             </li>
             <li>
-              <Link
-                href="/categories/healthy-swaps"
-                className="hover:text-primary"
-              >
+              <Link href="/categories/healthy-swaps" className="hover:text-primary">
                 Healthy swaps
+              </Link>
+            </li>
+            <li>
+              <Link href="/live-classes" className="hover:text-primary">
+                Live classes
               </Link>
             </li>
             <li>
@@ -67,9 +72,40 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
             )}
           </ul>
         </div>
+        <div className="text-sm">
+          <p className="font-semibold">Connect</p>
+          <ul className="mt-2 space-y-2 text-muted-foreground">
+            <li>
+              <a
+                href="https://wa.me/919818771280"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 transition-colors hover:text-foreground"
+              >
+                💬 WhatsApp Us
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="flex items-center gap-2 transition-colors hover:text-foreground"
+              >
+                📸 Instagram
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="flex items-center gap-2 transition-colors hover:text-foreground"
+              >
+                ▶️ YouTube
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       <p className="mt-10 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Yummmo Learn. Part of the Yummmo brand.
+        &copy; {new Date().getFullYear()} Yummmo Learn. Part of the Yummmo brand.
       </p>
     </footer>
   );

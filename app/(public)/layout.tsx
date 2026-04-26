@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { getUserWithProfile } from "@/lib/auth";
 
 export default async function PublicLayout({
@@ -14,6 +15,7 @@ export default async function PublicLayout({
       <SiteHeader email={user?.email} role={profile?.role} avatarUrl={profile?.avatar_url} />
       <main className="flex-1">{children}</main>
       <SiteFooter isLoggedIn={!!user} />
+      <WhatsAppFab />
     </div>
   );
 }
