@@ -8,6 +8,12 @@ export async function GET(request: Request) {
   const nextParam = searchParams.get("next");
   const next = nextParam ?? "/dashboard";
 
+  // Handle email change confirmation (Supabase sends type=email_change)
+  const type = searchParams.get("type");
+  if (type === "email_change") {
+    return NextResponse.redirect(`${origin}/profile?email_updated=1`);
+  }
+
   let destination = next;
 
   if (code) {
