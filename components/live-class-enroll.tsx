@@ -77,11 +77,13 @@ const personalSteps = [
 export function LiveClassEnroll({
   batches = [],
   buttonLabel,
+  buttonClassName,
   preSelectedBatchId,
   autoRegister,
 }: {
   batches?: Batch[];
   buttonLabel?: string;
+  buttonClassName?: string;
   preSelectedBatchId?: string;
   autoRegister?: boolean;
 }) {
@@ -255,7 +257,7 @@ export function LiveClassEnroll({
       }}
     >
       <DialogTrigger asChild>
-        <Button size="lg" className="text-lg px-8 py-6">
+        <Button size="lg" className={buttonClassName ?? "text-lg px-8 py-6"}>
           {buttonLabel ?? "Enroll in Live Class"}
         </Button>
       </DialogTrigger>
