@@ -178,19 +178,19 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* ── Google ─────────────────────────────────────── */}
-          <div className="flex items-center justify-between gap-3">
+          <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted">
                 <GoogleIcon className="h-5 w-5" />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">Google</p>
                 <p className="truncate text-xs text-muted-foreground">
                   {hasGoogle ? googleEmail : "Not connected"}
                 </p>
               </div>
             </div>
-            <div className="flex shrink-0 gap-2">
+            <div className="flex flex-wrap gap-2">
               {hasGoogle ? (
                 <>
                   {canUnlink && (
@@ -205,7 +205,7 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
                     </Button>
                   )}
                   {!canUnlink && (
-                    <p className="text-xs text-muted-foreground max-w-[140px]">
+                    <p className="text-xs text-muted-foreground">
                       Password add karo pehle, phir unlink kar sakte ho
                     </p>
                   )}
@@ -239,19 +239,19 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
           <Separator />
 
           {/* ── Email & Password ───────────────────────────── */}
-          <div className="flex items-center justify-between gap-3">
+          <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted">
                 <Mail className="h-5 w-5 text-muted-foreground" />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">Email & Password</p>
                 <p className="truncate text-xs text-muted-foreground">
                   {hasEmail ? userEmail : "Not connected"}
                 </p>
               </div>
             </div>
-            <div className="flex shrink-0 gap-2">
+            <div className="flex flex-wrap gap-2">
               {hasEmail ? (
                 <>
                   {canUnlink && (
