@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/course-card";
 import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedCounter } from "@/components/animated-counter";
+import { FadeInSection } from "@/components/fade-in-section";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -139,7 +141,7 @@ export default async function HomePage() {
           <div className="absolute -bottom-10 left-1/3 h-64 w-64 rounded-full bg-green-100/40 blur-3xl animate-blob-delay-4" />
         </div>
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 md:flex-row md:items-center md:py-24">
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 space-y-6 animate-[fade-up_0.6s_ease-out_forwards]">
             <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl">
               Healthy cooking that still{" "}
               <span className="text-primary">tastes like home</span>.
@@ -160,7 +162,7 @@ export default async function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="relative flex-1">
+          <div className="relative flex-1 opacity-0 animate-[fade-up_0.6s_ease-out_0.2s_forwards]">
             <div className="relative mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-3xl border bg-white shadow-xl sm:aspect-square">
               <Image
                 src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
@@ -181,7 +183,37 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Marquee trust strip ──────────────────────────────── */}
+      <div className="overflow-hidden border-y bg-white/60 py-3">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[
+            "🏆 Featured in Zee News",
+            "📰 Economic Times",
+            "👩‍🍳 100+ Students Trained",
+            "🎂 10+ Years Baking Experience",
+            "📍 Based in Noida",
+            "🌿 Healthy Ingredients Only",
+            "✅ Preservative Free",
+            "🏆 Featured in Zee News",
+            "📰 Economic Times",
+            "👩‍🍳 100+ Students Trained",
+            "🎂 10+ Years Baking Experience",
+            "📍 Based in Noida",
+            "🌿 Healthy Ingredients Only",
+            "✅ Preservative Free",
+          ].map((item, i) => (
+            <span
+              key={i}
+              className="mx-8 text-sm font-medium text-muted-foreground"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ── Featured Categories (H4) ─────────────────────────── */}
+      <FadeInSection>
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="mb-10 text-center">
           <h2 className="font-display text-3xl font-bold text-charcoal">
@@ -207,8 +239,10 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+      </FadeInSection>
 
       {/* ── Popular Courses ──────────────────────────────────── */}
+      <FadeInSection delay={0.1}>
       <section className="border-y bg-white/70 py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
@@ -236,6 +270,7 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+      </FadeInSection>
 
       {/* ── Free Courses ─────────────────────────────────────── */}
       {freeList.length > 0 && (
@@ -255,6 +290,7 @@ export default async function HomePage() {
       )}
 
       {/* ── Live Classes Urgency Strip (H3) ──────────────────── */}
+      <FadeInSection delay={0.1}>
       <section className="bg-gradient-to-r from-primary to-amber-500 py-5">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
           <div className="text-center text-white sm:text-left">
@@ -273,8 +309,10 @@ export default async function HomePage() {
           </Button>
         </div>
       </section>
+      </FadeInSection>
 
       {/* ── Meet Akta Mahajan (H1) ───────────────────────────── */}
+      <FadeInSection delay={0.1}>
       <section className="bg-gradient-to-r from-primary/10 via-cream to-herb/10 py-16">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
           <div className="relative flex items-center justify-center">
@@ -331,8 +369,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </FadeInSection>
 
       {/* ── Trust Stats (H2) ─────────────────────────────────── */}
+      <FadeInSection delay={0.1}>
       <section className="border-y bg-white/70 py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
@@ -355,7 +395,7 @@ export default async function HomePage() {
                 className="rounded-2xl border border-border/60 bg-cream p-6 text-center shadow-sm"
               >
                 <p className="font-display text-4xl font-bold text-primary">
-                  {stat.number}
+                  <AnimatedCounter value={stat.number} />
                 </p>
                 <p className="mt-1 font-semibold text-charcoal">{stat.label}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{stat.sub}</p>
@@ -364,6 +404,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </FadeInSection>
     </div>
   );
 }

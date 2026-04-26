@@ -32,7 +32,7 @@ export function CourseCard({ course, enrolled }: { course: CourseCardData; enrol
       : null;
 
   return (
-    <Card className="group flex h-full flex-col overflow-hidden border-border/80 transition-shadow duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-orange-100">
+    <Card className="group flex h-full flex-col overflow-hidden border-border/80 transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-lg hover:shadow-orange-100">
       <Link href={`/courses/${course.slug}`} className="block">
         <div className="relative aspect-video overflow-hidden bg-muted">
           {course.thumbnail_url ? (
@@ -62,7 +62,7 @@ export function CourseCard({ course, enrolled }: { course: CourseCardData; enrol
       <CardContent className="flex flex-1 flex-col gap-2 p-5">
         <div className="flex items-start justify-between gap-2">
           <Link href={`/courses/${course.slug}`}>
-            <h3 className="font-display text-lg font-semibold leading-snug hover:text-primary">
+            <h3 className="font-display text-lg font-semibold leading-snug transition-colors group-hover:text-primary">
               {course.title}
             </h3>
           </Link>

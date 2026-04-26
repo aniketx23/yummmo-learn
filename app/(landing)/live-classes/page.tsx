@@ -91,7 +91,7 @@ export default async function LiveClassesLandingPage({
           SECTION 1 — HERO
           ══════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-cream via-white to-primary/5">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-16 text-center md:py-24">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-16 text-center animate-[fade-up_0.6s_ease-out_forwards] md:py-24">
           <Badge className="text-sm px-4 py-1.5">🎂 Limited Seats Per Batch</Badge>
 
           <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-6xl">
