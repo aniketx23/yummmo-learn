@@ -13,7 +13,6 @@ import {
   LogOut,
   Menu,
   Newspaper,
-  Radio,
   ShieldCheck,
   User,
   UserPlus,
@@ -160,6 +159,14 @@ export function SiteNav({ email, role, avatarUrl }: Props) {
             <NavLink href="/courses" icon={BookOpen} onClick={() => setOpen(false)}>
               All Courses
             </NavLink>
+            <Link
+              href="/live-classes"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <span>🎂</span>
+              Live Classes
+            </Link>
             <NavLink href="/categories/baking" icon={ChefHat} onClick={() => setOpen(false)}>
               Categories
             </NavLink>
@@ -177,9 +184,6 @@ export function SiteNav({ email, role, avatarUrl }: Props) {
                 </NavLink>
                 <NavLink href="/my-courses" icon={BookOpen} onClick={() => setOpen(false)}>
                   My Courses
-                </NavLink>
-                <NavLink href="/live-classes" icon={Radio} onClick={() => setOpen(false)}>
-                  Live Classes
                 </NavLink>
                 <NavLink href="/profile" icon={User} onClick={() => setOpen(false)}>
                   My Profile
