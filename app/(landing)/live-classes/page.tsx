@@ -186,7 +186,7 @@ export default async function LiveClassesLandingPage({
                 <p className="text-lg text-muted-foreground">
                   Naye batches jaldi aane wale hain — WhatsApp pe updates ke liye{" "}
                   <a
-                    href="https://wa.me/919818771280"
+                    href="https://wa.me/918459999991"
                     className="font-medium text-primary underline"
                   >
                     message karein
@@ -370,11 +370,11 @@ export default async function LiveClassesLandingPage({
                     <span>B2 1602, Cleo County, Sector 121, Noida</span>
                   </p>
                   <p className="flex items-center gap-2">
-                    <span>📞</span>
+                    <span>💬</span>
                     <span>
                       WhatsApp:{" "}
-                      <a href="https://wa.me/919818771280" className="text-primary hover:underline">
-                        9818771280
+                      <a href="https://wa.me/918459999991" className="text-primary hover:underline">
+                        8459999991
                       </a>
                     </span>
                   </p>
@@ -401,7 +401,7 @@ export default async function LiveClassesLandingPage({
               </div>
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                 <a
-                  href="https://wa.me/919818771280?text=Hi%2C%20I%20want%20to%20know%20about%20live%20baking%20classes"
+                  href="https://wa.me/918459999991?text=Hi%2C%20I%20want%20to%20know%20about%20live%20baking%20classes"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-herb bg-herb/10 px-6 py-3 text-sm font-semibold text-herb transition hover:bg-herb/20"

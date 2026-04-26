@@ -19,13 +19,8 @@ export default function LandingLayout({
             B2 1602, Cleo County, Sector 121, Noida
           </p>
           <p className="mt-1">
-            WhatsApp:{" "}
-            <a href="https://wa.me/919818771280" className="text-primary hover:underline">
-              9818771280
-            </a>
-            {" · "}
-            Call:{" "}
-            <a href="tel:+918459999991" className="text-primary hover:underline">
+            WhatsApp / Call:{" "}
+            <a href="https://wa.me/918459999991" className="text-primary hover:underline">
               8459999991
             </a>
           </p>

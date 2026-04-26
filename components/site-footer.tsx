@@ -77,7 +77,7 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
           <ul className="mt-2 space-y-2 text-muted-foreground">
             <li>
               <a
-                href="https://wa.me/919818771280"
+                href="https://wa.me/918459999991"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 transition-colors hover:text-foreground"
