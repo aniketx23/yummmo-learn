@@ -74,6 +74,17 @@ export default async function CategoryPage({
       : null,
   }));
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: enrollments } = user
+    ? await supabase
+        .from("enrollments")
+        .select("course_id")
+        .eq("student_id", user.id)
+    : { data: [] as { course_id: string }[] };
+  const enrolledIds = new Set((enrollments ?? []).map((e) => e.course_id));
+
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-10">
       <div>
@@ -90,7 +101,7 @@ export default async function CategoryPage({
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
-            <CourseCard key={c.id} course={c} />
+            <CourseCard key={c.id} course={c} enrolled={enrolledIds.has(c.id)} />
           ))}
         </div>
       )}

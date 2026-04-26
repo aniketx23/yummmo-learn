@@ -130,6 +130,18 @@ export default async function HomePage() {
   const popularList = attachInstructor(popular ?? []);
   const freeList = attachInstructor(freeCourses ?? []);
 
+  // Check enrolled courses for current user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: enrollments } = user
+    ? await supabase
+        .from("enrollments")
+        .select("course_id")
+        .eq("student_id", user.id)
+    : { data: [] as { course_id: string }[] };
+  const enrolledIds = new Set((enrollments ?? []).map((e) => e.course_id));
+
   return (
     <div>
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-cream via-white to-primary/10">
@@ -223,7 +235,7 @@ export default async function HomePage() {
           ) : (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {popularList.map((c) => (
-                <CourseCard key={c.id as string} course={c as never} />
+                <CourseCard key={c.id as string} course={c as never} enrolled={enrolledIds.has(c.id as string)} />
               ))}
             </div>
           )}
@@ -240,7 +252,7 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {freeList.map((c) => (
-              <CourseCard key={c.id as string} course={c as never} />
+              <CourseCard key={c.id as string} course={c as never} enrolled={enrolledIds.has(c.id as string)} />
             ))}
           </div>
         </section>

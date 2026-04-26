@@ -21,6 +21,7 @@ export async function POST(request: Request) {
       id: user.id,
       full_name: body.full_name ?? null,
       phone: body.phone ?? null,
+      email: user.email ?? null,
       role: "student",
     },
     { onConflict: "id" }

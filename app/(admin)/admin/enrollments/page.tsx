@@ -55,10 +55,10 @@ export default async function AdminEnrollmentsPage({
       studentIds.length
         ? supabase
             .from("profiles")
-            .select("id, full_name")
+            .select("id, full_name, email")
             .in("id", studentIds)
         : Promise.resolve({
-            data: [] as { id: string; full_name: string | null }[],
+            data: [] as { id: string; full_name: string | null; email: string | null }[],
           }),
       courseIds.length
         ? supabase.from("courses").select("id, title").in("id", courseIds)
@@ -81,7 +81,7 @@ export default async function AdminEnrollmentsPage({
         .order("title"),
     ]);
 
-  const profRows = (profs ?? []) as { id: string; full_name: string | null }[];
+  const profRows = (profs ?? []) as { id: string; full_name: string | null; email: string | null }[];
   const courseRows = (crs ?? []) as { id: string; title: string }[];
   const payRows = (pays ?? []) as {
     id: string;
@@ -90,6 +90,7 @@ export default async function AdminEnrollmentsPage({
   }[];
 
   const nameBy = new Map(profRows.map((p) => [p.id, p.full_name]));
+  const emailBy = new Map(profRows.map((p) => [p.id, p.email]));
   const titleBy = new Map(courseRows.map((c) => [c.id, c.title]));
   const payBy = new Map(payRows.map((p) => [p.id, p]));
 
@@ -98,6 +99,7 @@ export default async function AdminEnrollmentsPage({
     return {
       ...r,
       student: nameBy.get(r.student_id) ?? "",
+      email: emailBy.get(r.student_id) ?? "",
       course: titleBy.get(r.course_id) ?? "",
       amount: pay?.amount ?? null,
       payId: pay?.razorpay_payment_id ?? null,
@@ -118,6 +120,7 @@ export default async function AdminEnrollmentsPage({
           <TableHeader>
             <TableRow>
               <TableHead>Student</TableHead>
+              <TableHead>Email</TableHead>
               <TableHead>Course</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Amount</TableHead>
@@ -128,7 +131,7 @@ export default async function AdminEnrollmentsPage({
             {table.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={5}
+                  colSpan={6}
                   className="text-center text-muted-foreground"
                 >
                   No enrollments yet
@@ -138,6 +141,7 @@ export default async function AdminEnrollmentsPage({
               table.map((r) => (
                 <TableRow key={r.student_id + r.course_id + r.enrolled_at}>
                   <TableCell>{r.student}</TableCell>
+                  <TableCell className="text-muted-foreground">{r.email || "—"}</TableCell>
                   <TableCell>{r.course}</TableCell>
                   <TableCell>
                     {formatDate(r.enrolled_at)}

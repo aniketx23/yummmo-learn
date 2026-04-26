@@ -40,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hi" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${baloo.variable} ${dmSans.variable} min-h-screen bg-cream font-sans text-charcoal antialiased`}
         suppressHydrationWarning

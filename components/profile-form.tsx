@@ -26,18 +26,21 @@ const schema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters"),
   phone: z
     .string()
-    .optional()
+    .min(1, "Phone number is required")
+    .transform((v) => v.replace(/\D/g, ""))
     .refine(
-      (v) => !v || /^[+]?[\d\s-]{10,15}$/.test(v.replace(/\s/g, "")),
-      "Enter a valid phone number (10-15 digits)"
+      (v) => /^\d{10}$/.test(v),
+      "Enter a valid 10-digit phone number"
     ),
   avatar_url: z.string().optional(),
 });
 
 export function ProfileForm({
   initial,
+  redirectTo,
 }: {
   initial: { full_name: string; phone: string; avatar_url: string };
+  redirectTo?: string;
 }) {
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
@@ -103,6 +106,9 @@ export function ProfileForm({
       return;
     }
     toast.success("Profile saved!");
+    if (redirectTo) {
+      router.push(redirectTo);
+    }
     router.refresh();
   }
 
@@ -160,7 +166,7 @@ export function ProfileForm({
                   <FormControl>
                     <Input placeholder="+91 98765 43210" {...field} />
                   </FormControl>
-                  <FormDescription>Optional — for WhatsApp updates</FormDescription>
+                  <FormDescription>10-digit number — for class updates via WhatsApp</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

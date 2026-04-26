@@ -25,10 +25,11 @@ const schema = z
     email: z.string().email(),
     phone: z
       .string()
-      .min(10, "Phone number is required (10+ digits)")
+      .min(1, "Phone number is required")
+      .transform((v) => v.replace(/\D/g, ""))
       .refine(
-        (v) => /^[+]?[\d\s-]{10,15}$/.test(v.replace(/\s/g, "")),
-        "Enter a valid phone number"
+        (v) => /^\d{10}$/.test(v),
+        "Enter a valid 10-digit phone number"
       ),
     password: z.string().min(6, "Password must be at least 6 characters"),
   })

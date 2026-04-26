@@ -33,7 +33,7 @@ export default async function DashboardPage() {
   const [{ data: profile }, { data: enrollRows }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("full_name, avatar_url")
+      .select("full_name, avatar_url, phone")
       .eq("id", user.id)
       .maybeSingle(),
     supabase
@@ -187,6 +187,23 @@ export default async function DashboardPage() {
           <Link href="/courses">Browse courses</Link>
         </Button>
       </div>
+
+      {/* ── Phone missing banner ──────────────────────────────────── */}
+      {!profile?.phone && (
+        <div className="flex flex-col items-start gap-3 rounded-xl border border-primary/30 bg-primary/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-display font-semibold text-primary">
+              Phone number add karein
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Class updates aur important notifications ke liye aapka number chahiye.
+            </p>
+          </div>
+          <Button asChild size="sm">
+            <Link href="/profile?complete=1">Add phone number</Link>
+          </Button>
+        </div>
+      )}
 
       {/* ── Stats ───────────────────────────────────────────────── */}
       {courses.length > 0 && (

@@ -43,6 +43,7 @@ export default async function ProfilePage({
           phone: profile?.phone ?? "",
           avatar_url: profile?.avatar_url ?? "",
         }}
+        redirectTo={isComplete ? "/dashboard" : undefined}
       />
     </div>
   );

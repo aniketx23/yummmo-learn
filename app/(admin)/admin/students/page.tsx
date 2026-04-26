@@ -21,12 +21,12 @@ export default async function AdminStudentsPage({
   const supabase = await createClient();
   let query = supabase
     .from("profiles")
-    .select("id, full_name, phone, created_at, role")
+    .select("id, full_name, email, phone, created_at, role")
     .eq("role", "student")
     .order("created_at", { ascending: false });
 
   if (q) {
-    query = query.or(`full_name.ilike.%${q}%,phone.ilike.%${q}%`);
+    query = query.or(`full_name.ilike.%${q}%,phone.ilike.%${q}%,email.ilike.%${q}%`);
   }
 
   const { data: students } = await query;
@@ -51,7 +51,7 @@ export default async function AdminStudentsPage({
         <Input
           name="q"
           defaultValue={q}
-          placeholder="Search by name or phone..."
+          placeholder="Search by name, email, or phone..."
         />
       </form>
       <div className="overflow-x-auto">
@@ -59,6 +59,7 @@ export default async function AdminStudentsPage({
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
               <TableHead>Phone</TableHead>
               <TableHead>Courses</TableHead>
               <TableHead>Joined</TableHead>
@@ -67,7 +68,7 @@ export default async function AdminStudentsPage({
           <TableBody>
             {(students ?? []).length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center text-muted-foreground">
+                <TableCell colSpan={5} className="text-center text-muted-foreground">
                   {q ? "No students found" : "No students yet"}
                 </TableCell>
               </TableRow>
@@ -77,6 +78,7 @@ export default async function AdminStudentsPage({
                   <TableCell className="font-medium">
                     {s.full_name ?? "—"}
                   </TableCell>
+                  <TableCell className="text-muted-foreground">{s.email ?? "—"}</TableCell>
                   <TableCell>{s.phone ?? "—"}</TableCell>
                   <TableCell>{countBy.get(s.id) ?? 0}</TableCell>
                   <TableCell>

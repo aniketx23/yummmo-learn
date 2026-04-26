@@ -19,7 +19,7 @@ export type CourseCardData = {
   instructor?: { full_name: string | null } | null;
 };
 
-export function CourseCard({ course }: { course: CourseCardData }) {
+export function CourseCard({ course, enrolled }: { course: CourseCardData; enrolled?: boolean }) {
   const price =
     typeof course.price === "string"
       ? parseFloat(course.price)
@@ -48,11 +48,15 @@ export function CourseCard({ course }: { course: CourseCardData }) {
               <PlayCircle className="h-12 w-12 text-primary" />
             </div>
           )}
-          {course.is_free && (
+          {enrolled ? (
+            <Badge className="absolute left-3 top-3" variant="herb">
+              Enrolled
+            </Badge>
+          ) : course.is_free ? (
             <Badge className="absolute left-3 top-3" variant="herb">
               FREE
             </Badge>
-          )}
+          ) : null}
         </div>
       </Link>
       <CardContent className="flex flex-1 flex-col gap-2 p-5">
@@ -91,7 +95,11 @@ export function CourseCard({ course }: { course: CourseCardData }) {
       </CardContent>
       <CardFooter className="flex items-center justify-between border-t bg-muted/30 px-5 py-4">
         <div className="flex items-baseline gap-2">
-          {course.is_free ? (
+          {enrolled ? (
+            <span className="font-display text-lg font-bold text-herb">
+              Enrolled
+            </span>
+          ) : course.is_free ? (
             <span className="font-display text-lg font-bold text-herb">
               Free
             </span>
@@ -109,10 +117,10 @@ export function CourseCard({ course }: { course: CourseCardData }) {
           )}
         </div>
         <Link
-          href={`/courses/${course.slug}`}
+          href={enrolled ? `/learn/${course.slug}` : `/courses/${course.slug}`}
           className="text-sm font-medium text-primary hover:underline"
         >
-          View course
+          {enrolled ? "Go to course" : "View course"}
         </Link>
       </CardFooter>
     </Card>
