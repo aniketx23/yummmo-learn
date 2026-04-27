@@ -1,0 +1,2 @@
+ALTER TABLE public.live_classes
+ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE;

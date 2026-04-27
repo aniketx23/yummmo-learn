@@ -30,6 +30,7 @@ export async function PUT(
   const patch: Record<string, unknown> = {};
   const keys = [
     "title",
+    "slug",
     "description",
     "schedule_type",
     "schedule_days",

@@ -6,28 +6,42 @@ import { createClient } from "@/lib/supabase/server";
 import { LiveClassEnroll } from "@/components/live-class-enroll";
 import { WhatsAppShare } from "@/components/whatsapp-share";
 
-type Props = { params: Promise<{ batchId: string }> };
+type Props = { params: Promise<{ batchSlug: string }> };
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function findBatch(supabase: Awaited<ReturnType<typeof createClient>>, key: string) {
+  const isUuid = UUID_RE.test(key);
+  const query = supabase
+    .from("live_classes")
+    .select("*")
+    .eq("is_active", true);
+  const { data } = isUuid
+    ? await query.eq("id", key).maybeSingle()
+    : await query.eq("slug", key).maybeSingle();
+  return data;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { batchId } = await params;
+  const { batchSlug } = await params;
   const supabase = await createClient();
-  const { data: batch } = await supabase
-    .from("live_classes")
-    .select("title, description, thumbnail_url")
-    .eq("id", batchId)
-    .maybeSingle();
+  const batch = (await findBatch(supabase, batchSlug)) as
+    | { title: string; description: string | null; thumbnail_url: string | null }
+    | null;
   if (!batch) return { title: "Batch" };
   return {
     title: `${batch.title} | Yummmo Live Class`,
     description: batch.description ?? undefined,
     openGraph: batch.thumbnail_url
-      ? { images: [{ url: batch.thumbnail_url as string }] }
+      ? { images: [{ url: batch.thumbnail_url }] }
       : undefined,
   };
 }
 
 type Batch = {
   id: string;
+  slug: string | null;
   title: string;
   description: string | null;
   class_date: string | null;
@@ -44,16 +58,10 @@ type Batch = {
 };
 
 export default async function BatchPage({ params }: Props) {
-  const { batchId } = await params;
+  const { batchSlug } = await params;
   const supabase = await createClient();
 
-  const { data: batchRaw } = await supabase
-    .from("live_classes")
-    .select("*")
-    .eq("id", batchId)
-    .eq("is_active", true)
-    .maybeSingle();
-
+  const batchRaw = await findBatch(supabase, batchSlug);
   if (!batchRaw) notFound();
 
   const batch = batchRaw as unknown as Batch;
@@ -79,6 +87,7 @@ export default async function BatchPage({ params }: Props) {
       : null;
 
   const city = batch.location_city || "Noida";
+  const batchUrl = `https://yummmo-learn.vercel.app/live-classes/${batch.slug || batch.id}`;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -274,7 +283,12 @@ export default async function BatchPage({ params }: Props) {
         <div className="mt-6 text-center">
           <p className="mb-2 text-xs text-muted-foreground">Share this class</p>
           <div className="flex justify-center gap-3">
-            <WhatsAppShare title={batch.title} dateStr={dateStr} city={city} />
+            <WhatsAppShare
+              title={batch.title}
+              dateStr={dateStr}
+              city={city}
+              shareUrl={batchUrl}
+            />
           </div>
         </div>
       </div>

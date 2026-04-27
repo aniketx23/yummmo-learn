@@ -114,6 +114,7 @@ export default async function LiveClassesLandingPage({
 
   const activeBatches = (batches ?? []).map((b) => ({
     id: b.id as string,
+    slug: (b.slug as string | null) ?? null,
     title: b.title as string,
     description: b.description as string | null,
     class_date: b.class_date as string | null,
@@ -393,7 +394,7 @@ export default async function LiveClassesLandingPage({
                           ₹500 now &middot; Balance on class day
                         </p>
                         <Link
-                          href={`/live-classes/${batch.id}`}
+                          href={`/live-classes/${batch.slug || batch.id}`}
                           className="mt-2 block text-center text-xs text-muted-foreground underline underline-offset-2 transition-colors hover:text-primary"
                         >
                           View full batch details →

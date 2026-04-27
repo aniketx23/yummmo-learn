@@ -41,6 +41,7 @@ export async function POST(request: Request) {
 
   const body = (await request.json()) as {
     title: string;
+    slug?: string | null;
     description?: string;
     schedule_type?: string;
     schedule_days?: string;
@@ -70,6 +71,7 @@ export async function POST(request: Request) {
     .from("live_classes")
     .insert({
       title: body.title.trim(),
+      slug: body.slug?.trim() || null,
       description: body.description || null,
       schedule_type: body.schedule_type || "custom",
       schedule_days: body.schedule_days || null,

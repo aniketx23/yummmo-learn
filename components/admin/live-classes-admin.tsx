@@ -45,6 +45,7 @@ import { createClient } from "@/lib/supabase/client";
 type LiveClass = {
   id: string;
   title: string;
+  slug: string | null;
   description: string | null;
   schedule_type: string;
   schedule_days: string | null;
@@ -548,6 +549,7 @@ function BatchDialog({
   const isEdit = !!existingBatch;
   const [busy, setBusy] = useState(false);
   const [title, setTitle] = useState(existingBatch?.title ?? "");
+  const [slug, setSlug] = useState(existingBatch?.slug ?? "");
   const [description, setDescription] = useState(existingBatch?.description ?? "");
   const [classDate, setClassDate] = useState(existingBatch?.class_date ?? "");
   const [startTime, setStartTime] = useState(existingBatch?.start_time ?? "10:00 AM");
@@ -600,6 +602,7 @@ function BatchDialog({
     setBusy(true);
     const body = {
       title: title.trim(),
+      slug: slug.trim() || null,
       description: description || null,
       class_date: classDate,
       start_time: startTime,
@@ -642,10 +645,54 @@ function BatchDialog({
             <Label>Batch title</Label>
             <Input
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                const v = e.target.value;
+                setTitle(v);
+                if (!slug) {
+                  setSlug(
+                    v
+                      .toLowerCase()
+                      .replace(/[^a-z0-9\s-]/g, "")
+                      .trim()
+                      .replace(/\s+/g, "-")
+                  );
+                }
+              }}
               placeholder="e.g. Dry Cake Baking Batch"
             />
           </div>
+
+          <div className="space-y-1.5">
+            <Label>
+              URL Slug
+              <span className="ml-1 text-xs text-muted-foreground">
+                (optional — for shareable link)
+              </span>
+            </Label>
+            <div className="flex items-center gap-2">
+              <span className="shrink-0 text-xs text-muted-foreground">
+                /live-classes/
+              </span>
+              <Input
+                placeholder="haridwar-cake-class"
+                value={slug}
+                onChange={(e) =>
+                  setSlug(
+                    e.target.value
+                      .toLowerCase()
+                      .replace(/[^a-z0-9-]/g, "-")
+                      .replace(/-+/g, "-")
+                  )
+                }
+              />
+            </div>
+            {slug && (
+              <p className="text-xs text-green-600">
+                ✓ yummmo-learn.vercel.app/live-classes/{slug}
+              </p>
+            )}
+          </div>
+
           <div className="space-y-2">
             <Label>Description</Label>
             <Textarea
