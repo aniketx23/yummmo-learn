@@ -330,7 +330,7 @@ export default async function CourseDetailPage({ params }: Props) {
                   <Separator />
                   <div className="text-sm text-muted-foreground">
                     {course.is_free
-                      ? "Get instant access — no payment needed."
+                      ? "Koi payment nahi — bilkul free hai!"
                       : "Secure payments with Razorpay. Instant access after purchase."}
                   </div>
                 </>

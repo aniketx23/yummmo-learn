@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { LiveClassEnroll } from "@/components/live-class-enroll";
+import { HeroSlideshow } from "@/components/hero-slideshow";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 
@@ -23,6 +24,31 @@ export const metadata: Metadata = {
     images: ["/og-live-classes.jpg"],
   },
 };
+
+const FOUNDER =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_6884.jpg";
+const WORKSHOP_1 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5543.jpg";
+const WORKSHOP_2 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5550.jpg";
+const WORKSHOP_3 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5714.jpg";
+const WORKSHOP_4 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5727.jpg";
+const WORKSHOP_5 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5756.jpg";
+const CAKE_1 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5737.jpg";
+const CAKE_2 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5750.jpg";
+const CAKE_3 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5762.jpg";
+const CAKE_4 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5775.jpg";
+const CAKE_5 =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_5786.jpg";
+const DESIGNER_CAKE =
+  "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.41.52_4395e100.jpg";
 
 const features = [
   { emoji: "🥣", title: "Healthy Recipes", desc: "Maida-free, sugar-free alternatives" },
@@ -48,7 +74,7 @@ const faqs = [
   },
   {
     q: "Registration fee refundable hai?",
-    a: "Ek baar registration ke baad class miss hone pe next available batch mein adjust kar sakte hain. Direct refund available nahi hai.",
+    a: "₹500 registration fee non-refundable hai, lekin valid reason pe next batch mein transfer ho sakti hai. Remaining class fee sirf class ke din collect hoti hai.",
   },
   {
     q: "Class ka exact time kya hoga?",
@@ -58,6 +84,16 @@ const faqs = [
     q: "Kitne log hote hain ek class mein?",
     a: "Maximum 5-8 log per batch. Small batches ensure karte hain ki har student ko personal attention mile.",
   },
+];
+
+const marqueeItems = [
+  "⭐⭐⭐⭐⭐ Amazing experience",
+  "🎂 Made my first cake here",
+  "💚 Healthy AND delicious",
+  "👩‍🍳 Akta is the best teacher",
+  "🏠 Took my cake home same day",
+  "✨ Worth every rupee",
+  "📍 Best thing in Noida",
 ];
 
 export default async function LiveClassesLandingPage({
@@ -91,92 +127,170 @@ export default async function LiveClassesLandingPage({
 
   return (
     <div>
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 1 — HERO
-          ══════════════════════════════════════════════════════════ */}
+      {/* ════════════════ SECTION 1 — HERO ════════════════ */}
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-cream via-white to-primary/5">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-16 text-center animate-[fade-up_0.6s_ease-out_forwards] md:py-24">
-          <Badge className="text-sm px-4 py-1.5">🎂 Limited Seats Per Batch</Badge>
+        {/* Animated blobs */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-orange-200/50 blur-3xl animate-blob" />
+          <div className="absolute -bottom-10 -left-20 h-80 w-80 rounded-full bg-amber-200/40 blur-3xl animate-blob-delay-2" />
+        </div>
 
-          <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-6xl">
-            Ghar Pe Banao{" "}
-            <span className="text-primary">Professional Cakes</span>
-          </h1>
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-2 md:items-center md:py-24">
+          {/* Left — Content */}
+          <div className="space-y-6 animate-[fade-up_0.6s_ease-out_forwards]">
+            <Badge className="px-4 py-1.5 text-sm">🎂 Limited Seats Per Batch</Badge>
 
-          <p className="mx-auto max-w-xl text-lg text-muted-foreground">
-            Akta Mahajan ke saath seekho — step by step, bilkul aasaan tarike se
-          </p>
+            <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl lg:text-6xl">
+              Ghar Pe Banao{" "}
+              <span className="text-primary">Professional Cakes.</span>
+            </h1>
 
-          <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-charcoal/80">
-            <span className="flex items-center gap-1.5">✓ Hands-on Learning</span>
-            <span className="flex items-center gap-1.5">✓ Healthy Ingredients</span>
-            <span className="flex items-center gap-1.5">✓ Small Batches Only</span>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              Akta Mahajan ke saath seekho — healthy ingredients, professional
+              techniques, aur woh satisfaction jo tab milta hai jab aap khud
+              apna cake banate hain.
+            </p>
+
+            <div className="flex flex-wrap gap-4 text-sm font-medium text-charcoal/80">
+              <span className="flex items-center gap-1.5">✓ Hands-on Learning</span>
+              <span className="flex items-center gap-1.5">✓ Healthy Ingredients</span>
+              <span className="flex items-center gap-1.5">✓ Small Batches Only</span>
+            </div>
+
+            <div id="register">
+              <LiveClassEnroll
+                batches={activeBatches}
+                buttonLabel="Register Now — ₹500 →"
+                autoRegister={autoRegister}
+                triggerProps={{ "data-register-trigger": "" }}
+              />
+              <p className="mt-2 max-w-md text-xs text-muted-foreground">
+                ₹500 registration fee to confirm your spot. Remaining class
+                fee payable on the day of the workshop.
+              </p>
+            </div>
+
+            <p className="text-sm text-muted-foreground">
+              📍 Noida, Sector 121 &nbsp;•&nbsp; ⏰ 3-4 hours per class
+            </p>
           </div>
 
-          <div id="register">
-            <LiveClassEnroll
-              batches={activeBatches}
-              buttonLabel="Register Now — ₹500 Only →"
-              autoRegister={autoRegister}
-              triggerProps={{ "data-register-trigger": "" }}
+          {/* Right — Slideshow */}
+          <div className="opacity-0 animate-[fade-up_0.6s_ease-out_0.2s_forwards]">
+            <HeroSlideshow
+              slides={[
+                {
+                  src: WORKSHOP_2,
+                  caption: "Intimate batches of 5-8 students only",
+                  tag: "The Classroom",
+                },
+                {
+                  src: WORKSHOP_3,
+                  caption: "Personal guidance from Akta herself",
+                  tag: "Hands-on Learning",
+                },
+                {
+                  src: WORKSHOP_5,
+                  caption: "You decorate. You take it home.",
+                  tag: "Real Practice",
+                },
+                {
+                  src: CAKE_4,
+                  caption: "6 cakes made in one single session",
+                  tag: "Student Results",
+                },
+              ]}
             />
           </div>
-
-          <p className="text-sm text-muted-foreground">
-            📍 Noida · 🕐 Weekend & Weekday Batches Available
-          </p>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 2 — MEET AKTA
-          ══════════════════════════════════════════════════════════ */}
+      {/* ════════════════ SECTION 2 — DARK MARQUEE ════════════════ */}
+      <div className="overflow-hidden bg-charcoal py-3">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[...marqueeItems, ...marqueeItems].map((item, i) => (
+            <span key={i} className="mx-8 text-sm font-medium text-white/80">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ════════════════ SECTION 3 — MEET AKTA ════════════════ */}
       <section className="bg-white py-16">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
-          <div className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/10 to-cream shadow-lg">
-            <Image
-              src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80"
-              alt="Akta Mahajan"
-              fill
-              className="object-cover"
-              sizes="(max-width:768px) 100vw, 400px"
-            />
+          {/* Left — Founder photo */}
+          <div className="relative mx-auto w-full max-w-sm md:max-w-full">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl shadow-2xl">
+              <Image
+                src={FOUNDER}
+                alt="Akta Mahajan, Founder of Yummmo"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width:768px) 100vw, 500px"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-5 pb-5 pt-16 text-white">
+                <p className="font-display text-2xl font-bold">Akta Mahajan</p>
+                <p className="text-sm text-white/80">Founder, Yummmo Bakery</p>
+              </div>
+            </div>
+            {/* Floating years badge */}
+            <div className="absolute -right-2 top-4 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-primary text-white shadow-xl">
+              <span className="font-display text-2xl font-bold leading-none">10+</span>
+              <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider">
+                Years
+              </span>
+            </div>
           </div>
+
+          {/* Right — Bio */}
           <div className="space-y-5">
-            <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
               Meet Your Chef
             </p>
-            <h2 className="font-display text-3xl font-bold">Akta Mahajan</h2>
-            <p className="text-sm font-medium text-muted-foreground">
-              Founder, Yummmo Bakery · Master Baker
+            <h2 className="font-display text-3xl font-bold md:text-4xl">
+              The Woman Behind Yummmo
+            </h2>
+
+            <p className="leading-relaxed text-muted-foreground">
+              Akta Mahajan has spent over a decade perfecting the art of
+              healthy baking. As the founder of Yummmo — a premium healthy
+              bakery featured in Zee News and Economic Times — she has
+              redefined what indulgence means for Indian families.
             </p>
-            <p className="text-muted-foreground leading-relaxed">
-              10+ saalon ki baking expertise. Healthy ingredients mein specialist
-              — maida ki jagah atta, chini ki jagah jaggery. Aapko wahi
-              sikhaungi jo maine khud saalon mein seekha.
+
+            <p className="leading-relaxed text-muted-foreground">
+              Ab woh yahi expertise aapke saath share karna chahti hain.
+              In-person workshops mein woh sirf recipe nahi — ek complete
+              healthy baking philosophy sikhati hain.
             </p>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="px-3 py-1">
-                🏆 Featured on Zee News
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
+
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700">
+                🏆 Zee News Featured
+              </span>
+              <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
                 📰 Economic Times
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                🎓 100+ Students Trained
-              </Badge>
+              </span>
+              <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-700">
+                👩‍🍳 100+ Students Trained
+              </span>
+              <span className="rounded-full border border-purple-200 bg-purple-50 px-3 py-1.5 text-xs font-semibold text-purple-700">
+                🎂 Noida&apos;s #1 Baking Class
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 3 — UPCOMING BATCHES
-          ══════════════════════════════════════════════════════════ */}
+      {/* ════════════════ SECTION 4 — UPCOMING BATCHES ════════════════ */}
       <section className="py-16" id="batches">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <h2 className="font-display text-3xl font-bold">Aane Wali Classes</h2>
+            <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
+              Har batch mein sirf 5-8 students — personal attention guaranteed
+            </p>
             <Badge className="mt-3" variant="herb">Abhi Register Karein</Badge>
           </div>
 
@@ -225,7 +339,7 @@ export default async function LiveClassesLandingPage({
                       <div className="space-y-3 px-6 py-5">
                         <h3 className="font-display text-xl font-semibold">{batch.title}</h3>
                         {batch.description && (
-                          <p className="text-sm text-muted-foreground line-clamp-2">
+                          <p className="line-clamp-2 text-sm text-muted-foreground">
                             {batch.description}
                           </p>
                         )}
@@ -237,6 +351,9 @@ export default async function LiveClassesLandingPage({
                           preSelectedBatchId={batch.id}
                           buttonLabel={`Register — ₹${price > 0 ? price : "Free"}`}
                         />
+                        <p className="mt-1 text-center text-xs text-muted-foreground">
+                          ₹500 now &middot; Balance on class day
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -247,10 +364,129 @@ export default async function LiveClassesLandingPage({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 4 — WHAT YOU'LL LEARN
-          ══════════════════════════════════════════════════════════ */}
+      {/* ════════════════ SECTION 5 — INSIDE THE WORKSHOP ════════════════ */}
+      <section className="bg-cream py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+              Real Workshop. Real People.
+            </p>
+            <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
+              See What Happens Inside
+            </h2>
+            <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
+              Yeh sirf ek class nahi hai — yeh ek experience hai. Students come
+              as beginners and leave as bakers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {/* Large image — spans 2 rows on md */}
+            <div className="group relative col-span-2 row-span-2 overflow-hidden rounded-2xl shadow-md md:col-span-1">
+              <div className="relative aspect-[4/5] md:aspect-auto md:h-full">
+                <Image
+                  src={WORKSHOP_2}
+                  alt="The Classroom"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+                  <p className="font-display text-lg font-bold">The Classroom</p>
+                  <p className="text-xs text-white/80">Warm, hands-on, intimate</p>
+                </div>
+              </div>
+            </div>
+
+            {[
+              { src: WORKSHOP_1, label: "Taking notes 📝" },
+              { src: WORKSHOP_4, label: "Hands-on practice 🎂" },
+              { src: WORKSHOP_5, label: "Cake decorating 🌸" },
+              { src: WORKSHOP_3, label: "Personal attention ✨" },
+            ].map((item) => (
+              <div
+                key={item.src}
+                className="group relative aspect-square overflow-hidden rounded-2xl shadow-md"
+              >
+                <Image
+                  src={item.src}
+                  alt={item.label}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <p className="absolute bottom-3 left-3 text-sm font-semibold text-white">
+                  {item.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════ SECTION 6 — STUDENT CREATIONS ════════════════ */}
       <section className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+              Student Creations
+            </p>
+            <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
+              Yeh Sab Banaya Hamari Students Ne
+            </h2>
+            <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
+              First class mein. In their very first workshop. Koi prior
+              experience nahi tha.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+            {[
+              { src: CAKE_5, name: "Cherry Blossom Cake", label: "First-time baker" },
+              { src: CAKE_2, name: "Classic Black Forest", label: "Workshop graduate" },
+              { src: CAKE_3, name: "Mother's Day Special", label: "Workshop graduate" },
+              { src: CAKE_1, name: "Barbie Princess Cake", label: "Workshop graduate" },
+              { src: CAKE_4, name: "6 Cakes in One Day", label: "One batch!" },
+              { src: DESIGNER_CAKE, name: "Custom Designer Cake", label: "Advanced workshop" },
+            ].map((cake) => (
+              <div
+                key={cake.name}
+                className="group relative aspect-square overflow-hidden rounded-2xl shadow-md transition-shadow duration-300 hover:shadow-xl"
+              >
+                <Image
+                  src={cake.src}
+                  alt={cake.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+                  <p className="font-display text-base font-bold leading-tight">
+                    {cake.name}
+                  </p>
+                  <p className="mt-1 text-xs text-white/90">✓ {cake.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <p className="mb-3 text-muted-foreground">
+              Aap bhi yahi banana chahte hain?
+            </p>
+            <LiveClassEnroll
+              batches={activeBatches}
+              buttonLabel="Abhi Register Karein — ₹500 →"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════ SECTION 7 — WHAT YOU'LL LEARN ════════════════ */}
+      <section className="bg-cream py-16">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="mb-10 text-center font-display text-3xl font-bold">
             Is Class Mein Kya Milega?
@@ -269,44 +505,7 @@ export default async function LiveClassesLandingPage({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 5 — PRODUCT GALLERY
-          ══════════════════════════════════════════════════════════ */}
-      <section className="py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl font-bold">Yummmo Ki Creations</h2>
-            <p className="mt-2 text-muted-foreground">
-              Yehi sikhate hain hum — healthy bhi, beautiful bhi
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-            {[
-              { label: "Atta Chocolate Cake", emoji: "🍫", gradient: "from-amber-600 to-orange-700" },
-              { label: "Ragi Banana Bread", emoji: "🍌", gradient: "from-yellow-500 to-amber-600" },
-              { label: "Jaggery Cookies", emoji: "🍪", gradient: "from-orange-400 to-red-500" },
-              { label: "Healthy Red Velvet", emoji: "❤️", gradient: "from-red-500 to-pink-600" },
-              { label: "Oats Muffins", emoji: "🧁", gradient: "from-teal-400 to-green-500" },
-              { label: "Date Walnut Cake", emoji: "🌰", gradient: "from-amber-700 to-yellow-800" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className={`relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} text-white transition-transform duration-300 hover:scale-105`}
-              >
-                <span className="text-5xl">{item.emoji}</span>
-                <p className="mt-3 px-2 text-center text-sm font-semibold text-white/90">
-                  {item.label}
-                </p>
-                <div className="absolute inset-0 bg-black/10" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 6 — HOW IT WORKS
-          ══════════════════════════════════════════════════════════ */}
+      {/* ════════════════ SECTION 8 — HOW IT WORKS ════════════════ */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="mb-10 text-center font-display text-3xl font-bold">
@@ -318,7 +517,7 @@ export default async function LiveClassesLandingPage({
                 number: "01",
                 icon: "📝",
                 title: "Register Karein",
-                desc: "₹500 pay karke apni spot confirm karein. WhatsApp confirmation milega.",
+                desc: "₹500 registration fee pay karke apni spot confirm karein. Baaki class fee workshop ke din pay karni hogi.",
               },
               {
                 number: "02",
@@ -353,10 +552,8 @@ export default async function LiveClassesLandingPage({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 7 — LOCATION + CONTACT
-          ══════════════════════════════════════════════════════════ */}
-      <section className="py-16">
+      {/* ════════════════ SECTION 9 — LOCATION + CONTACT ════════════════ */}
+      <section className="bg-cream py-16">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="mb-8 text-center font-display text-3xl font-bold">
             Kahan Hogi Class?
@@ -415,9 +612,7 @@ export default async function LiveClassesLandingPage({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 8 — FAQ
-          ══════════════════════════════════════════════════════════ */}
+      {/* ════════════════ SECTION 10 — FAQ ════════════════ */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-3xl px-4">
           <h2 className="mb-8 text-center font-display text-3xl font-bold">
@@ -442,24 +637,45 @@ export default async function LiveClassesLandingPage({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          SECTION 9 — FINAL CTA
-          ══════════════════════════════════════════════════════════ */}
-      <section className="bg-gradient-to-r from-primary to-secondary py-16">
-        <div className="mx-auto max-w-3xl px-4 text-center text-white">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">
-            Aaj Hi Book Karein — Seats Limited Hain!
+      {/* ════════════════ SECTION 11 — FINAL CTA WITH BG IMAGE ════════════════ */}
+      <section className="relative overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src={WORKSHOP_3}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-charcoal/80" />
+        </div>
+
+        {/* Content */}
+        <div className="relative mx-auto max-w-3xl px-4 py-20 text-center text-white md:py-24">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+            Limited Seats Available
+          </p>
+          <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
+            Aaj Hi Book Karein.
+            <br />
+            <span className="text-primary">Seats Bhar Jaati Hain.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-white/80">
-            ₹500 mein professional baking seekho — Akta Mahajan ke saath
+          <p className="mx-auto mt-5 max-w-xl text-lg text-white/80">
+            Every batch fills up fast. Don&apos;t miss the chance to bake with
+            Akta Mahajan personally — in an intimate, hands-on setting.
           </p>
           <div className="mt-8">
             <LiveClassEnroll
               batches={activeBatches}
-              buttonLabel="Abhi Register Karein →"
-              buttonClassName="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90 font-bold"
+              buttonLabel="Register Now — ₹500 Only →"
+              buttonClassName="rounded-full bg-primary text-white hover:bg-primary/90 font-bold text-lg px-8 py-6 shadow-2xl shadow-primary/40"
             />
           </div>
+          <p className="mt-4 text-xs text-white/60">
+            ₹500 to register &middot; Balance on class day &middot; All
+            materials provided
+          </p>
         </div>
       </section>
     </div>

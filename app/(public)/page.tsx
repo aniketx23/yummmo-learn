@@ -5,8 +5,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/course-card";
 import { Card, CardContent } from "@/components/ui/card";
-import { AnimatedCounter } from "@/components/animated-counter";
 import { FadeInSection } from "@/components/fade-in-section";
+import { HeroSlideshow } from "@/components/hero-slideshow";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -142,13 +142,14 @@ export default async function HomePage() {
         </div>
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 md:flex-row md:items-center md:py-24">
           <div className="flex-1 space-y-6 animate-[fade-up_0.6s_ease-out_forwards]">
-            <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl">
-              Healthy cooking that still{" "}
-              <span className="text-primary">tastes like home</span>.
+            <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl lg:text-6xl">
+              Where Indulgence Meets{" "}
+              <span className="text-primary">Wellness.</span>
             </h1>
             <p className="max-w-xl text-lg text-muted-foreground">
-              Replace unhealthy ingredients with smart swaps — without losing
-              swad. Built for Indian kitchens, taught with warmth.
+              Premium healthy bakes crafted with oats, ragi, jaggery & millets
+              — preservative-free, eggless & made with love. Ab seekho ghar pe
+              banana — Akta Mahajan ke saath.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button size="pill" className="w-full sm:w-auto" asChild>
@@ -163,22 +164,35 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="relative flex-1 opacity-0 animate-[fade-up_0.6s_ease-out_0.2s_forwards]">
-            <div className="relative mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-3xl border bg-white shadow-xl sm:aspect-square">
-              <Image
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
-                alt="Indian kitchen cooking"
-                fill
-                className="object-cover"
-                style={{ objectPosition: "center top" }}
-                priority
-                sizes="(max-width: 768px) 100vw, 400px"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pb-5 pt-12 text-white">
-                <p className="font-display text-lg font-semibold">
-                  Ghar ka khana, smarter ingredients
-                </p>
-              </div>
-            </div>
+            <HeroSlideshow
+              slides={[
+                {
+                  src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_20230719_183424.jpg",
+                  caption: "Crafted with jaggery. Zero refined sugar.",
+                  tag: "Healthy Dry Cakes",
+                },
+                {
+                  src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/Gemini_Generated_Image_7nhen77nhen77nhe.png",
+                  caption: "Almond atta cake — maida-free perfection.",
+                  tag: "Signature Bakes",
+                },
+                {
+                  src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.41.52_4395e100.jpg",
+                  caption: "Custom designer cakes — made to your vision.",
+                  tag: "Designer Cakes",
+                },
+                {
+                  src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.41.52_ff896845.jpg",
+                  caption: "Cookie bouquets — the sweetest gift.",
+                  tag: "Gifting",
+                },
+                {
+                  src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.55.46_a6dcfacb.jpg",
+                  caption: "Premium hampers — handcrafted with love.",
+                  tag: "Hampers",
+                },
+              ]}
+            />
           </div>
         </div>
       </section>
@@ -237,6 +251,112 @@ export default async function HomePage() {
               </Card>
             </Link>
           ))}
+        </div>
+      </section>
+      </FadeInSection>
+
+      {/* ── Yummmo Products Showcase ─────────────────────────── */}
+      <FadeInSection delay={0.1}>
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mb-10 text-center">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">
+            Our Creations
+          </p>
+          <h2 className="font-display text-3xl font-bold text-charcoal">
+            Crafted with Purpose. Baked with Love.
+          </h2>
+          <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
+            Every product at Yummmo is made with healthier ingredients —
+            no maida, no refined sugar, no preservatives. Just real,
+            wholesome goodness.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {[
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_20230719_183424.jpg",
+              name: "Healthy Dry Cakes",
+              tag: "Sugar-Free",
+              tagColor: "bg-green-100 text-green-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/Gemini_Generated_Image_7nhen77nhen77nhe.png",
+              name: "Almond Atta Cake",
+              tag: "Maida-Free",
+              tagColor: "bg-amber-100 text-amber-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.41.52_4395e100.jpg",
+              name: "Designer Cakes",
+              tag: "Custom Orders",
+              tagColor: "bg-purple-100 text-purple-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.41.52_ff896845.jpg",
+              name: "Cookie Bouquets",
+              tag: "Gifting",
+              tagColor: "bg-red-100 text-red-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.55.46_a3571f8d.jpg",
+              name: "Oat Cookies",
+              tag: "Healthy Snacking",
+              tagColor: "bg-orange-100 text-orange-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.55.46_a6dcfacb.jpg",
+              name: "Premium Hampers",
+              tag: "Corporate Gifts",
+              tagColor: "bg-pink-100 text-pink-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2002.05.09_79b2cc62.jpg",
+              name: "Chocolate Ganache",
+              tag: "Signature Product",
+              tagColor: "bg-yellow-100 text-yellow-700",
+            },
+            {
+              src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/FB_IMG_1640449048164.jpg",
+              name: "Celebration Cakes",
+              tag: "Made to Order",
+              tagColor: "bg-blue-100 text-blue-700",
+            },
+          ].map((item) => (
+            <div
+              key={item.name}
+              className="group relative overflow-hidden rounded-2xl border border-border/60 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+            >
+              <div className="relative aspect-square overflow-hidden">
+                <Image
+                  src={item.src}
+                  alt={item.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 640px) 50vw, 25vw"
+                />
+              </div>
+              <div className="p-3">
+                <span
+                  className={`inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${item.tagColor}`}
+                >
+                  {item.tag}
+                </span>
+                <p className="mt-1 text-sm font-semibold text-charcoal">
+                  {item.name}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            Want to learn to make these at home?
+          </p>
+          <Button asChild size="pill" className="mt-3">
+            <Link href="/courses">Start Learning Free &rarr;</Link>
+          </Button>
         </div>
       </section>
       </FadeInSection>
@@ -311,20 +431,96 @@ export default async function HomePage() {
       </section>
       </FadeInSection>
 
+      {/* ── Signature: Chocolate Ganache ─────────────────────── */}
+      <FadeInSection delay={0.1}>
+      <section className="bg-gradient-to-br from-amber-900 via-yellow-900 to-amber-800 py-16 text-white">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
+          <div className="relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-3xl shadow-2xl md:max-w-full">
+            <Image
+              src="https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2002.05.09_79b2cc62.jpg"
+              alt="Yummmo Signature Chocolate Ganache"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+
+          <div className="space-y-5">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-amber-300">
+                Signature Product
+              </p>
+              <h2 className="mt-2 font-display text-4xl font-bold">
+                The Yummmo Chocolate Ganache
+              </h2>
+            </div>
+
+            <p className="text-lg leading-relaxed text-white/80">
+              Rich, velvety, and indulgent — our signature dark chocolate
+              ganache is crafted without refined sugar. Made with premium dark
+              chocolate, fresh cream, and a touch of jaggery. Available in
+              jars for home use and bulk orders for bakeries.
+            </p>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: "🍫", text: "Premium Dark Chocolate" },
+                { icon: "🌿", text: "No Refined Sugar" },
+                { icon: "✅", text: "Preservative Free" },
+                { icon: "🎁", text: "Available in Jars" },
+              ].map((f) => (
+                <div
+                  key={f.text}
+                  className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2"
+                >
+                  <span>{f.icon}</span>
+                  <span className="text-sm font-medium">{f.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Button
+                asChild
+                className="rounded-full bg-amber-400 font-bold text-amber-900 hover:bg-amber-300"
+              >
+                <Link href="/live-classes">Learn to Make It &rarr;</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-full border-white/40 text-white hover:bg-white/10"
+              >
+                <a
+                  href="https://wa.me/918459999991?text=Hi%2C%20I%27d%20like%20to%20order%20the%20chocolate%20ganache"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  💬 Order on WhatsApp
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+      </FadeInSection>
+
       {/* ── Meet Akta Mahajan (H1) ───────────────────────────── */}
       <FadeInSection delay={0.1}>
       <section className="bg-gradient-to-r from-primary/10 via-cream to-herb/10 py-16">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
-          <div className="relative mx-auto flex w-full max-w-xs items-center justify-center md:max-w-none">
-            <div className="relative h-72 w-72 overflow-hidden rounded-3xl border-4 border-primary/20 bg-gradient-to-br from-primary/20 to-amber-100 shadow-2xl sm:h-80 sm:w-80">
-              <div className="flex h-full w-full items-center justify-center">
-                <span className="font-display text-9xl font-bold text-primary/30">A</span>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/90 p-3 shadow-lg backdrop-blur-sm">
-                <p className="text-center text-xs font-semibold text-charcoal">
-                  🏆 Featured in Zee News &amp; Economic Times
-                </p>
-              </div>
+          <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border-4 border-primary/20 shadow-2xl">
+            <Image
+              src="https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_6884.jpg"
+              alt="Akta Mahajan — Founder, Yummmo"
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
+            <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/90 p-3 shadow-lg backdrop-blur-sm">
+              <p className="text-center text-xs font-semibold text-charcoal">
+                🏆 Featured in Zee News &amp; Economic Times
+              </p>
             </div>
           </div>
 
@@ -342,10 +538,16 @@ export default async function HomePage() {
             </div>
 
             <p className="leading-relaxed text-muted-foreground">
-              10+ saalon ki baking expertise ke saath, Akta ne hundreds of
-              families ko sikhaaya hai ki healthy khana boring nahi hota.
-              Zee News aur Economic Times mein featured, Akta ki classes
-              Noida mein ek movement ban gayi hain — ek cake at a time.
+              Akta Mahajan is the founder of Yummmo — a premium healthy
+              bakery that has redefined indulgence for hundreds of Indian
+              families. Featured in <strong>Zee News</strong> and{" "}
+              <strong>Economic Times</strong>, Akta has built a community
+              around one powerful belief: healthy food should never
+              compromise on taste.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              Ab woh yahi secrets aapko sikhana chahti hain — ghar ki rasoi
+              mein, aapki apni raften mein.
             </p>
 
             <div className="flex flex-wrap gap-2">
@@ -371,34 +573,61 @@ export default async function HomePage() {
       </section>
       </FadeInSection>
 
-      {/* ── Trust Stats (H2) ─────────────────────────────────── */}
+      {/* ── Premium Lifestyle Selling Points ────────────────── */}
       <FadeInSection delay={0.1}>
       <section className="border-y bg-white/70 py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <h2 className="font-display text-3xl font-bold text-charcoal">
-              Why Yummmo Learn?
+              A New Way to Eat. A Better Way to Live.
             </h2>
             <p className="mt-2 text-muted-foreground">
-              Real learning, real results — aapki apni rasoi mein
+              Yummmo is not just a bakery — it&apos;s a movement towards
+              conscious, joyful eating.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { number: "9", label: "Lessons", sub: "In our first course" },
-              { number: "100%", label: "Free", sub: "Start learning today" },
-              { number: "Hindi", label: "& Hinglish", sub: "Easy to understand" },
-              { number: "0g", label: "Maida", sub: "Healthy swaps only" },
+              {
+                icon: "🌾",
+                title: "Real Ingredients Only",
+                desc: "Oats, ragi, millets, jaggery, dates — nothing artificial, nothing refined. Ever.",
+                accent: "border-t-4 border-green-400",
+                bg: "bg-green-50",
+              },
+              {
+                icon: "✨",
+                title: "Indulgence, Reimagined",
+                desc: "Premium taste without the guilt. Because healthy and delicious are not opposites.",
+                accent: "border-t-4 border-amber-400",
+                bg: "bg-amber-50",
+              },
+              {
+                icon: "🏠",
+                title: "Made for Indian Kitchens",
+                desc: "Every recipe designed for your home oven, your local ingredients, your family's palate.",
+                accent: "border-t-4 border-orange-400",
+                bg: "bg-orange-50",
+              },
+              {
+                icon: "🎓",
+                title: "Learn Once, Cook Forever",
+                desc: "Master the art of healthy swaps — skills that transform every meal you make, forever.",
+                accent: "border-t-4 border-purple-400",
+                bg: "bg-purple-50",
+              },
             ].map((stat) => (
               <div
-                key={stat.label}
-                className="rounded-2xl border border-border/60 bg-cream p-6 text-center shadow-sm"
+                key={stat.title}
+                className={`rounded-2xl ${stat.bg} ${stat.accent} p-6 shadow-sm transition-shadow duration-300 hover:shadow-md`}
               >
-                <p className="font-display text-4xl font-bold text-primary">
-                  <AnimatedCounter value={stat.number} />
+                <span className="text-3xl">{stat.icon}</span>
+                <h3 className="mt-3 font-display text-lg font-bold text-charcoal">
+                  {stat.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {stat.desc}
                 </p>
-                <p className="mt-1 font-semibold text-charcoal">{stat.label}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{stat.sub}</p>
               </div>
             ))}
           </div>

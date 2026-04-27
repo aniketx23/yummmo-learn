@@ -169,7 +169,7 @@ export function CoursePurchase({
           disabled={busy}
           onClick={() => void enrollFree()}
         >
-          Enroll free
+          Enroll Free — Start Instantly
         </Button>
       ) : (
         <Button
