@@ -55,6 +55,9 @@ type LiveClass = {
   max_spots: number;
   price: string | number;
   is_active: boolean;
+  location: string | null;
+  location_city: string | null;
+  thumbnail_url: string | null;
   created_at: string;
 };
 
@@ -94,9 +97,20 @@ export function LiveClassesAdmin({
   const router = useRouter();
   const [classes] = useState(initialClasses);
   const [registrations] = useState(initialRegistrations);
-  const [createOpen, setCreateOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingBatch, setEditingBatch] = useState<LiveClass | null>(null);
   const [statusFilter, setStatusFilter] = useState("");
   const [classFilter, setClassFilter] = useState("");
+
+  function openCreate() {
+    setEditingBatch(null);
+    setDialogOpen(true);
+  }
+
+  function openEdit(cls: LiveClass) {
+    setEditingBatch(cls);
+    setDialogOpen(true);
+  }
 
   // Stats
   const totalRegs = registrations.length;
@@ -156,7 +170,7 @@ export function LiveClassesAdmin({
         {/* ── Batches Tab ──────────────────────────────────────── */}
         <TabsContent value="batches" className="space-y-4 pt-4">
           <div className="flex justify-end">
-            <Button onClick={() => setCreateOpen(true)}>
+            <Button onClick={openCreate}>
               <Plus className="mr-2 h-4 w-4" /> New Batch
             </Button>
           </div>
@@ -188,7 +202,11 @@ export function LiveClassesAdmin({
                           {cls.is_active ? "Active" : "Inactive"}
                         </Badge>
                       </div>
-                      <BatchActions cls={cls} onRefresh={() => router.refresh()} />
+                      <BatchActions
+                        cls={cls}
+                        onEdit={() => openEdit(cls)}
+                        onRefresh={() => router.refresh()}
+                      />
                     </CardHeader>
                     <CardContent className="space-y-2 text-sm text-muted-foreground">
                       {cls.description && (
@@ -332,11 +350,16 @@ export function LiveClassesAdmin({
         </TabsContent>
       </Tabs>
 
-      {/* ── Create Batch Dialog ────────────────────────────────── */}
-      <CreateBatchDialog
-        open={createOpen}
-        onOpenChange={setCreateOpen}
-        onCreated={() => router.refresh()}
+      {/* ── Create / Edit Batch Dialog ─────────────────────────── */}
+      <BatchDialog
+        key={editingBatch?.id ?? "new"}
+        open={dialogOpen}
+        onOpenChange={(v) => {
+          setDialogOpen(v);
+          if (!v) setEditingBatch(null);
+        }}
+        existingBatch={editingBatch}
+        onSaved={() => router.refresh()}
       />
     </div>
   );
@@ -345,9 +368,11 @@ export function LiveClassesAdmin({
 // ── Batch Actions Dropdown ──────────────────────────────────────────
 function BatchActions({
   cls,
+  onEdit,
   onRefresh,
 }: {
   cls: LiveClass;
+  onEdit: () => void;
   onRefresh: () => void;
 }) {
   const [busy, setBusy] = useState(false);
@@ -380,6 +405,7 @@ function BatchActions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={onEdit}>Edit</DropdownMenuItem>
         <DropdownMenuItem onClick={() => void toggle()}>
           {cls.is_active ? "Deactivate" : "Activate"}
         </DropdownMenuItem>
@@ -507,27 +533,30 @@ function TimePicker({
   );
 }
 
-// ── Create Batch Dialog ─────────────────────────────────────────────
-function CreateBatchDialog({
+// ── Batch Dialog (create + edit) ────────────────────────────────────
+function BatchDialog({
   open,
   onOpenChange,
-  onCreated,
+  existingBatch,
+  onSaved,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  onCreated: () => void;
+  existingBatch: LiveClass | null;
+  onSaved: () => void;
 }) {
+  const isEdit = !!existingBatch;
   const [busy, setBusy] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [classDate, setClassDate] = useState("");
-  const [startTime, setStartTime] = useState("10:00 AM");
-  const [endTime, setEndTime] = useState("1:00 PM");
-  const [maxSpots, setMaxSpots] = useState("8");
-  const [price, setPrice] = useState("0");
-  const [location, setLocation] = useState("");
-  const [locationCity, setLocationCity] = useState("Noida");
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [title, setTitle] = useState(existingBatch?.title ?? "");
+  const [description, setDescription] = useState(existingBatch?.description ?? "");
+  const [classDate, setClassDate] = useState(existingBatch?.class_date ?? "");
+  const [startTime, setStartTime] = useState(existingBatch?.start_time ?? "10:00 AM");
+  const [endTime, setEndTime] = useState(existingBatch?.end_time ?? "1:00 PM");
+  const [maxSpots, setMaxSpots] = useState(String(existingBatch?.max_spots ?? 8));
+  const [price, setPrice] = useState(String(existingBatch?.price ?? 0));
+  const [location, setLocation] = useState(existingBatch?.location ?? "");
+  const [locationCity, setLocationCity] = useState(existingBatch?.location_city ?? "Noida");
+  const [thumbnailUrl, setThumbnailUrl] = useState(existingBatch?.thumbnail_url ?? "");
   const [uploading, setUploading] = useState(false);
 
   const today = new Date().toISOString().split("T")[0];
@@ -559,18 +588,7 @@ function CreateBatchDialog({
     toast.success("Poster uploaded");
   }
 
-  function reset() {
-    setTitle("");
-    setDescription("");
-    setClassDate("");
-    setStartTime("10:00 AM");
-    setEndTime("1:00 PM");
-    setLocation("");
-    setLocationCity("Noida");
-    setThumbnailUrl("");
-  }
-
-  async function create() {
+  async function save() {
     if (!title.trim()) {
       toast.error("Title is required");
       return;
@@ -580,45 +598,44 @@ function CreateBatchDialog({
       return;
     }
     setBusy(true);
-    const r = await fetch("/api/admin/live-classes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: title.trim(),
-        description: description || null,
-        class_date: classDate,
-        start_time: startTime,
-        end_time: endTime,
-        location: location || null,
-        location_city: locationCity,
-        thumbnail_url: thumbnailUrl || null,
-        max_spots: parseInt(maxSpots) || 8,
-        price: parseFloat(price) || 0,
-      }),
-    });
+    const body = {
+      title: title.trim(),
+      description: description || null,
+      class_date: classDate,
+      start_time: startTime,
+      end_time: endTime,
+      location: location || null,
+      location_city: locationCity || null,
+      thumbnail_url: thumbnailUrl || null,
+      max_spots: parseInt(maxSpots) || 8,
+      price: parseFloat(price) || 0,
+    };
+    const r = await fetch(
+      isEdit ? `/api/admin/live-classes/${existingBatch!.id}` : "/api/admin/live-classes",
+      {
+        method: isEdit ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      }
+    );
     setBusy(false);
     if (r.ok) {
-      toast.success("Batch created!");
+      toast.success(isEdit ? "Batch updated!" : "Batch created!");
       onOpenChange(false);
-      reset();
-      onCreated();
+      onSaved();
     } else {
       const j = (await r.json()) as { error?: string };
-      toast.error(j.error ?? "Failed to create");
+      toast.error(j.error ?? "Failed to save");
     }
   }
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(v) => {
-        onOpenChange(v);
-        if (!v) reset();
-      }}
-    >
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] w-full max-w-lg overflow-y-auto sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle className="font-display">Create New Batch</DialogTitle>
+          <DialogTitle className="font-display">
+            {isEdit ? "Edit Batch" : "Create New Batch"}
+          </DialogTitle>
         </DialogHeader>
         <div className="space-y-4 pb-4">
           <div className="space-y-2">
@@ -741,9 +758,9 @@ function CreateBatchDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={() => void create()} disabled={busy}>
+          <Button onClick={() => void save()} disabled={busy}>
             {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Batch
+            {isEdit ? "Save Changes" : "Create Batch"}
           </Button>
         </DialogFooter>
       </DialogContent>
