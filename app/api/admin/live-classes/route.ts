@@ -48,6 +48,9 @@ export async function POST(request: Request) {
     class_date?: string;
     start_time?: string;
     end_time?: string;
+    location?: string | null;
+    location_city?: string | null;
+    thumbnail_url?: string | null;
     max_spots?: number;
     price?: number;
     is_active?: boolean;
@@ -74,6 +77,9 @@ export async function POST(request: Request) {
       class_date: body.class_date || null,
       start_time: body.start_time || null,
       end_time: body.end_time || null,
+      location: body.location || null,
+      location_city: body.location_city || null,
+      thumbnail_url: body.thumbnail_url || null,
       max_spots: body.max_spots ?? 8,
       price: (body.price ?? 0).toFixed(2),
       is_active: body.is_active ?? true,

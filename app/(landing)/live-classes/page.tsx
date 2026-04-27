@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Accordion,
   AccordionContent,
@@ -120,6 +121,9 @@ export default async function LiveClassesLandingPage({
     end_time: b.end_time as string | null,
     time_slot: b.time_slot as string | null,
     schedule_days: b.schedule_days as string | null,
+    location: (b.location as string | null) ?? null,
+    location_city: (b.location_city as string | null) ?? null,
+    thumbnail_url: (b.thumbnail_url as string | null) ?? null,
     max_spots: b.max_spots as number,
     price: b.price as string | number,
     is_active: b.is_active as boolean,
@@ -147,8 +151,8 @@ export default async function LiveClassesLandingPage({
 
             <p className="text-lg leading-relaxed text-muted-foreground">
               Akta Mahajan ke saath seekho — healthy ingredients, professional
-              techniques, aur woh satisfaction jo tab milta hai jab aap khud
-              apna cake banate hain.
+              techniques, multiple cities mein. Ghar jaao apna khud banaya
+              hua cake lekar.
             </p>
 
             <div className="flex flex-wrap gap-4 text-sm font-medium text-charcoal/80">
@@ -171,7 +175,7 @@ export default async function LiveClassesLandingPage({
             </div>
 
             <p className="text-sm text-muted-foreground">
-              📍 Noida, Sector 121 &nbsp;•&nbsp; ⏰ 3-4 hours per class
+              📍 Noida · Haridwar · Laxmi Nagar &nbsp;•&nbsp; ⏰ Multiple Batches
             </p>
           </div>
 
@@ -321,6 +325,29 @@ export default async function LiveClassesLandingPage({
                     className="overflow-hidden border-primary/20 transition hover:shadow-lg"
                   >
                     <CardContent className="p-0">
+                      {/* Thumbnail at top */}
+                      {batch.thumbnail_url && (
+                        <div className="group/poster relative h-44 w-full overflow-hidden">
+                          <Image
+                            src={batch.thumbnail_url}
+                            alt={`${batch.title} poster`}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover/poster:scale-105"
+                            sizes="(max-width: 640px) 100vw, 50vw"
+                          />
+                          <a
+                            href={batch.thumbnail_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover/poster:opacity-100"
+                          >
+                            <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-charcoal">
+                              🔍 View full poster
+                            </span>
+                          </a>
+                        </div>
+                      )}
+
                       <div className="flex items-center justify-between bg-primary/5 px-6 py-3">
                         <div>
                           {batch.class_date && (
@@ -330,6 +357,17 @@ export default async function LiveClassesLandingPage({
                           )}
                           {timeStr && (
                             <p className="text-xs text-muted-foreground">🕐 {timeStr}</p>
+                          )}
+                          {(batch.location_city || batch.location) && (
+                            <div className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-primary">
+                              <span>📍</span>
+                              <span>{batch.location_city || "Noida"}</span>
+                              {batch.location_city && batch.location_city !== "Noida" && (
+                                <span className="ml-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-bold text-primary">
+                                  NEW CITY
+                                </span>
+                              )}
+                            </div>
                           )}
                         </div>
                         <Badge variant="herb" className="shrink-0">
@@ -354,6 +392,12 @@ export default async function LiveClassesLandingPage({
                         <p className="mt-1 text-center text-xs text-muted-foreground">
                           ₹500 now &middot; Balance on class day
                         </p>
+                        <Link
+                          href={`/live-classes/${batch.id}`}
+                          className="mt-2 block text-center text-xs text-muted-foreground underline underline-offset-2 transition-colors hover:text-primary"
+                        >
+                          View full batch details →
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>

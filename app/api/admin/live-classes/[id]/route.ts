@@ -37,6 +37,9 @@ export async function PUT(
     "class_date",
     "start_time",
     "end_time",
+    "location",
+    "location_city",
+    "thumbnail_url",
     "max_spots",
     "is_active",
   ] as const;

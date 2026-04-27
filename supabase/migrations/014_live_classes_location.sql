@@ -1,0 +1,4 @@
+ALTER TABLE public.live_classes
+ADD COLUMN IF NOT EXISTS location TEXT,
+ADD COLUMN IF NOT EXISTS location_city TEXT,
+ADD COLUMN IF NOT EXISTS thumbnail_url TEXT;

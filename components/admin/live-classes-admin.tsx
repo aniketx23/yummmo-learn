@@ -524,8 +524,22 @@ function CreateBatchDialog({
   const [endTime, setEndTime] = useState("1:00 PM");
   const [maxSpots, setMaxSpots] = useState("8");
   const [price, setPrice] = useState("0");
+  const [location, setLocation] = useState("");
+  const [locationCity, setLocationCity] = useState("Noida");
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
 
   const today = new Date().toISOString().split("T")[0];
+
+  function reset() {
+    setTitle("");
+    setDescription("");
+    setClassDate("");
+    setStartTime("10:00 AM");
+    setEndTime("1:00 PM");
+    setLocation("");
+    setLocationCity("Noida");
+    setThumbnailUrl("");
+  }
 
   async function create() {
     if (!title.trim()) {
@@ -546,6 +560,9 @@ function CreateBatchDialog({
         class_date: classDate,
         start_time: startTime,
         end_time: endTime,
+        location: location || null,
+        location_city: locationCity,
+        thumbnail_url: thumbnailUrl || null,
         max_spots: parseInt(maxSpots) || 8,
         price: parseFloat(price) || 0,
       }),
@@ -554,11 +571,7 @@ function CreateBatchDialog({
     if (r.ok) {
       toast.success("Batch created!");
       onOpenChange(false);
-      setTitle("");
-      setDescription("");
-      setClassDate("");
-      setStartTime("10:00 AM");
-      setEndTime("1:00 PM");
+      reset();
       onCreated();
     } else {
       const j = (await r.json()) as { error?: string };
@@ -567,12 +580,18 @@ function CreateBatchDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        onOpenChange(v);
+        if (!v) reset();
+      }}
+    >
+      <DialogContent className="max-h-[90vh] w-full max-w-lg overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle className="font-display">Create New Batch</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="space-y-4 pb-4">
           <div className="space-y-2">
             <Label>Batch title</Label>
             <Input
@@ -590,6 +609,34 @@ function CreateBatchDialog({
               placeholder="What will students learn in this batch?"
             />
           </div>
+
+          {/* City / Location */}
+          <div className="space-y-1.5">
+            <Label>City</Label>
+            <select
+              value={locationCity}
+              onChange={(e) => setLocationCity(e.target.value)}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              <option value="Noida">Noida</option>
+              <option value="Haridwar">Haridwar</option>
+              <option value="Laxmi Nagar">Laxmi Nagar</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>
+              Full Address / Venue
+              <span className="ml-1 text-xs text-muted-foreground">(optional)</span>
+            </Label>
+            <Input
+              placeholder="e.g. B2 1602, Cleo County, Sector 121, Noida"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
+
           <div className="space-y-2">
             <Label>Class date</Label>
             <Input
@@ -621,6 +668,34 @@ function CreateBatchDialog({
                 placeholder="0"
               />
             </div>
+          </div>
+
+          {/* Thumbnail URL */}
+          <div className="space-y-1.5">
+            <Label>
+              Batch Poster / Thumbnail URL
+              <span className="ml-1 text-xs text-muted-foreground">
+                (optional — paste Supabase URL)
+              </span>
+            </Label>
+            <Input
+              placeholder="https://wexwculvefhficxhbbby.supabase.co/..."
+              value={thumbnailUrl}
+              onChange={(e) => setThumbnailUrl(e.target.value)}
+            />
+            {thumbnailUrl && (
+              <div className="relative mt-2 h-32 w-full overflow-hidden rounded-lg border">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={thumbnailUrl}
+                  alt="Poster preview"
+                  className="h-full w-full object-cover"
+                  onError={(e) => {
+                    (e.currentTarget.parentElement as HTMLDivElement).style.display = "none";
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
         <DialogFooter>
