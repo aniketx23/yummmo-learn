@@ -175,7 +175,7 @@ export default async function LiveClassesLandingPage({
             </div>
 
             <p className="text-sm text-muted-foreground">
-              📍 Noida · Haridwar · Laxmi Nagar &nbsp;•&nbsp; ⏰ Multiple Batches
+              📍 Delhi NCR &nbsp;•&nbsp; ⏰ Multiple Batches
             </p>
           </div>
 

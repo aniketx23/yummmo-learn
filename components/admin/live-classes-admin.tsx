@@ -40,6 +40,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
 
 type LiveClass = {
   id: string;
@@ -527,8 +528,36 @@ function CreateBatchDialog({
   const [location, setLocation] = useState("");
   const [locationCity, setLocationCity] = useState("Noida");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const today = new Date().toISOString().split("T")[0];
+
+  async function uploadPoster(file: File) {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      toast.error("Please log in again to upload");
+      return;
+    }
+    setUploading(true);
+    const path = `${user.id}/batch-${Date.now()}-${file.name}`;
+    const { error } = await supabase.storage
+      .from("course-thumbnails")
+      .upload(path, file, { upsert: true });
+    if (error) {
+      setUploading(false);
+      toast.error(error.message);
+      return;
+    }
+    const { data } = supabase.storage
+      .from("course-thumbnails")
+      .getPublicUrl(path);
+    setThumbnailUrl(data.publicUrl);
+    setUploading(false);
+    toast.success("Poster uploaded");
+  }
 
   function reset() {
     setTitle("");
@@ -613,16 +642,11 @@ function CreateBatchDialog({
           {/* City / Location */}
           <div className="space-y-1.5">
             <Label>City</Label>
-            <select
+            <Input
               value={locationCity}
               onChange={(e) => setLocationCity(e.target.value)}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
-            >
-              <option value="Noida">Noida</option>
-              <option value="Haridwar">Haridwar</option>
-              <option value="Laxmi Nagar">Laxmi Nagar</option>
-              <option value="Other">Other</option>
-            </select>
+              placeholder="e.g. Noida"
+            />
           </div>
 
           <div className="space-y-1.5">
@@ -655,6 +679,8 @@ function CreateBatchDialog({
               <Label>Max spots</Label>
               <Input
                 type="number"
+                inputMode="numeric"
+                className="no-spinner"
                 value={maxSpots}
                 onChange={(e) => setMaxSpots(e.target.value)}
               />
@@ -663,6 +689,8 @@ function CreateBatchDialog({
               <Label>Price (INR, 0 = free)</Label>
               <Input
                 type="number"
+                inputMode="numeric"
+                className="no-spinner"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="0"
@@ -670,30 +698,41 @@ function CreateBatchDialog({
             </div>
           </div>
 
-          {/* Thumbnail URL */}
+          {/* Batch Poster — file upload */}
           <div className="space-y-1.5">
             <Label>
-              Batch Poster / Thumbnail URL
-              <span className="ml-1 text-xs text-muted-foreground">
-                (optional — paste Supabase URL)
-              </span>
+              Batch Poster
+              <span className="ml-1 text-xs text-muted-foreground">(optional)</span>
             </Label>
             <Input
-              placeholder="https://wexwculvefhficxhbbby.supabase.co/..."
-              value={thumbnailUrl}
-              onChange={(e) => setThumbnailUrl(e.target.value)}
+              type="file"
+              accept="image/*"
+              disabled={uploading}
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void uploadPoster(f);
+              }}
             />
-            {thumbnailUrl && (
+            {uploading && (
+              <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                <Loader2 className="h-3 w-3 animate-spin" /> Uploading...
+              </p>
+            )}
+            {thumbnailUrl && !uploading && (
               <div className="relative mt-2 h-32 w-full overflow-hidden rounded-lg border">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={thumbnailUrl}
                   alt="Poster preview"
                   className="h-full w-full object-cover"
-                  onError={(e) => {
-                    (e.currentTarget.parentElement as HTMLDivElement).style.display = "none";
-                  }}
                 />
+                <button
+                  type="button"
+                  onClick={() => setThumbnailUrl("")}
+                  className="absolute right-2 top-2 rounded bg-black/60 px-2 py-1 text-xs text-white hover:bg-black/80"
+                >
+                  Remove
+                </button>
               </div>
             )}
           </div>
