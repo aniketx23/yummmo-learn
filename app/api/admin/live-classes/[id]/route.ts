@@ -51,14 +51,22 @@ export async function PUT(
     patch.price = body.price.toFixed(2);
   }
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("live_classes")
     .update(patch)
-    .eq("id", id);
+    .eq("id", id)
+    .select("id, slug")
+    .maybeSingle();
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
-  return NextResponse.json({ ok: true });
+  if (!data) {
+    return NextResponse.json(
+      { error: "Update did not affect any row (permission or row missing)" },
+      { status: 404 }
+    );
+  }
+  return NextResponse.json({ ok: true, batch: data });
 }
 
 // DELETE — delete a live class

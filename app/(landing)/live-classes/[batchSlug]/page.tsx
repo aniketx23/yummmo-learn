@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { LiveClassEnroll } from "@/components/live-class-enroll";
 import { WhatsAppShare } from "@/components/whatsapp-share";
@@ -65,6 +65,11 @@ export default async function BatchPage({ params }: Props) {
   if (!batchRaw) notFound();
 
   const batch = batchRaw as unknown as Batch;
+
+  // Canonical URL: if batch has a slug and user landed here via UUID, redirect to slug URL
+  if (batch.slug && batchSlug !== batch.slug) {
+    redirect(`/live-classes/${batch.slug}`);
+  }
 
   const dateStr = batch.class_date
     ? new Date(batch.class_date).toLocaleDateString("en-IN", {
