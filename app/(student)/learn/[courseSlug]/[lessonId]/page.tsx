@@ -97,138 +97,152 @@ export default async function LessonPlayerPage({
   const prevAccessible = prev && !isLocked(prev);
   const nextAccessible = next && !isLocked(next);
 
+  // Single-video course (the workshop-tutorial model): no curriculum sidebar.
+  const single = total <= 1;
+
   // Whether the current lesson has a native video (for progress tracker)
   const hasNativeVideo = !!(lesson.video_url && !getYouTubeId(lesson.video_url));
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col bg-cream lg:flex-row">
-      {/* ── Sidebar ──────────────────────────────────────────── */}
-      <aside className="w-full border-b bg-white lg:w-80 lg:border-b-0 lg:border-r">
-        <div className="border-b p-4">
-          <Link
-            href={`/courses/${courseSlug}`}
-            className="text-xs font-medium text-primary hover:underline"
-          >
-            ← Back to course
-          </Link>
-          <h2 className="mt-2 font-display text-lg font-bold leading-snug">
-            {course.title}
-          </h2>
-          <div className="mt-3 space-y-1">
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Progress</span>
-              <span>
-                {completedCount}/{total}
-              </span>
-            </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-              <div
-                className="h-2 rounded-full bg-primary"
-                style={{ width: `${pct}%` }}
-              />
-            </div>
-          </div>
-        </div>
-        <CollapsibleSidebar title="Curriculum">
-        <ScrollArea className="h-[40vh] lg:h-[calc(100vh-12rem)]">
-          <div className="space-y-4 p-3">
-            {(sections ?? []).map((section) => (
-              <div key={section.id}>
-                <p className="px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {section.title}
-                </p>
-                <ul className="space-y-1">
-                  {(lessons ?? [])
-                    .filter((l) => l.section_id === section.id)
-                    .sort((a, b) => a.display_order - b.display_order)
-                    .map((l) => {
-                      const isActive = l.id === lessonId;
-                      const locked = isLocked(l);
-                      const isComplete = done.has(l.id);
-
-                      {/* C9: completion indicators */}
-                      const icon = isComplete ? (
-                        <Check className="h-4 w-4 shrink-0 text-herb" />
-                      ) : isActive ? (
-                        <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
-                      ) : locked ? (
-                        <Lock className="h-4 w-4 shrink-0 text-muted-foreground" />
-                      ) : (
-                        <Circle className="h-4 w-4 shrink-0 text-muted-foreground/40" />
-                      );
-
-                      const row = (
-                        <>
-                          {icon}
-                          <span className="line-clamp-2">{l.title}</span>
-                        </>
-                      );
-
-                      return (
-                        <li key={l.id}>
-                          {locked ? (
-                            <span className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm opacity-50">
-                              {row}
-                            </span>
-                          ) : (
-                            <Link
-                              href={`/learn/${courseSlug}/${l.id}`}
-                              className={cn(
-                                "flex items-center gap-2 rounded-lg px-2 py-2 text-sm hover:bg-muted",
-                                isActive && "bg-primary/10 font-medium text-primary"
-                              )}
-                            >
-                              {row}
-                            </Link>
-                          )}
-                        </li>
-                      );
-                    })}
-                </ul>
+      {/* ── Sidebar (multi-lesson courses only) ──────────────── */}
+      {!single && (
+        <aside className="w-full border-b bg-white lg:w-80 lg:border-b-0 lg:border-r">
+          <div className="border-b p-4">
+            <Link
+              href={`/courses/${courseSlug}`}
+              className="text-xs font-medium text-primary hover:underline"
+            >
+              ← Back to course
+            </Link>
+            <h2 className="mt-2 font-display text-lg font-bold leading-snug">
+              {course.title}
+            </h2>
+            <div className="mt-3 space-y-1">
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>Progress</span>
+                <span>
+                  {completedCount}/{total}
+                </span>
               </div>
-            ))}
+              <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-2 rounded-full bg-primary"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
           </div>
-        </ScrollArea>
-        </CollapsibleSidebar>
-      </aside>
+          <CollapsibleSidebar title="Curriculum">
+            <ScrollArea className="h-[40vh] lg:h-[calc(100vh-12rem)]">
+              <div className="space-y-4 p-3">
+                {(sections ?? []).map((section) => (
+                  <div key={section.id}>
+                    <p className="px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {section.title}
+                    </p>
+                    <ul className="space-y-1">
+                      {(lessons ?? [])
+                        .filter((l) => l.section_id === section.id)
+                        .sort((a, b) => a.display_order - b.display_order)
+                        .map((l) => {
+                          const isActive = l.id === lessonId;
+                          const locked = isLocked(l);
+                          const isComplete = done.has(l.id);
+
+                          const icon = isComplete ? (
+                            <Check className="h-4 w-4 shrink-0 text-herb" />
+                          ) : isActive ? (
+                            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
+                          ) : locked ? (
+                            <Lock className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          ) : (
+                            <Circle className="h-4 w-4 shrink-0 text-muted-foreground/40" />
+                          );
+
+                          const row = (
+                            <>
+                              {icon}
+                              <span className="line-clamp-2">{l.title}</span>
+                            </>
+                          );
+
+                          return (
+                            <li key={l.id}>
+                              {locked ? (
+                                <span className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm opacity-50">
+                                  {row}
+                                </span>
+                              ) : (
+                                <Link
+                                  href={`/learn/${courseSlug}/${l.id}`}
+                                  className={cn(
+                                    "flex items-center gap-2 rounded-lg px-2 py-2 text-sm hover:bg-muted",
+                                    isActive && "bg-primary/10 font-medium text-primary"
+                                  )}
+                                >
+                                  {row}
+                                </Link>
+                              )}
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          </CollapsibleSidebar>
+        </aside>
+      )}
 
       {/* ── Main content ─────────────────────────────────────── */}
       <div className="flex flex-1 flex-col">
-        {/* C6: Previous/Next with clear disabled styling */}
         <div className="border-b bg-white px-4 py-3">
           <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-muted-foreground">
-              Lesson {idx + 1} of {total}
-            </p>
-            <div className="flex gap-2">
-              {prevAccessible ? (
-                <Button variant="outline" size="sm" asChild>
-                  <Link href={`/learn/${courseSlug}/${prev.id}`}>Previous</Link>
-                </Button>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled
-                  className="opacity-50 cursor-not-allowed"
-                >
-                  Previous
-                </Button>
-              )}
-              {nextAccessible ? (
-                <Button size="sm" asChild>
-                  <Link href={`/learn/${courseSlug}/${next.id}`}>Next</Link>
-                </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  disabled
-                  className="opacity-50 cursor-not-allowed"
-                >
-                  Next
-                </Button>
-              )}
-            </div>
+            {single ? (
+              <Link
+                href={`/courses/${courseSlug}`}
+                className="text-sm font-medium text-primary hover:underline"
+              >
+                ← Back to course
+              </Link>
+            ) : (
+              <>
+                <p className="text-sm text-muted-foreground">
+                  Lesson {idx + 1} of {total}
+                </p>
+                <div className="flex gap-2">
+                  {prevAccessible ? (
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href={`/learn/${courseSlug}/${prev.id}`}>Previous</Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled
+                      className="cursor-not-allowed opacity-50"
+                    >
+                      Previous
+                    </Button>
+                  )}
+                  {nextAccessible ? (
+                    <Button size="sm" asChild>
+                      <Link href={`/learn/${courseSlug}/${next.id}`}>Next</Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      disabled
+                      className="cursor-not-allowed opacity-50"
+                    >
+                      Next
+                    </Button>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -240,11 +254,7 @@ export default async function LessonPlayerPage({
             <YouTubePlayer url={lesson.video_url} />
           ) : lesson.video_url ? (
             <div className="aspect-video w-full overflow-hidden rounded-lg bg-[#0f0f0f]">
-              <video
-                src={lesson.video_url}
-                controls
-                className="h-full w-full"
-              />
+              <video src={lesson.video_url} controls className="h-full w-full" />
             </div>
           ) : (
             <div className="flex aspect-video items-center justify-center rounded-lg bg-cream text-center">
@@ -254,7 +264,6 @@ export default async function LessonPlayerPage({
             </div>
           )}
 
-          {/* Native video progress tracker */}
           {hasNativeVideo && (
             <LessonProgressTracker
               lessonId={lesson.id}
@@ -263,17 +272,20 @@ export default async function LessonPlayerPage({
             />
           )}
 
-          {/* C8: Mark complete moved below video, above title */}
           <MarkLessonComplete
             lessonId={lesson.id}
             courseId={course.id}
             initiallyCompleted={done.has(lesson.id)}
-            nextLessonUrl={nextAccessible ? `/learn/${courseSlug}/${next.id}` : undefined}
+            nextLessonUrl={
+              !single && nextAccessible
+                ? `/learn/${courseSlug}/${next.id}`
+                : undefined
+            }
           />
 
-          <h1 className="font-display text-2xl font-bold">{lesson.title}</h1>
+          <h1 className="font-display text-2xl font-bold">{course.title}</h1>
 
-          {/* C7: Description, Chef Tips, and Attachments via LessonTabs */}
+          {/* Description, Chef Tips, and Recipe PDF via LessonTabs */}
           <LessonTabs
             description={lesson.description ?? null}
             tips={lesson.tips ?? null}

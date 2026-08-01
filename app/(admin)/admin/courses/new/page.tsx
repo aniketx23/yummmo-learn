@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { CourseWizard } from "@/components/admin/course-wizard";
+import { CourseForm } from "@/components/admin/course-form";
 
 export default async function NewCoursePage() {
   const supabase = await createClient();
@@ -10,8 +10,8 @@ export default async function NewCoursePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl font-bold">New course</h1>
-      <CourseWizard categories={categories ?? []} />
+      <h1 className="font-display text-3xl font-bold">New cake tutorial</h1>
+      <CourseForm categories={categories ?? []} />
     </div>
   );
 }

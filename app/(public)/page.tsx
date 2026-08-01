@@ -355,7 +355,7 @@ export default async function HomePage() {
             Want to learn to make these at home?
           </p>
           <Button asChild size="pill" className="mt-3">
-            <Link href="/courses">Start Learning Free &rarr;</Link>
+            <Link href="/courses">Browse Tutorials &rarr;</Link>
           </Button>
         </div>
       </section>

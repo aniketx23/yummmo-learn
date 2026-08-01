@@ -9,6 +9,7 @@ import {
   Loader2,
   MoreHorizontal,
   Pencil,
+  KeyRound,
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -94,6 +95,12 @@ export function AdminCourseActions({
             <Link href={`/admin/courses/${courseId}/edit`}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/admin/courses/${courseId}/access`}>
+              <KeyRound className="mr-2 h-4 w-4" />
+              Manage access
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
