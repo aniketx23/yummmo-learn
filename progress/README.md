@@ -46,6 +46,7 @@ This folder is the **living changelog** for the project. Anyone onboarding to th
 | [SESSION-2026-08-01-43-workshop-tutorial-pivot.md](./SESSION-2026-08-01-43-workshop-tutorial-pivot.md) | Pivot to workshop model: payments off, single-video courses, admin-granted access |
 | [SESSION-2026-08-02-44-admin-simplification.md](./SESSION-2026-08-02-44-admin-simplification.md) | Admin dashboard simplified to grant-access + new tutorial; purged old test courses/enrollments |
 | [SESSION-2026-08-02-45-home-my-tutorials.md](./SESSION-2026-08-02-45-home-my-tutorials.md) | Homepage "Your tutorials" section under hero — one click from home to the video |
+| [SESSION-2026-08-02-46-funnel-sharing-homepage-fixes.md](./SESSION-2026-08-02-46-funnel-sharing-homepage-fixes.md) | Audit fixes: unblock workshop enquiry, notify on registration, real OG cards, referral share, workshop-first homepage, remove fabricated claims |
 
 ## PRD source of truth
 
