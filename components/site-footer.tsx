@@ -9,28 +9,24 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
             Yummmo Learn
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Healthy cooking courses in Hindi & Hinglish — swad bhi, sehat bhi.
+            Akta Mahajan ke saath healthy baking — in-person workshops aur
+            recorded tutorials.
           </p>
           <p className="mt-2 text-xs text-muted-foreground">
-            Featured in Zee News & Economic Times
+            Eggless &middot; No maida &middot; Preservative-free
           </p>
         </div>
         <div className="text-sm">
           <p className="font-semibold">Explore</p>
           <ul className="mt-2 space-y-2 text-muted-foreground">
             <li>
-              <Link href="/courses" className="hover:text-primary">
-                All courses
-              </Link>
-            </li>
-            <li>
-              <Link href="/categories/healthy-swaps" className="hover:text-primary">
-                Healthy swaps
-              </Link>
-            </li>
-            <li>
               <Link href="/live-classes" className="hover:text-primary">
-                Live classes
+                Baking workshops
+              </Link>
+            </li>
+            <li>
+              <Link href="/courses" className="hover:text-primary">
+                Recorded tutorials
               </Link>
             </li>
             <li>
@@ -77,28 +73,20 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
           <ul className="mt-2 space-y-2 text-muted-foreground">
             <li>
               <a
-                href="https://wa.me/918459999991"
+                href="https://wa.me/918459999991?text=Namaste%21%20Main%20aapki%20baking%20workshop%20ke%20baare%20mein%20jaanna%20chahta%2Fchahti%20hoon."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 transition-colors hover:text-foreground"
               >
-                💬 WhatsApp Us
+                💬 Workshop ke liye WhatsApp karein
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="tel:+918459999991"
                 className="flex items-center gap-2 transition-colors hover:text-foreground"
               >
-                📸 Instagram
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center gap-2 transition-colors hover:text-foreground"
-              >
-                ▶️ YouTube
+                📞 +91 84599 99991
               </a>
             </li>
           </ul>

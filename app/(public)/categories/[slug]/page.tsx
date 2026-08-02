@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CourseCard } from "@/components/course-card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -97,7 +99,33 @@ export default async function CategoryPage({
         </p>
       </div>
       {list.length === 0 ? (
-        <p className="text-muted-foreground">No published courses yet.</p>
+        <Card className="border-primary/20 bg-cream">
+          <CardContent className="flex flex-col items-center gap-4 px-6 py-10 text-center">
+            <h2 className="font-display text-2xl font-bold text-charcoal">
+              Is category mein abhi koi tutorial nahi hai
+            </h2>
+            <p className="max-w-xl text-base text-muted-foreground">
+              Yummmo Learn ke recipe tutorials Akta ki in-person workshop
+              attend karne ke baad milte hain. Workshop join kijiye — uske baad
+              recording aur recipe PDF aapke account mein add kar di jaati hai.
+            </p>
+            <div className="mt-2 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+              <Button asChild size="lg" className="w-full sm:w-auto">
+                <Link href="/live-classes">
+                  Workshop ke baare mein jaanein
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto"
+              >
+                <Link href="/courses">Saare tutorials dekhein</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (

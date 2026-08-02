@@ -16,6 +16,10 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const siteUrl = (
+  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+).replace(/\/+$/, "");
+
 export const metadata: Metadata = {
   title: {
     default: "Yummmo Learn — Healthy Cooking Courses",
@@ -23,9 +27,30 @@ export const metadata: Metadata = {
   },
   description:
     "Hindi + Hinglish healthy cooking courses. Swad bhi, sehat bhi — learn ingredient swaps that taste amazing.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-  ),
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "Yummmo Learn",
+    title: "Yummmo Learn — Healthy Cooking Courses",
+    description:
+      "Hindi + Hinglish healthy cooking courses. Swad bhi, sehat bhi — learn ingredient swaps that taste amazing.",
+    images: [
+      {
+        url: "/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Yummmo Learn — healthy baking workshops with Akta Mahajan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yummmo Learn — Healthy Cooking Courses",
+    description:
+      "Hindi + Hinglish healthy cooking courses. Swad bhi, sehat bhi — learn ingredient swaps that taste amazing.",
+    images: ["/og-default.jpg"],
+  },
 };
 
 export const viewport: Viewport = {

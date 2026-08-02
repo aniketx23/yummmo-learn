@@ -5,15 +5,16 @@ import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Calendar,
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
   Clock,
   IndianRupee,
   Loader2,
+  MessageCircle,
   Users,
 } from "lucide-react";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,7 +44,14 @@ type Batch = {
 
 type FormData = Record<string, string>;
 
-const STORAGE_KEY = "pending_live_class_reg";
+type Confirmation = {
+  name: string;
+  phone: string;
+  batchTitle: string;
+};
+
+/** Akta's WhatsApp business number — the real confirmation channel. */
+const WHATSAPP_NUMBER = "918459999991";
 
 const personalSteps = [
   {
@@ -59,19 +67,6 @@ const personalSteps = [
     placeholder: "98765 43210",
     type: "tel" as const,
   },
-  {
-    key: "age",
-    label: "Aapki age?",
-    placeholder: "e.g. 32",
-    type: "number" as const,
-  },
-  {
-    key: "gender",
-    label: "Gender",
-    placeholder: "",
-    type: "select" as const,
-    options: ["Female", "Male", "Other", "Prefer not to say"],
-  },
 ];
 
 export function LiveClassEnroll({
@@ -79,14 +74,12 @@ export function LiveClassEnroll({
   buttonLabel,
   buttonClassName,
   preSelectedBatchId,
-  autoRegister,
   triggerProps,
 }: {
   batches?: Batch[];
   buttonLabel?: string;
   buttonClassName?: string;
   preSelectedBatchId?: string;
-  autoRegister?: boolean;
   triggerProps?: Record<string, string>;
 }) {
   const router = useRouter();
@@ -96,34 +89,12 @@ export function LiveClassEnroll({
   const [selectedBatch, setSelectedBatch] = useState<Batch | null>(null);
   const [expandedBatch, setExpandedBatch] = useState<Batch | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
 
   const totalSteps = personalSteps.length + 1; // +1 for batch selection
   const isOnBatchStep = step === personalSteps.length;
   const currentPersonalStep = step < personalSteps.length ? personalSteps[step] : null;
   const currentValue = currentPersonalStep ? data[currentPersonalStep.key] ?? "" : "";
-
-  // Auto-register from localStorage after login redirect
-  useEffect(() => {
-    if (!autoRegister) return;
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
-    try {
-      const pending = JSON.parse(saved) as { data: FormData; batchId: string };
-      setData(pending.data);
-      const batch = batches.find((b) => b.id === pending.batchId);
-      if (batch) setSelectedBatch(batch);
-      localStorage.removeItem(STORAGE_KEY);
-      setOpen(true);
-      // Auto-submit after a short delay
-      setTimeout(() => {
-        void submitRegistration(pending.data, pending.batchId);
-      }, 500);
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoRegister]);
 
   // Pre-select batch if provided
   useEffect(() => {
@@ -142,8 +113,8 @@ export function LiveClassEnroll({
     }
     if (currentPersonalStep.key === "phone") {
       const digits = val.replace(/\D/g, "");
-      if (!/^\d{10}$/.test(digits)) {
-        toast.error("10-digit phone number daalein");
+      if (!/^\d{10,15}$/.test(digits)) {
+        toast.error("Sahi WhatsApp number daalein (10 digit)");
         return false;
       }
     }
@@ -170,65 +141,55 @@ export function LiveClassEnroll({
     setExpandedBatch(null);
   }
 
-  async function submitRegistration(formData: FormData, batchId: string) {
-    setSubmitting(true);
-    const phone = (formData.phone ?? "").replace(/\D/g, "");
-    const r = await fetch("/api/live-classes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        live_class_id: batchId,
-        full_name: formData.name,
-        phone,
-        age: formData.age ? parseInt(formData.age) : null,
-        gender: formData.gender || null,
-      }),
-    });
-    setSubmitting(false);
-    if (r.ok) {
-      toast.success("Registration ho gaya! Details jaldi WhatsApp pe aayenge.");
-      setOpen(false);
-      resetForm();
-      router.refresh();
-    } else {
-      const j = (await r.json()) as { error?: string };
-      toast.error(j.error ?? "Registration fail ho gayi. Dobara try karein.");
-    }
-  }
-
   async function handleSubmit() {
     if (!selectedBatch) {
       toast.error("Pehle ek batch choose karein");
       return;
     }
 
-    // Check if user is logged in
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      // Save to localStorage and show login prompt
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ data, batchId: selectedBatch.id })
-      );
-      setShowLogin(true);
+    const name = (data.name ?? "").trim();
+    const phone = (data.phone ?? "").replace(/\D/g, "");
+    if (!name || !/^\d{10,15}$/.test(phone)) {
+      toast.error("Naam aur WhatsApp number sahi bharein");
+      setStep(0);
       return;
     }
 
-    await submitRegistration(data, selectedBatch.id);
+    setSubmitting(true);
+    try {
+      const r = await fetch("/api/live-classes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          live_class_id: selectedBatch.id,
+          full_name: name,
+          phone,
+        }),
+      });
+
+      if (r.ok) {
+        setConfirmation({ name, phone, batchTitle: selectedBatch.title });
+        toast.success("Registration mil gaya! Ab WhatsApp par confirm kar dein.");
+      } else {
+        // A dropped 4G connection must never look like a silent failure.
+        const j = (await r.json().catch(() => ({}))) as { error?: string };
+        toast.error(j.error ?? "Registration fail ho gayi. Dobara try karein.");
+      }
+    } catch {
+      toast.error("Network issue. Dobara try karein ya WhatsApp par message karein.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  async function loginWithGoogle() {
-    const supabase = createClient();
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/live-classes?auto_register=1`,
-      },
-    });
+  function whatsappConfirmUrl(c: Confirmation) {
+    const text = [
+      "Namaste! Maine workshop ke liye register kiya hai.",
+      `Name: ${c.name}`,
+      `Phone: ${c.phone}`,
+      `Batch: ${c.batchTitle}`,
+    ].join("\n");
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
   }
 
   function resetForm() {
@@ -236,7 +197,7 @@ export function LiveClassEnroll({
     setData({});
     setSelectedBatch(null);
     setExpandedBatch(null);
-    setShowLogin(false);
+    setConfirmation(null);
   }
 
   function formatBatchTime(batch: Batch) {
@@ -255,7 +216,14 @@ export function LiveClassEnroll({
       open={open}
       onOpenChange={(v) => {
         setOpen(v);
-        if (!v) resetForm();
+        if (!v) {
+          const registered = confirmation !== null;
+          resetForm();
+          // Refresh spots-left counts only after the dialog is gone —
+          // refreshing while it is open remounts the tree and kills the
+          // success screen before the user can tap WhatsApp.
+          if (registered) router.refresh();
+        }
       }}
     >
       <DialogTrigger asChild>
@@ -266,9 +234,9 @@ export function LiveClassEnroll({
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-display text-xl">
-            Live Class Registration
+            {confirmation ? "Ho gaya!" : "Live Class Registration"}
           </DialogTitle>
-          {!showLogin && (
+          {!confirmation && (
             <p className="text-xs text-muted-foreground">
               Step {step + 1} of {totalSteps}
             </p>
@@ -276,7 +244,7 @@ export function LiveClassEnroll({
         </DialogHeader>
 
         {/* Progress bar */}
-        {!showLogin && (
+        {!confirmation && (
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
             <div
               className="h-1.5 rounded-full bg-primary transition-all"
@@ -287,40 +255,46 @@ export function LiveClassEnroll({
           </div>
         )}
 
-        {/* ── Login prompt (shown after form fill for guests) ── */}
-        {showLogin ? (
-          <div className="space-y-4 py-4 text-center">
+        {/* ── Success screen ────────────────────────────── */}
+        {confirmation ? (
+          <div className="space-y-5 py-2 text-center">
             <div className="space-y-2">
+              <CheckCircle2 className="mx-auto h-12 w-12 text-herb" />
               <p className="font-display text-lg font-semibold">
-                Almost done!
+                Registration mil gaya, {confirmation.name.split(" ")[0]}!
               </p>
               <p className="text-sm text-muted-foreground">
-                Registration complete karne ke liye login karein — sirf 10
-                second lagenge!
+                Bas ek aakhri step — WhatsApp par confirm kar dein. Akta wahin
+                par batch ki details aur location bhej dengi.
               </p>
             </div>
-            <div className="space-y-3">
-              <Button
-                className="w-full"
-                onClick={() => void loginWithGoogle()}
-              >
-                Continue with Google
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full"
-                asChild
-              >
-                <a href={`/auth/login?next=/live-classes?auto_register=1`}>
-                  Login with Email
-                </a>
-              </Button>
+
+            <a
+              href={whatsappConfirmUrl(confirmation)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#1ebe5a]"
+            >
+              <MessageCircle className="h-5 w-5" />
+              WhatsApp par confirm karein
+            </a>
+
+            <div className="rounded-lg border bg-muted/40 p-3 text-left text-xs text-muted-foreground">
+              <p>
+                <span className="font-medium text-foreground">Batch:</span>{" "}
+                {confirmation.batchTitle}
+              </p>
+              <p>
+                <span className="font-medium text-foreground">Number:</span>{" "}
+                {confirmation.phone}
+              </p>
             </div>
+
             <button
-              onClick={() => setShowLogin(false)}
+              onClick={() => setOpen(false)}
               className="text-xs text-muted-foreground hover:text-primary"
             >
-              ← Back to form
+              Band karein
             </button>
           </div>
         ) : isOnBatchStep ? (
@@ -462,53 +436,29 @@ export function LiveClassEnroll({
               )}
             </div>
 
-            {currentPersonalStep?.type === "select" ? (
-              <div className="space-y-2">
-                {currentPersonalStep.options?.map((opt) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() =>
-                      setData((d) => ({
-                        ...d,
-                        [currentPersonalStep.key]: opt,
-                      }))
-                    }
-                    className={`w-full rounded-lg border px-4 py-3 text-left text-sm transition ${
-                      currentValue === opt
-                        ? "border-primary bg-primary/10 font-medium text-primary"
-                        : "hover:bg-muted"
-                    }`}
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <Input
-                type={currentPersonalStep?.type ?? "text"}
-                placeholder={currentPersonalStep?.placeholder}
-                value={currentValue}
-                onChange={(e) =>
-                  setData((d) => ({
-                    ...d,
-                    [currentPersonalStep!.key]: e.target.value,
-                  }))
+            <Input
+              type={currentPersonalStep?.type ?? "text"}
+              placeholder={currentPersonalStep?.placeholder}
+              value={currentValue}
+              onChange={(e) =>
+                setData((d) => ({
+                  ...d,
+                  [currentPersonalStep!.key]: e.target.value,
+                }))
+              }
+              className="text-base"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  next();
                 }
-                className="text-base"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    next();
-                  }
-                }}
-              />
-            )}
+              }}
+            />
           </div>
         )}
 
         {/* ── Navigation buttons ──────────────────────── */}
-        {!showLogin && !expandedBatch && (
+        {!confirmation && !expandedBatch && (
           <div className="flex justify-between">
             <Button variant="ghost" onClick={back} disabled={step === 0}>
               <ChevronLeft className="mr-1 h-4 w-4" />

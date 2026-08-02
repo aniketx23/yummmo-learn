@@ -2,10 +2,14 @@ import type { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const base = (
+    process.env.NEXT_PUBLIC_APP_URL || "https://yummmo-learn.vercel.app"
+  ).replace(/\/+$/, "");
   const staticUrls: MetadataRoute.Sitemap = [
     { url: base, lastModified: new Date() },
+    { url: `${base}/live-classes`, lastModified: new Date() },
     { url: `${base}/courses`, lastModified: new Date() },
+    { url: `${base}/blog`, lastModified: new Date() },
   ];
 
   try {

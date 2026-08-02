@@ -9,9 +9,10 @@ import { getYouTubeId } from "@/lib/video";
 import { LessonTabs } from "@/components/lesson-tabs";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Check, Circle, Lock } from "lucide-react";
+import { Check, Circle, Heart, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CollapsibleSidebar } from "@/components/collapsible-sidebar";
+import { WhatsAppShare } from "@/components/whatsapp-share";
 
 type Resource = { type: string; name: string; url: string };
 
@@ -102,6 +103,13 @@ export default async function LessonPlayerPage({
 
   // Whether the current lesson has a native video (for progress tracker)
   const hasNativeVideo = !!(lesson.video_url && !getYouTubeId(lesson.video_url));
+
+  // Referral share always points at the PUBLIC workshop page — the lesson URL
+  // is access-gated, so sending it to a friend is a dead end.
+  const appBase = (
+    process.env.NEXT_PUBLIC_APP_URL || "https://yummmo-learn.vercel.app"
+  ).replace(/\/+$/, "");
+  const referralMessage = `Maine abhi Akta Mahajan ki "${course.title}" recipe seekhi — bina maida, bina refined sugar. Aap bhi unki workshop try karo: ${appBase}/live-classes`;
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col bg-cream lg:flex-row">
@@ -291,6 +299,32 @@ export default async function LessonPlayerPage({
             tips={lesson.tips ?? null}
             attachments={(lesson.attachments as Resource[]) ?? []}
           />
+
+          {/* ── Refer a friend (after the watch, at the moment of delight) ── */}
+          <div className="rounded-2xl border border-herb/20 bg-herb/5 p-5 sm:p-6">
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-herb/15 text-herb">
+                <Heart className="h-5 w-5" />
+              </span>
+              <div className="min-w-0">
+                <h2 className="font-display text-lg font-bold leading-snug text-charcoal sm:text-xl">
+                  Pasand aaya? Doston ko bhi bataiye
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Aapke jaise hi koi ghar pe healthy baking seekhna chahta hoga.
+                  Ek tap mein unhe Akta ki workshop ke baare mein bata dijiye.
+                </p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <WhatsAppShare
+                title={course.title}
+                message={referralMessage}
+                label="Dost ko WhatsApp karein"
+                className="w-full px-5 py-3 text-base sm:w-auto"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

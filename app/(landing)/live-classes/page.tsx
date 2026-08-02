@@ -17,11 +17,28 @@ import { formatDate } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Live Baking Classes by Akta Mahajan | Yummmo",
   description:
-    "Ghar pe seekho professional baking — healthy ingredients ke saath. Noida mein limited seats. ₹500 only.",
+    "Akta Mahajan ke saath hands-on baking workshop — chhoti batch, healthy ingredients, eggless. Recipe PDF aur video recording bhi milti hai.",
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "Yummmo Learn",
     title: "Live Baking Classes by Akta Mahajan | Yummmo",
     description:
-      "Hands-on baking classes in Noida. Small batches, healthy recipes, personal attention. ₹500 only.",
+      "Hands-on baking workshop with Akta Mahajan. Small batches, healthy eggless recipes, personal attention. Recipe PDF + video recording included.",
+    images: [
+      {
+        url: "/og-live-classes.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hands-on healthy baking workshop with Akta Mahajan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Live Baking Classes by Akta Mahajan | Yummmo",
+    description:
+      "Hands-on baking workshop with Akta Mahajan. Small batches, healthy eggless recipes, personal attention. Recipe PDF + video recording included.",
     images: ["/og-live-classes.jpg"],
   },
 };
@@ -94,17 +111,10 @@ const marqueeItems = [
   "👩‍🍳 Akta is the best teacher",
   "🏠 Took my cake home same day",
   "✨ Worth every rupee",
-  "📍 Best thing in Noida",
+  "✨ Chhoti batch, poora attention",
 ];
 
-export default async function LiveClassesLandingPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const sp = await searchParams;
-  const autoRegister = sp.auto_register === "1";
-
+export default async function LiveClassesLandingPage() {
   const supabase = await createClient();
   const { data: batches } = await supabase
     .from("live_classes")
@@ -166,7 +176,6 @@ export default async function LiveClassesLandingPage({
               <LiveClassEnroll
                 batches={activeBatches}
                 buttonLabel="Register Now — ₹500 →"
-                autoRegister={autoRegister}
                 triggerProps={{ "data-register-trigger": "" }}
               />
               <p className="mt-2 max-w-md text-xs text-muted-foreground">
@@ -241,7 +250,7 @@ export default async function LiveClassesLandingPage({
             </div>
             {/* Floating years badge */}
             <div className="absolute -right-2 top-4 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-primary text-white shadow-xl">
-              <span className="font-display text-2xl font-bold leading-none">10+</span>
+              <span className="font-display text-2xl font-bold leading-none">25+</span>
               <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider">
                 Years
               </span>
@@ -258,10 +267,10 @@ export default async function LiveClassesLandingPage({
             </h2>
 
             <p className="leading-relaxed text-muted-foreground">
-              Akta Mahajan has spent over a decade perfecting the art of
-              healthy baking. As the founder of Yummmo — a premium healthy
-              bakery featured in Zee News and Economic Times — she has
-              redefined what indulgence means for Indian families.
+              Akta Mahajan ne kabhi culinary school nahi dekha — 25+ saal apni
+              ghar ki rasoi mein seekha. 2017 mein unke bade bachche ka weight
+              120 kg tha; khaane aur lifestyle badal kar teen saal mein woh
+              54 kg par aa gaye.
             </p>
 
             <p className="leading-relaxed text-muted-foreground">
@@ -272,16 +281,16 @@ export default async function LiveClassesLandingPage({
 
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700">
-                🏆 Zee News Featured
+                👩‍🍳 25+ saal home baking
               </span>
               <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
-                📰 Economic Times
+                🎓 Self-taught, ghar se seekha
               </span>
               <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-700">
-                👩‍🍳 100+ Students Trained
+                🌱 Eggless &amp; preservative-free
               </span>
               <span className="rounded-full border border-purple-200 bg-purple-50 px-3 py-1.5 text-xs font-semibold text-purple-700">
-                🎂 Noida&apos;s #1 Baking Class
+                🍯 Gud aur dates — no refined sugar
               </span>
             </div>
           </div>
@@ -633,7 +642,7 @@ export default async function LiveClassesLandingPage({
                 <div className="space-y-3">
                   <p className="flex items-center gap-2">
                     <span>💰</span>
-                    <span className="font-semibold">₹500 per class</span>
+                    <span className="font-semibold">₹500 se spot confirm</span>
                   </p>
                   <p className="flex items-center gap-2">
                     <span>⏰</span>

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import {
   Bell,
   BookOpen,
-  ChefHat,
   Home,
   LayoutDashboard,
   LogIn,
@@ -62,8 +61,8 @@ export function SiteNav({ email, role, avatarUrl }: Props) {
     <div className="flex items-center gap-2">
       {/* ── Desktop nav (lg and above) ──────────────────────── */}
       <nav className="hidden items-center gap-1 lg:flex">
-        <DesktopLink href="/courses">Courses</DesktopLink>
-        <DesktopLink href="/live-classes">Live Classes</DesktopLink>
+        <DesktopLink href="/live-classes">Workshops</DesktopLink>
+        <DesktopLink href="/courses">Tutorials</DesktopLink>
         <DesktopLink href="/blog">Blog</DesktopLink>
       </nav>
 
@@ -156,19 +155,16 @@ export function SiteNav({ email, role, avatarUrl }: Props) {
             <NavLink href="/" icon={Home} onClick={() => setOpen(false)}>
               Home
             </NavLink>
-            <NavLink href="/courses" icon={BookOpen} onClick={() => setOpen(false)}>
-              All Courses
-            </NavLink>
             <Link
               href="/live-classes"
               onClick={() => setOpen(false)}
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               <span>🎂</span>
-              Live Classes
+              Baking Workshops
             </Link>
-            <NavLink href="/categories/baking" icon={ChefHat} onClick={() => setOpen(false)}>
-              Categories
+            <NavLink href="/courses" icon={BookOpen} onClick={() => setOpen(false)}>
+              Recorded Tutorials
             </NavLink>
             <NavLink href="/blog" icon={Newspaper} onClick={() => setOpen(false)}>
               Blog

@@ -20,12 +20,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .eq("is_published", true)
     .maybeSingle();
   if (!data) return { title: "Course" };
+  const image = data.thumbnail_url || "/og-default.jpg";
   return {
     title: data.title,
     description: data.short_description ?? undefined,
-    openGraph: data.thumbnail_url
-      ? { images: [{ url: data.thumbnail_url }] }
-      : undefined,
+    openGraph: {
+      type: "article",
+      title: data.title,
+      description: data.short_description ?? undefined,
+      images: [{ url: image, width: 1200, height: 630, alt: data.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data.title,
+      description: data.short_description ?? undefined,
+      images: [image],
+    },
   };
 }
 

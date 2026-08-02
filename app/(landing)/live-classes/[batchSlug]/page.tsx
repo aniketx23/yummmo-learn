@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { LiveClassEnroll } from "@/components/live-class-enroll";
 import { WhatsAppShare } from "@/components/whatsapp-share";
@@ -11,7 +12,7 @@ type Props = { params: Promise<{ batchSlug: string }> };
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-async function findBatch(supabase: Awaited<ReturnType<typeof createClient>>, key: string) {
+async function findBatch(supabase: SupabaseClient, key: string) {
   const isUuid = UUID_RE.test(key);
   const query = supabase
     .from("live_classes")
@@ -30,12 +31,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     | { title: string; description: string | null; thumbnail_url: string | null }
     | null;
   if (!batch) return { title: "Batch" };
+  const image = batch.thumbnail_url || "/og-live-classes.jpg";
   return {
     title: `${batch.title} | Yummmo Live Class`,
     description: batch.description ?? undefined,
-    openGraph: batch.thumbnail_url
-      ? { images: [{ url: batch.thumbnail_url }] }
-      : undefined,
+    openGraph: {
+      type: "article",
+      locale: "en_IN",
+      siteName: "Yummmo Learn",
+      title: `${batch.title} | Yummmo Live Class`,
+      description: batch.description ?? undefined,
+      images: [{ url: image, width: 1200, height: 630, alt: batch.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${batch.title} | Yummmo Live Class`,
+      description: batch.description ?? undefined,
+      images: [image],
+    },
   };
 }
 
@@ -257,10 +270,10 @@ export default async function BatchPage({ params }: Props) {
             <div>
               <p className="font-bold text-charcoal">Akta Mahajan</p>
               <p className="text-sm text-muted-foreground">
-                Founder, Yummmo · 10+ Years Experience
+                Self-taught baker · 25+ saal ki ghar ki kitchen
               </p>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                Featured in Zee News &amp; Economic Times
+                Eggless · No maida · Preservative-free
               </p>
             </div>
           </div>
