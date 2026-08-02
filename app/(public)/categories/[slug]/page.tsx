@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = cat?.name ?? slug;
   return {
     title: `${name} Courses`,
-    description: `Healthy ${name.toLowerCase()} courses in Hindi + Hinglish. Learn smart ingredient swaps.`,
+    description: `Healthy ${name.toLowerCase()} courses in simple, easy English. Learn smart ingredient swaps.`,
   };
 }
 
@@ -102,17 +102,17 @@ export default async function CategoryPage({
         <Card className="border-primary/20 bg-cream">
           <CardContent className="flex flex-col items-center gap-4 px-6 py-10 text-center">
             <h2 className="font-display text-2xl font-bold text-charcoal">
-              Is category mein abhi koi tutorial nahi hai
+              No tutorials in this category yet
             </h2>
             <p className="max-w-xl text-base text-muted-foreground">
-              Yummmo Learn ke recipe tutorials Akta ki in-person workshop
-              attend karne ke baad milte hain. Workshop join kijiye — uske baad
-              recording aur recipe PDF aapke account mein add kar di jaati hai.
+              Yummmo Learn recipe tutorials are given after you attend an
+              in-person workshop with Akta. Join a workshop — after that, the
+              recording and recipe PDF are added to your account.
             </p>
             <div className="mt-2 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href="/live-classes">
-                  Workshop ke baare mein jaanein
+                  Know more about the workshop
                 </Link>
               </Button>
               <Button
@@ -121,7 +121,7 @@ export default async function CategoryPage({
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                <Link href="/courses">Saare tutorials dekhein</Link>
+                <Link href="/courses">See all tutorials</Link>
               </Button>
             </div>
           </CardContent>

@@ -22,7 +22,7 @@ export function QuickGrant({ courses }: { courses: GrantCourse[] }) {
   async function grant() {
     const value = identifier.trim();
     if (!courseId) {
-      toast.error("Pehle ek cake tutorial banao");
+      toast.error("Please create a cake tutorial first");
       return;
     }
     if (!value) {
@@ -49,7 +49,7 @@ export function QuickGrant({ courses }: { courses: GrantCourse[] }) {
   if (courses.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        Pehle ek cake tutorial banao, phir yahan se access de sakte ho.
+        Create a cake tutorial first, then you can give access from here.
       </p>
     );
   }

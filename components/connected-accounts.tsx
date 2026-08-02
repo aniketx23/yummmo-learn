@@ -124,11 +124,11 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
 
   async function setPassword() {
     if (newPassword.length < 6) {
-      toast.error("Password kam se kam 6 characters ka hona chahiye");
+      toast.error("Password must be at least 6 characters");
       return;
     }
     if (newPassword !== confirmPassword) {
-      toast.error("Passwords match nahi kar rahe");
+      toast.error("Passwords do not match");
       return;
     }
     setBusy("set-password");
@@ -142,7 +142,7 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
       return;
     }
     toast.success(
-      "Password successfully set ho gaya! Ab email aur Google dono se login kar sakte ho."
+      "Password set successfully! You can now log in with email or Google."
     );
     setShowPasswordForm(false);
     setNewPassword("");
@@ -152,7 +152,7 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
 
   async function changeEmail() {
     if (!newEmail.trim() || !newEmail.includes("@")) {
-      toast.error("Valid email daalo");
+      toast.error("Please enter a valid email");
       return;
     }
     setBusy("change-email");
@@ -164,7 +164,7 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
       return;
     }
     toast.success(
-      "Verification email bhej diya! Naye email pe link click karo tab email change hoga."
+      "Verification email sent! Click the link in your new email to complete the change."
     );
     setShowEmailForm(false);
     setNewEmail("");
@@ -206,7 +206,7 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
                   )}
                   {!canUnlink && (
                     <p className="text-xs text-muted-foreground">
-                      Password add karo pehle, phir unlink kar sakte ho
+                      Add a password first, then you can unlink
                     </p>
                   )}
                   {canUnlink && (
@@ -359,13 +359,12 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {unlinkTarget === "google" ? "Google" : "Email & Password"} unlink
-              karein?
+              Unlink {unlinkTarget === "google" ? "Google" : "Email & Password"}?
             </DialogTitle>
             <DialogDescription>
-              Kya aap sure hain?{" "}
-              {unlinkTarget === "google" ? "Google" : "Email & Password"} se
-              login nahi kar paoge iske baad.
+              Are you sure? You will not be able to log in with{" "}
+              {unlinkTarget === "google" ? "Google" : "Email & Password"} after
+              this.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -390,10 +389,10 @@ export function ConnectedAccounts({ identities, userEmail }: Props) {
       <Dialog open={changeGoogleOpen} onOpenChange={setChangeGoogleOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Google account change karein?</DialogTitle>
+            <DialogTitle>Change Google account?</DialogTitle>
             <DialogDescription>
-              Ye aapka Google account change kar dega. Naya Google sign-in popup
-              khulega jahan aap doosra account choose kar sakte ho.
+              This will change your Google account. A new Google sign-in popup
+              will open where you can choose a different account.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

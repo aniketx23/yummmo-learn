@@ -18,7 +18,7 @@ export async function sendPurchaseConfirmation(opts: {
     from,
     to: opts.to,
     subject: `Enrollment confirmed: ${opts.courseTitle}`,
-    html: `<p>Namaste,</p><p>Your enrollment in <strong>${opts.courseTitle}</strong> is confirmed. Amount paid: ₹${opts.amount}.</p><p>Happy healthy cooking!</p><p>— Yummmo Learn</p>`,
+    html: `<p>Hello,</p><p>Your enrollment in <strong>${opts.courseTitle}</strong> is confirmed. Amount paid: ₹${opts.amount}.</p><p>Happy healthy baking!</p><p>— Yummmo Learn</p>`,
   });
   return { skipped: false as const };
 }

@@ -104,7 +104,7 @@ export default async function BatchPage({ params }: Props) {
       ? Math.max(0, batch.max_spots - (registeredCount ?? 0))
       : null;
 
-  const city = batch.location_city || "Noida";
+  const city = batch.location_city || batch.location || "";
   const batchUrl = `https://yummmo-learn.vercel.app/live-classes/${batch.slug || batch.id}`;
 
   return (
@@ -270,10 +270,10 @@ export default async function BatchPage({ params }: Props) {
             <div>
               <p className="font-bold text-charcoal">Akta Mahajan</p>
               <p className="text-sm text-muted-foreground">
-                Self-taught baker · 25+ saal ki ghar ki kitchen
+                Self-taught baker · 25+ years in her own kitchen
               </p>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                Eggless · No maida · Preservative-free
+                Eggless · No refined flour · Preservative-free
               </p>
             </div>
           </div>
@@ -285,7 +285,7 @@ export default async function BatchPage({ params }: Props) {
             Ready to Join?
           </p>
           <p className="mb-4 mt-1 text-sm text-muted-foreground">
-            Sirf ₹500 mein apni spot confirm karein
+            Confirm your spot with just ₹500
           </p>
           <LiveClassEnroll
             batches={[batch]}

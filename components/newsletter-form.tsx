@@ -12,14 +12,14 @@ export function NewsletterForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !email.includes("@")) {
-      toast.error("Valid email address daalo");
+      toast.error("Please enter a valid email address");
       return;
     }
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
     setLoading(false);
     setEmail("");
-    toast.success("Subscribed! Weekly tips aapke inbox mein aayenge 🎉");
+    toast.success("Subscribed! Weekly tips will reach your inbox 🎉");
   }
 
   return (
@@ -29,7 +29,7 @@ export function NewsletterForm() {
     >
       <Input
         type="email"
-        placeholder="aapki@email.com"
+        placeholder="your@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="flex-1 border-white/30 bg-white/20 text-white placeholder:text-white/70"

@@ -88,10 +88,10 @@ export default async function CourseDetailPage({ params }: Props) {
   const enrollmentCount = countRes.count ?? 0;
 
   const learnPoints = [
-    "Poori cake recipe step-by-step video mein",
-    "Healthy swaps — maida ki jagah atta, chini ki jagah gud",
-    "Chef tips jo cake ko perfect banate hain",
-    "Ghar par ingredients aur measurements",
+    "The full cake recipe, step by step, on video",
+    "Healthy swaps — whole wheat instead of refined flour, jaggery instead of sugar",
+    "Chef tips that make the cake come out perfect",
+    "Simple home ingredients and easy measurements",
   ];
 
   return (
@@ -154,7 +154,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
           <div className="rounded-xl border bg-white p-6">
             <h2 className="mb-4 font-display text-2xl font-bold">
-              Is video mein kya milega?
+              What you will learn
             </h2>
             <div className="grid gap-3 sm:grid-cols-2">
               {learnPoints.map((title, i) => (
@@ -191,8 +191,8 @@ export default async function CourseDetailPage({ params }: Props) {
                 <>
                   <Separator />
                   <div className="text-sm text-muted-foreground">
-                    Yeh tutorial humare in-person workshop attend karne wale
-                    students ko milta hai.
+                    This tutorial is for students who attend our in-person
+                    workshop.
                   </div>
                 </>
               )}

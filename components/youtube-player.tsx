@@ -9,7 +9,7 @@ export function YouTubePlayer({ url }: { url: string }) {
     return (
       <div className="flex aspect-video items-center justify-center rounded-lg bg-cream text-center">
         <p className="text-lg font-medium text-primary">
-          Video bahut jaldi aane wala hai! 🎬
+          Video coming soon! 🎬
         </p>
       </div>
     );

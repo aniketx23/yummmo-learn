@@ -16,7 +16,7 @@ export default function LandingLayout({
         <div className="mx-auto max-w-6xl px-4 text-center text-sm text-muted-foreground">
           <p className="font-display font-semibold text-primary">Yummmo Learn</p>
           <p className="mt-2">
-            B2 1602, Cleo County, Sector 121, Noida
+            Business address: B2 1602, Cleo County, Sector 121, Noida
           </p>
           <p className="mt-1">
             WhatsApp / Call:{" "}

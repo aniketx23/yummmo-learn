@@ -109,7 +109,7 @@ export default async function LessonPlayerPage({
   const appBase = (
     process.env.NEXT_PUBLIC_APP_URL || "https://yummmo-learn.vercel.app"
   ).replace(/\/+$/, "");
-  const referralMessage = `Maine abhi Akta Mahajan ki "${course.title}" recipe seekhi — bina maida, bina refined sugar. Aap bhi unki workshop try karo: ${appBase}/live-classes`;
+  const referralMessage = `I just learnt Akta Mahajan's "${course.title}" recipe — no refined flour, no refined sugar. Try her workshop too: ${appBase}/live-classes`;
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col bg-cream lg:flex-row">
@@ -267,7 +267,7 @@ export default async function LessonPlayerPage({
           ) : (
             <div className="flex aspect-video items-center justify-center rounded-lg bg-cream text-center">
               <p className="text-lg font-medium text-primary">
-                Video bahut jaldi aane wala hai! 🎬
+                Video coming soon! 🎬
               </p>
             </div>
           )}
@@ -308,11 +308,11 @@ export default async function LessonPlayerPage({
               </span>
               <div className="min-w-0">
                 <h2 className="font-display text-lg font-bold leading-snug text-charcoal sm:text-xl">
-                  Pasand aaya? Doston ko bhi bataiye
+                  Liked it? Tell your friends too
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Aapke jaise hi koi ghar pe healthy baking seekhna chahta hoga.
-                  Ek tap mein unhe Akta ki workshop ke baare mein bata dijiye.
+                  Someone you know may also want to learn healthy baking at
+                  home. Tell them about Akta and her workshop in one tap.
                 </p>
               </div>
             </div>
@@ -320,7 +320,7 @@ export default async function LessonPlayerPage({
               <WhatsAppShare
                 title={course.title}
                 message={referralMessage}
-                label="Dost ko WhatsApp karein"
+                label="Tell a friend on WhatsApp"
                 className="w-full px-5 py-3 text-base sm:w-auto"
               />
             </div>

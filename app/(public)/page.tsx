@@ -12,11 +12,11 @@ import { createClient } from "@/lib/supabase/server";
 export const metadata: Metadata = {
   title: "Healthy Baking Workshops — Akta Mahajan",
   description:
-    "Akta Mahajan ke saath ghar pe healthy baking seekho — chhoti batch, haath se haath. Maida nahi, chini nahi. Har class ka recorded video bhi.",
+    "Learn healthy baking with Akta Mahajan — small, hands-on, in-person batches. No refined flour, no sugar. Every class comes with a recorded video.",
   openGraph: {
     title: "Yummmo Learn — Healthy Baking Workshops with Akta Mahajan",
     description:
-      "Chhoti batch, haath se haath. Maida nahi — atta. Chini nahi — gud. Swaad wahi.",
+      "Small batch, hands-on. No refined flour — whole wheat. No sugar — jaggery. Same taste.",
     type: "website",
     siteName: "Yummmo Learn",
     locale: "en_IN",
@@ -37,29 +37,29 @@ const TEL = "+918459999991";
 const workshopPoints = [
   {
     icon: "👐",
-    title: "Haath se haath",
-    desc: "Aap khud banayenge — sirf dekhenge nahi. Poora cake apne haath se.",
+    title: "Hands-on baking",
+    desc: "You bake it yourself — you do not just watch. The whole cake with your own hands.",
     accent: "border-t-4 border-orange-400",
     bg: "bg-orange-50",
   },
   {
     icon: "👩‍🍳",
-    title: "Chhoti batch",
-    desc: "Kam log, personal attention. Har sawaal ka jawab milta hai.",
+    title: "Small batch",
+    desc: "Few people, personal attention. Every question gets an answer.",
     accent: "border-t-4 border-green-400",
     bg: "bg-green-50",
   },
   {
     icon: "🌿",
     title: "Healthy swaps",
-    desc: "Maida nahi — atta, oats, ragi. Chini nahi — gud aur dates. Eggless.",
+    desc: "No refined flour — whole wheat, oats, ragi. No sugar — jaggery and dates. Eggless.",
     accent: "border-t-4 border-amber-400",
     bg: "bg-amber-50",
   },
   {
     icon: "🎥",
-    title: "Video ghar le jaayein",
-    desc: "Class ke baad har recipe ka recorded video + PDF — ghar pe dohraane ke liye.",
+    title: "Take the video home",
+    desc: "After class you get a recorded video of every recipe plus a PDF — to bake again at home.",
     accent: "border-t-4 border-purple-400",
     bg: "bg-purple-50",
   },
@@ -69,13 +69,13 @@ const orderProducts = [
   {
     src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_20230719_183424.jpg",
     name: "Healthy Dry Cakes",
-    tag: "Gud se meetha",
+    tag: "Sweetened with jaggery",
     tagColor: "bg-green-100 text-green-700",
   },
   {
     src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/Gemini_Generated_Image_7nhen77nhen77nhe.png",
-    name: "Almond Atta Cake",
-    tag: "Maida-free",
+    name: "Almond Whole Wheat Cake",
+    tag: "No refined flour",
     tagColor: "bg-amber-100 text-amber-700",
   },
   {
@@ -232,20 +232,20 @@ export default async function HomePage() {
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 md:flex-row md:items-center md:py-24">
           <div className="flex-1 space-y-6 animate-[fade-up_0.6s_ease-out_forwards]">
             <span className="inline-flex items-center gap-2 rounded-full bg-herb/10 px-4 py-1.5 text-sm font-semibold text-herb">
-              📍 In-person &middot; Chhoti batch
+              📍 In-person &middot; Small batch
             </span>
             <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl lg:text-6xl">
-              Cake banana seekho —{" "}
-              <span className="text-primary">haath se haath.</span>
+              Learn to bake —{" "}
+              <span className="text-primary">with your own hands.</span>
             </h1>
             <p className="max-w-xl text-lg text-muted-foreground">
-              Akta Mahajan ke saath chhoti batch mein, haath se haath. Maida
-              nahi — atta. Chini nahi — gud. Swaad wahi, guilt zero.
+              Learn from Akta Mahajan in a small, hands-on batch. No refined
+              flour, no sugar. Same taste, zero guilt.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button size="pill" className="w-full sm:w-auto" asChild>
                 <Link href="/live-classes">
-                  Workshop ke liye poochein
+                  Ask about the workshop
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -257,12 +257,12 @@ export default async function HomePage() {
               >
                 <a
                   href={`https://wa.me/${WA}?text=${encodeURIComponent(
-                    "Namaste! Main aapki baking workshop ke baare mein jaanna chahta/chahti hoon."
+                    "Hello! I want to know more about your baking workshop."
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  💬 WhatsApp karein
+                  💬 Message on WhatsApp
                 </a>
               </Button>
             </div>
@@ -272,17 +272,17 @@ export default async function HomePage() {
               slides={[
                 {
                   src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/IMG_20230719_183424.jpg",
-                  caption: "Gud se meetha. Refined sugar bilkul nahi.",
+                  caption: "Sweetened with jaggery. No refined sugar at all.",
                   tag: "Healthy Dry Cakes",
                 },
                 {
                   src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/Gemini_Generated_Image_7nhen77nhen77nhe.png",
-                  caption: "Almond atta cake — maida-free perfection.",
+                  caption: "Almond whole wheat cake — no refined flour.",
                   tag: "Signature Bakes",
                 },
                 {
                   src: "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.55.46_a3571f8d.jpg",
-                  caption: "Oat cookies — roz ka healthy snack.",
+                  caption: "Oat cookies — an everyday healthy snack.",
                   tag: "Everyday Snacks",
                 },
               ]}
@@ -299,19 +299,19 @@ export default async function HomePage() {
         <div className="flex animate-marquee whitespace-nowrap">
           {[
             "🌿 Eggless & preservative-free",
-            "🍰 Maida nahi — atta, oats, ragi",
-            "🍯 Chini nahi — gud aur dates",
-            "👩‍🍳 25+ saal ki ghar ki kitchen",
-            "📍 Chhoti batch — in-person",
-            "🎥 Har class ka recorded video",
+            "🍰 No refined flour — whole wheat, oats, ragi",
+            "🍯 No sugar — jaggery and dates",
+            "👩‍🍳 25+ years of home kitchen",
+            "📍 Small batch — in-person",
+            "🎥 A recorded video of every class",
           ]
             .concat([
               "🌿 Eggless & preservative-free",
-              "🍰 Maida nahi — atta, oats, ragi",
-              "🍯 Chini nahi — gud aur dates",
-              "👩‍🍳 25+ saal ki ghar ki kitchen",
-              "📍 Chhoti batch — in-person",
-              "🎥 Har class ka recorded video",
+              "🍰 No refined flour — whole wheat, oats, ragi",
+              "🍯 No sugar — jaggery and dates",
+              "👩‍🍳 25+ years of home kitchen",
+              "📍 Small batch — in-person",
+              "🎥 A recorded video of every class",
             ])
             .map((item, i) => (
               <span
@@ -332,11 +332,11 @@ export default async function HomePage() {
               In-person workshop
             </p>
             <h2 className="font-display text-3xl font-bold text-charcoal">
-              Workshop mein kya hota hai?
+              What happens in a workshop?
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-              Ek din, ek kitchen, aur aapke haath se bana hua cake — ghar le
-              jaane ke liye.
+              One day, one kitchen, and a cake made by your own hands — to take
+              home.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -358,7 +358,7 @@ export default async function HomePage() {
           <div className="mt-10 text-center">
             <Button size="pill" asChild>
               <Link href="/live-classes">
-                Agli batch dekhein
+                See the next batch
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
@@ -383,33 +383,34 @@ export default async function HomePage() {
             <div className="space-y-5">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-widest text-primary">
-                  Aapki instructor
+                  Your instructor
                 </p>
                 <h2 className="mt-2 font-display text-4xl font-bold text-charcoal">
                   Akta Mahajan
                 </h2>
                 <p className="mt-1 text-lg text-muted-foreground">
-                  Self-taught baker &middot; 25+ saal ki ghar ki kitchen
+                  Self-taught baker &middot; 25+ years of home kitchen
                 </p>
               </div>
 
               <p className="leading-relaxed text-muted-foreground">
-                Akta ne kabhi culinary school nahi dekha — sab kuch apni rasoi
-                mein seekha. 2017 mein unke bade bachche ka weight 120 kg tha.
-                Khaane aur lifestyle badal kar, teen saal mein woh 54 kg par aa
-                gaye.
+                Akta never went to culinary school — she learnt everything in
+                her own kitchen. In 2017 her elder child weighed 120 kg. With
+                changes in food and lifestyle, that came down to 54 kg in three
+                years.
               </p>
               <p className="leading-relaxed text-muted-foreground">
-                Wahi healthy swaps — maida ki jagah atta, chini ki jagah gud —
-                ab woh aapko sikhati hain. Bina swaad chhode.
+                The same healthy swaps — whole wheat instead of refined flour,
+                jaggery instead of sugar — are what she teaches you now. Without
+                losing the taste.
               </p>
 
               <div className="flex flex-wrap gap-2">
                 {[
-                  "👩‍🍳 25+ saal home baking",
+                  "👩‍🍳 25+ years home baking",
                   "🌱 Eggless & preservative-free",
                   "📍 In-person batches",
-                  "❤️ Atta, gud, oats — no maida",
+                  "❤️ Whole wheat, jaggery, oats — no refined flour",
                 ].map((b) => (
                   <span
                     key={b}
@@ -421,7 +422,7 @@ export default async function HomePage() {
               </div>
 
               <Button asChild size="pill">
-                <Link href="/live-classes">Workshop ke liye poochein</Link>
+                <Link href="/live-classes">Ask about the workshop</Link>
               </Button>
             </div>
           </div>
@@ -436,16 +437,16 @@ export default async function HomePage() {
               <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                 <div>
                   <h2 className="font-display text-3xl font-bold">
-                    Workshop ke baad — aapke recorded tutorials
+                    After the workshop — your recorded tutorials
                   </h2>
                   <p className="text-muted-foreground">
-                    Har class ka ek poora video aur recipe PDF, ghar par
-                    dohraane ke liye. Access workshop attend karne ke baad
-                    milta hai.
+                    One full video and a recipe PDF for every class, to bake
+                    again at home. Access is given after you attend the
+                    workshop.
                   </p>
                 </div>
                 <Button variant="outline" asChild>
-                  <Link href="/courses">Sab dekhein</Link>
+                  <Link href="/courses">See all</Link>
                 </Button>
               </div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -468,18 +469,18 @@ export default async function HomePage() {
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
             <div className="text-center text-white sm:text-left">
               <p className="font-display text-lg font-bold">
-                🎂 Agli baking workshop
+                🎂 Next baking workshop
               </p>
               <p className="text-sm text-white/90">
-                Chhoti batch, personal attention. Seat poochne ke liye ek
-                message bhej dein.
+                Small batch, personal attention. Send one message to ask about
+                a seat.
               </p>
             </div>
             <Button
               asChild
               className="shrink-0 rounded-full bg-white px-6 font-bold text-primary hover:bg-white/90"
             >
-              <Link href="/live-classes">Batch dekhein &rarr;</Link>
+              <Link href="/live-classes">See batches &rarr;</Link>
             </Button>
           </div>
         </section>
@@ -493,12 +494,11 @@ export default async function HomePage() {
               Yummmo Bakery
             </p>
             <h2 className="font-display text-3xl font-bold text-charcoal">
-              Ya phir — banwa lo.
+              Or, just order from us.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-              Seekhne ka time nahi? Koi baat nahi. Wahi healthy ingredients,
-              wahi care — Yummmo se cakes, cookies, ganache aur hampers order
-              karein.
+              No time to learn? No problem. Same healthy ingredients, same care
+              — order cakes, cookies, ganache and hampers from Yummmo.
             </p>
           </div>
 
@@ -533,11 +533,11 @@ export default async function HomePage() {
 
           <div className="mt-10 rounded-2xl border bg-cream p-6 text-center">
             <p className="font-display text-xl font-bold text-charcoal">
-              Order karna hai?
+              Want to order?
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Humein WhatsApp par message karein ya seedha call kar lein — hum
-              aapko sab bata denge.
+              Message us on WhatsApp or just call us — we will tell you
+              everything.
             </p>
             <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
               <Button
@@ -547,18 +547,18 @@ export default async function HomePage() {
               >
                 <a
                   href={`https://wa.me/${WA}?text=${encodeURIComponent(
-                    "Namaste! Mujhe Yummmo se cake/hamper order karna hai."
+                    "Hello! I want to order a cake or hamper from Yummmo."
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  💬 WhatsApp par order karein
+                  💬 Order on WhatsApp
                 </a>
               </Button>
               <Button variant="outline" size="pill" asChild>
                 <a href={`tel:${TEL}`}>
                   <Phone className="h-4 w-4" />
-                  Call karein
+                  Call us
                 </a>
               </Button>
             </div>

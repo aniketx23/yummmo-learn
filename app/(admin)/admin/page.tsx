@@ -56,8 +56,8 @@ export default async function AdminHomePage() {
             Grant access
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Workshop attend karne wale student ko video ka access do. Unka
-            account pehle bana hona chahiye.
+            Give a workshop student access to the video. They must have created
+            an account first.
           </p>
         </CardHeader>
         <CardContent>
@@ -74,7 +74,7 @@ export default async function AdminHomePage() {
           {list.length === 0 ? (
             <div className="rounded-xl border border-dashed bg-cream p-8 text-center">
               <p className="text-muted-foreground">
-                Abhi koi tutorial nahi hai.
+                No tutorials yet.
               </p>
               <Button className="mt-4" asChild>
                 <Link href="/admin/courses/new">

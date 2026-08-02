@@ -68,7 +68,7 @@ export default async function AdminRevenuePage() {
             <RevenueChart data={chartData} />
           ) : (
             <p className="py-6 text-center text-sm text-muted-foreground">
-              Abhi koi payment nahi hua. Pehla course sell hone ke baad yahan data dikhega.
+              No payments yet. Data will appear here once a course is sold.
             </p>
           )}
         </CardContent>

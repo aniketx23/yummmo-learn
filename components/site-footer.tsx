@@ -9,11 +9,11 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
             Yummmo Learn
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Akta Mahajan ke saath healthy baking — in-person workshops aur
+            Healthy baking with Akta Mahajan — in-person workshops and
             recorded tutorials.
           </p>
           <p className="mt-2 text-xs text-muted-foreground">
-            Eggless &middot; No maida &middot; Preservative-free
+            Eggless &middot; No refined flour &middot; Preservative-free
           </p>
         </div>
         <div className="text-sm">
@@ -73,12 +73,12 @@ export function SiteFooter({ isLoggedIn }: { isLoggedIn?: boolean }) {
           <ul className="mt-2 space-y-2 text-muted-foreground">
             <li>
               <a
-                href="https://wa.me/918459999991?text=Namaste%21%20Main%20aapki%20baking%20workshop%20ke%20baare%20mein%20jaanna%20chahta%2Fchahti%20hoon."
+                href="https://wa.me/918459999991?text=Hello%21%20I%20want%20to%20know%20more%20about%20your%20baking%20workshop."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 transition-colors hover:text-foreground"
               >
-                💬 Workshop ke liye WhatsApp karein
+                💬 Ask about the workshop on WhatsApp
               </a>
             </li>
             <li>

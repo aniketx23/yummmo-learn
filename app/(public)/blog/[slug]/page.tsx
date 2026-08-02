@@ -17,122 +17,121 @@ const blogPosts: Record<
   }
 > = {
   "atta-cake-recipes": {
-    title: "5 Atta Cake Recipes That Actually Taste Amazing",
+    title: "5 Whole Wheat Cake Recipes That Actually Taste Amazing",
     date: "15 April 2026",
     author: "Akta Mahajan",
     readTime: "5 min read",
     emoji: "🎂",
     gradient: "from-amber-400 to-orange-500",
-    content: `## Maida se Atta — Kya Sach Mein Fark Padta Hai?
+    content: `## Refined Flour to Whole Wheat — Does It Really Make a Difference?
 
-Bahut log sochte hain ki atta cake maida cake jaisa soft nahi hoga. Yeh ek myth hai jo hum aaj todenge. Sahi technique aur sahi ratio ke saath, atta cake na sirf healthy hota hai — balki zyada moist aur flavourful bhi hota hai.
+Many people think a whole wheat cake can never be as soft as a refined flour cake. That is a myth, and we are going to clear it up today. With the right technique and the right ratio, a whole wheat cake is not only healthier — it is usually more moist and more flavourful too.
 
-## Recipe 1: Classic Vanilla Atta Cake
+## Recipe 1: Classic Vanilla Whole Wheat Cake
 
 **Ingredients:**
-- 1.5 cups whole wheat atta (finely milled)
+- 1.5 cups whole wheat flour (finely milled)
 - 3/4 cup jaggery powder
-- 2 eggs (room temperature)
 - 1/2 cup curd
 - 1/2 cup oil
 - 1 tsp vanilla extract
 - 1.5 tsp baking powder
 - 1/2 tsp baking soda
 
-**Method:** Eggs aur jaggery ko fluffy hone tak beat karo. Curd, oil, vanilla add karo. Dry ingredients fold karo. 180 degree C pe 35-40 minutes bake karo.
+**Method:** Whisk the curd and jaggery powder together until light and smooth. Add the oil and vanilla. Fold in the dry ingredients. Bake at 180 degree C for 35-40 minutes.
 
-**Tip:** Curd daalne se cake extra moist banta hai — yeh professional bakers ka secret hai.
+**Tip:** This cake is completely eggless. The curd keeps it extra moist and it also reacts with the baking soda to give a lovely rise — this is the secret professional bakers use.
 
-## Recipe 2: Chocolate Atta Cake
+## Recipe 2: Chocolate Whole Wheat Cake
 
-Chocolate lover hain? Is recipe mein cocoa powder use karte hain — refined sugar nahi, dates paste se mithaas laate hain.
+Are you a chocolate lover? This recipe uses cocoa powder, and all the sweetness comes from dates paste instead of refined sugar.
 
 **Key swap:** 1/4 cup cocoa powder + 1/2 cup dates paste (instead of sugar)
 
-Result? Dark, fudgy, guilt-free chocolate cake.
+The result? A dark, fudgy, guilt-free chocolate cake.
 
-## Recipe 3: Banana Oat Atta Cake
+## Recipe 3: Banana Oat Whole Wheat Cake
 
-Breakfast cake jo bacche bhi prefer karein! 2 ripe bananas naturally sweetness dete hain — alag se sugar ki zaroorat hi nahi.
+A breakfast cake that children actually ask for! Two ripe bananas bring in all the sweetness, so you do not need to add any sugar at all.
 
-**Zero added sugar** — bananas ki natural sweetness enough hai.
+**Zero added sugar** — the natural sweetness of the bananas is enough.
 
-## Recipe 4: Almond & Cardamom Atta Cake
+## Recipe 4: Almond and Cardamom Whole Wheat Cake
 
-Indian flavours ke liye yeh recipe perfect hai. Elaichi ki khushboo aur almonds ka crunch — festive occasions ke liye ideal.
+This recipe is perfect when you want Indian flavours. The aroma of cardamom with the crunch of almonds — ideal for festival days.
 
-**Festive touch:** Top pe sliced almonds scatter karo before baking — golden aur crunchy ho jaate hain.
+**Festive touch:** Scatter sliced almonds on top before baking — they turn golden and crunchy.
 
-## Recipe 5: Mango Atta Cake (Summer Special)
+## Recipe 5: Mango Whole Wheat Cake (Summer Special)
 
-Aam ka season aaye toh yeh cake zaroor try karo. Fresh mango pulp naturally sweeten aur moisturize karta hai cake ko.
+When mango season arrives, you must try this cake. Fresh mango pulp sweetens the cake and keeps it moist at the same time.
 
-**Tip:** Alphonso mangoes ka pulp sabse best result deta hai — zyada sweet aur aromatic.
+**Tip:** Alphonso mango pulp gives the best result — sweeter and more aromatic.
 
-## Common Mistakes Aur Solutions
+## Common Mistakes and Solutions
 
-**Problem:** Cake dense nikla
-**Solution:** Over-mixing se bachao — sirf tab tak mix karo jab tak sab combine ho jaaye.
+**Problem:** The cake came out dense
+**Solution:** Do not over-mix. Mix only until everything has just come together.
 
-**Problem:** Top jal gaya andar se kacha
-**Solution:** Temperature 170 degree C pe rakho, oven ka middle rack use karo.
+**Problem:** Burnt on top, raw inside
+**Solution:** Keep the temperature at 170 degree C and use the middle rack of the oven.
 
-**Problem:** Cake sticky lag raha hai
-**Solution:** 10 minutes pan mein cool karo pehle nikaalane se.`,
+**Problem:** The cake feels sticky
+**Solution:** Let it cool in the pan for 10 minutes before you take it out.`,
   },
   "sugar-free-mithai": {
-    title: "Sugar-Free Mithai for Every Festival",
+    title: "Sugar-Free Indian Sweets for Every Festival",
     date: "10 April 2026",
     author: "Akta Mahajan",
     readTime: "6 min read",
     emoji: "🪔",
     gradient: "from-purple-400 to-pink-500",
-    content: `## Tyohaar Mein Mithas — Bina Chini Ke?
+    content: `## Festival Sweetness — Without Sugar?
 
-Haan, yeh possible hai! Jaggery, dates, honey aur coconut sugar se aap wahi tyohaar wali sweetness la sakte hain — bina blood sugar spike ke. Yummmo mein hum yahi sikhate hain.
+Yes, it is possible! With jaggery, dates, honey and coconut sugar you can get that same festival sweetness — without the blood sugar spike. This is exactly what we teach at Yummmo.
 
 ## Why Refined Sugar is a Problem
 
-Refined sugar instantly blood glucose spike karta hai. Festival season mein roz mithai khana — diabetic patients ke liye toh khatre ki ghanti hai, lekin normal logon ke liye bhi weight gain aur energy crashes cause karta hai.
+Refined sugar pushes your blood glucose up almost instantly. Eating sweets every single day through the festival season is a warning bell for anyone with diabetes, and even for everyone else it leads to weight gain and energy crashes.
 
 **Better alternatives:**
 - Jaggery — iron rich, slow release energy
 - Dates paste — fibre + natural sweetness
 - Coconut sugar — low glycemic index
-- Honey — antibacterial, small quantities mein perfect
+- Honey — antibacterial, perfect in small quantities
 
-## Diwali Special: Jaggery Besan Ladoo
+## Diwali Special: Jaggery Gram Flour Ladoo
 
-Classic recipe with one swap — chini ki jagah jaggery powder.
+The classic recipe with one swap — jaggery powder in place of sugar.
 
 **Ingredients:**
-- 2 cups besan
+- 2 cups gram flour
 - 3/4 cup jaggery powder (finely grated)
 - 1/2 cup ghee
 - Cardamom, dry fruits
 
-**Method:** Besan ko ghee mein slow flame pe roast karo jab tak golden brown na ho jaaye (15-20 min). Thanda karo. Jaggery mix karo. Ladoo banao.
+**Method:** Roast the gram flour in ghee on a slow flame until it turns golden brown (15-20 min). Let it cool. Mix in the jaggery. Shape into ladoos.
 
-**Why it works:** Jaggery ka slight caramel flavour besan ke saath amazingly complement karta hai.
+**Why it works:** The light caramel flavour of jaggery goes beautifully with roasted gram flour.
 
 ## Holi Special: Thandai Barfi (Dates Sweetened)
 
-Traditional thandai flavours — rose, kesar, badam — in a barfi format. Dates paste se sweetened, no sugar needed.
+Traditional thandai flavours — rose, saffron and almond — in a barfi shape. Sweetened with dates paste, so no sugar is needed.
 
 ## Raksha Bandhan: Coconut Ladoo with Stevia
 
-Ultra-simple 3-ingredient recipe. Desiccated coconut, condensed milk substitute (made with full fat milk + stevia), and cardamom. Ready in 20 minutes, no cooking needed.
+An ultra-simple 3-ingredient recipe. Desiccated coconut, a condensed milk substitute (made with full fat milk + stevia), and cardamom. Ready in 20 minutes, with no cooking needed.
 
-## Tips for Perfect Sugar-Free Mithai
+## Tips for Perfect Sugar-Free Sweets
 
-- Jaggery me moisture — finely grate karo, warna mithai soft nahi hogi
-- Dates paste — seedless dates ko warm water mein soak karo 30 min, phir blend karo
-- Honey zyada mat daalo — 1-2 tbsp usually enough hai
-- Storage — airtight container mein 5-7 din tak fresh rehti hain
+- Jaggery holds moisture — grate it finely, or the sweets will not stay soft
+- Dates paste — soak seedless dates in warm water for 30 min, then blend them
+- Do not add too much honey — 1-2 tbsp is usually enough
+- Storage — they stay fresh for 5-7 days in an airtight container
 
-## Akta Ka Advice
+## Advice from Akta
 
-Festival season mein mithai completely skip karna zaruri nahi. Sirf smarter choices karo. Ek jaggery ladoo khao aur enjoy karo — guilt nahi, sirf swad!`,
+You do not have to give up sweets completely during the festival season. Just make smarter choices. Eat one jaggery ladoo and enjoy it — no guilt, only taste.`,
   },
   "healthy-oil-swaps": {
     title: "The Complete Guide to Healthy Oil Swaps",
@@ -141,16 +140,16 @@ Festival season mein mithai completely skip karna zaruri nahi. Sirf smarter choi
     readTime: "7 min read",
     emoji: "🫒",
     gradient: "from-green-400 to-teal-500",
-    content: `## Sahi Tel Ka Chunav — Kitna Important Hai?
+    content: `## Choosing the Right Oil — How Much Does It Matter?
 
-Indian cooking mein oil ek central role play karta hai. Tadka ho, baking ho ya frying — sahi oil choose karna flavour aur health dono affect karta hai.
+Oil plays a central role in Indian cooking. Whether you are making a tempering, baking a cake or frying something — the oil you choose affects both flavour and health.
 
-## Smoke Point Kyon Matter Karta Hai
+## Why Smoke Point Matters
 
-Jab oil apne smoke point se upar garam hota hai, toh harmful compounds release hote hain. High heat cooking ke liye high smoke point oil zaruri hai.
+When oil is heated past its smoke point, it starts to release harmful compounds. So for high heat cooking you need an oil with a high smoke point.
 
 **Quick guide:**
-- Mustard Oil (250 degree C) — Tadka, deep fry
+- Mustard Oil (250 degree C) — Tempering, deep frying
 - Coconut Oil (177 degree C) — Medium heat, baking
 - Olive Oil Extra Virgin (190 degree C) — Salads, low heat
 - Ghee (252 degree C) — High heat, roti
@@ -158,36 +157,36 @@ Jab oil apne smoke point se upar garam hota hai, toh harmful compounds release h
 
 ## Mustard Oil — The Indian Classic
 
-Sarson ka tel Indian cooking ka backbone hai. High smoke point aur distinctive flavour — Bengali aur Punjabi cuisine ke liye essential.
+Mustard oil is the backbone of Indian cooking. A high smoke point and a strong, distinctive flavour — essential for Bengali and Punjabi food.
 
 **Best for:** Deep frying, pickles, Bengali cuisine, Punjabi dishes
 
 ## Coconut Oil for Baking
 
-Baking mein butter ya refined oil ki jagah coconut oil use karna excellent swap hai. Medium chain fatty acids quickly metabolized hote hain. Slight coconut flavour depth add karta hai cakes mein.
+Using coconut oil in place of butter or refined oil is an excellent swap for baking. Its medium chain fatty acids are metabolised quickly, and the light coconut flavour adds a nice depth to cakes.
 
 **Tip:** Virgin coconut oil has stronger flavour. Refined coconut oil is more neutral — better for Indian sweet dishes.
 
-## Olive Oil — Kab Use Karein, Kab Nahi
+## Olive Oil — When to Use It, When Not To
 
-Bahut log har cheez mein olive oil use karte hain — yeh galti hai!
+Many people now use olive oil for everything — and that is a mistake!
 
-**Use karo:** Salad dressings, pasta, roasted vegetables, low-heat sauteing
-**Avoid:** Deep frying, high-heat Indian tadka — smoke point low hai
+**Use it for:** Salad dressings, pasta, roasted vegetables, low-heat sauteing
+**Avoid it for:** Deep frying and high-heat Indian tempering — the smoke point is too low
 
 ## Ghee — Our Superfood
 
-Pure desi ghee is having a global moment — and rightly so. High smoke point, incredible flavour, and when made from grass-fed cows, loaded with CLA and fat-soluble vitamins.
+Pure ghee is having a global moment — and rightly so. High smoke point, incredible flavour, and when made from grass-fed cows, loaded with CLA and fat-soluble vitamins.
 
-**Akta's rule:** 1 tsp ghee pe dal ya roti — yeh nahi chhodni chahiye.
+**Akta's rule:** 1 tsp ghee on your dal or roti — that is one thing you should never give up.
 
 ## Practical Swaps for Your Kitchen
 
-- Sabzi mein — Mustard oil ya refined sunflower (high heat)
-- Roti/paratha — Ghee (small amount)
-- Baking — Coconut oil ya neutral oils
+- Vegetable dishes — Mustard oil or refined sunflower (high heat)
+- Roti and paratha — Ghee (small amount)
+- Baking — Coconut oil or neutral oils
 - Salad dressing — Extra virgin olive oil
-- Tadka — Ghee ya mustard oil`,
+- Tempering — Ghee or mustard oil`,
   },
   "kids-eat-healthy": {
     title: "How to Get Kids to Eat Healthy (Without Them Knowing)",
@@ -196,21 +195,21 @@ Pure desi ghee is having a global moment — and rightly so. High smoke point, i
     readTime: "6 min read",
     emoji: "🥗",
     gradient: "from-yellow-400 to-green-500",
-    content: `## Moms Ka Sabse Bada Challenge
+    content: `## The Biggest Challenge for Mothers
 
-"Mera bachha vegetables nahi khaata" — yeh sentence har doosri Indian mom kehti hai. Lekin kya hoga agar vegetables itne cleverly hide karein ki bachhe ko pata hi na chale?
+"My child does not eat vegetables" — almost every second Indian mother says this. But what if you could hide the vegetables so cleverly that your child never finds out?
 
-Yeh sneaky parenting nahi hai — yeh smart cooking hai!
+This is not sneaky parenting — this is smart cooking!
 
 ## The Golden Rule: Texture and Color
 
-Bacche mainly do wajahon se vegetables reject karte hain: texture jo unhe pasand nahi, aur green cheezein jo suspicious lagti hain.
+Children reject vegetables for mainly two reasons: a texture they do not like, and anything green, which instantly looks suspicious to them.
 
-**Solution:** Puree karo, blend karo, ya familiar textures mein transform karo.
+**Solution:** Puree it, blend it, or turn it into a texture they already know and enjoy.
 
 ## Trick 1: Spinach in Chocolate Smoothie
 
-Palak aur chocolate? Sounds weird, tastes amazing!
+Spinach and chocolate? It sounds strange, but it tastes amazing!
 
 - 1 cup milk
 - 1 handful spinach
@@ -218,19 +217,19 @@ Palak aur chocolate? Sounds weird, tastes amazing!
 - 1 tbsp cocoa powder
 - 2-3 dates (sweetener)
 
-Blend karenge toh green colour purple-brown ho jaata hai cocoa se. Taste? Pure chocolate. Nutrition? Hidden spinach!
+Once you blend it, the cocoa turns the green colour into a purple-brown. The taste? Pure chocolate. The nutrition? Hidden spinach!
 
 ## Trick 2: Cauliflower in Mac & Cheese
 
-Phool gobhi boil karke mash karo, cheese sauce mein mix karo. Volume badhta hai, calories kam hoti hain, taste same rehta hai.
+Boil the cauliflower, mash it well, and mix it into the cheese sauce. The volume goes up, the calories come down, and the taste stays the same.
 
-**Tip:** 50/50 ratio se shuru karo — gobhi 50%, actual pasta 50%. Gradually gobhi badhao.
+**Tip:** Start with a 50/50 ratio — 50% cauliflower, 50% actual pasta. Then slowly increase the cauliflower.
 
 ## Trick 3: Ragi in Cookies
 
-Ragi (finger millet) ka dark colour chocolate chips ki wajah se hide ho jaata hai perfectly!
+The dark colour of ragi (finger millet) hides perfectly behind the chocolate chips!
 
-- 1 cup ragi flour + 1/2 cup atta
+- 1 cup ragi flour + 1/2 cup whole wheat flour
 - 1/2 cup jaggery powder
 - 1/4 cup ghee/butter
 - 1 egg
@@ -238,23 +237,23 @@ Ragi (finger millet) ka dark colour chocolate chips ki wajah se hide ho jaata ha
 
 **Result:** Crunchy, chocolatey cookies with hidden superfood nutrition.
 
-## Trick 4: Dal in Pasta Sauce
+## Trick 4: Lentils in Pasta Sauce
 
-Masoor dal ya moong dal boil karke completely blend karo. Tomato pasta sauce mein mix karo. Protein doubles, kids never know.
+Boil red lentils or yellow lentils until soft and blend them completely smooth. Mix the puree into your tomato pasta sauce. The protein doubles, and the children never know.
 
-**Tip:** Red lentils (masoor) blend completely smooth aur sauce ka colour bhi nahi change hota.
+**Tip:** Red lentils blend perfectly smooth and they do not change the colour of the sauce either.
 
 ## Trick 5: Zucchini in Paratha
 
-Zucchini (lauki bhi kaam karta hai) grate karo, excess moisture squeeze karo, atta mein mix karo. Soft parathas — bacche surprisingly love it!
+Grate the zucchini (bottle gourd works just as well), squeeze out the extra water, and mix it into the dough. Soft parathas — and children surprisingly love them!
 
 ## Start with These 3 Today
 
 - Spinach in chocolate smoothie
-- Ragi in any cookie/biscuit recipe
+- Ragi in any cookie or biscuit recipe
 - Grated zucchini in paratha dough
 
-Teen cheezein — teen wins. Kal se shuru karo!`,
+Three small changes — three easy wins. Start tomorrow!`,
   },
 };
 
@@ -360,17 +359,18 @@ export default async function BlogPostPage({ params }: Props) {
         {/* CTAs */}
         <div className="mt-16 rounded-2xl border border-primary/20 bg-primary/10 p-8 text-center">
           <p className="font-display text-xl font-bold text-charcoal">
-            Is topic pe aur seekhna chahte ho?
+            Want to learn more about this?
           </p>
           <p className="mt-2 text-muted-foreground">
-            Akta Mahajan ke saath live ya online — aap choose karo
+            Learn with Akta Mahajan — at a live workshop or through the
+            recorded lessons
           </p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Button asChild size="pill">
-              <Link href="/courses">Free Courses Dekho &rarr;</Link>
+              <Link href="/courses">See Free Courses &rarr;</Link>
             </Button>
             <Button asChild variant="outline" size="pill">
-              <Link href="/live-classes">Live Class Join Karo</Link>
+              <Link href="/live-classes">See Live Workshops</Link>
             </Button>
           </div>
         </div>

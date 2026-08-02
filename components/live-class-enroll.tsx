@@ -56,14 +56,14 @@ const WHATSAPP_NUMBER = "918459999991";
 const personalSteps = [
   {
     key: "name",
-    label: "Aapka naam?",
+    label: "Your name?",
     placeholder: "Full name",
     type: "text" as const,
   },
   {
     key: "phone",
-    label: "WhatsApp number daalein",
-    sublabel: "Sahi number do — class updates isi pe aayenge",
+    label: "Your WhatsApp number",
+    sublabel: "Please give the correct number. All class updates come here.",
     placeholder: "98765 43210",
     type: "tel" as const,
   },
@@ -114,7 +114,7 @@ export function LiveClassEnroll({
     if (currentPersonalStep.key === "phone") {
       const digits = val.replace(/\D/g, "");
       if (!/^\d{10,15}$/.test(digits)) {
-        toast.error("Sahi WhatsApp number daalein (10 digit)");
+        toast.error("Please enter a correct WhatsApp number (10 digits)");
         return false;
       }
     }
@@ -143,14 +143,14 @@ export function LiveClassEnroll({
 
   async function handleSubmit() {
     if (!selectedBatch) {
-      toast.error("Pehle ek batch choose karein");
+      toast.error("Please choose a batch first");
       return;
     }
 
     const name = (data.name ?? "").trim();
     const phone = (data.phone ?? "").replace(/\D/g, "");
     if (!name || !/^\d{10,15}$/.test(phone)) {
-      toast.error("Naam aur WhatsApp number sahi bharein");
+      toast.error("Please enter your name and a correct WhatsApp number");
       setStep(0);
       return;
     }
@@ -169,14 +169,14 @@ export function LiveClassEnroll({
 
       if (r.ok) {
         setConfirmation({ name, phone, batchTitle: selectedBatch.title });
-        toast.success("Registration mil gaya! Ab WhatsApp par confirm kar dein.");
+        toast.success("We have your details. Now confirm on WhatsApp.");
       } else {
         // A dropped 4G connection must never look like a silent failure.
         const j = (await r.json().catch(() => ({}))) as { error?: string };
-        toast.error(j.error ?? "Registration fail ho gayi. Dobara try karein.");
+        toast.error(j.error ?? "Registration did not go through. Please try again.");
       }
     } catch {
-      toast.error("Network issue. Dobara try karein ya WhatsApp par message karein.");
+      toast.error("Network problem. Please try again or message us on WhatsApp.");
     } finally {
       setSubmitting(false);
     }
@@ -184,7 +184,7 @@ export function LiveClassEnroll({
 
   function whatsappConfirmUrl(c: Confirmation) {
     const text = [
-      "Namaste! Maine workshop ke liye register kiya hai.",
+      "Hello! I have registered for the workshop.",
       `Name: ${c.name}`,
       `Phone: ${c.phone}`,
       `Batch: ${c.batchTitle}`,
@@ -234,7 +234,7 @@ export function LiveClassEnroll({
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-display text-xl">
-            {confirmation ? "Ho gaya!" : "Live Class Registration"}
+            {confirmation ? "Done!" : "Live Class Registration"}
           </DialogTitle>
           {!confirmation && (
             <p className="text-xs text-muted-foreground">
@@ -261,11 +261,11 @@ export function LiveClassEnroll({
             <div className="space-y-2">
               <CheckCircle2 className="mx-auto h-12 w-12 text-herb" />
               <p className="font-display text-lg font-semibold">
-                Registration mil gaya, {confirmation.name.split(" ")[0]}!
+                We have your details, {confirmation.name.split(" ")[0]}!
               </p>
               <p className="text-sm text-muted-foreground">
-                Bas ek aakhri step — WhatsApp par confirm kar dein. Akta wahin
-                par batch ki details aur location bhej dengi.
+                One last step. Please confirm on WhatsApp. Akta will send the
+                batch details and location there.
               </p>
             </div>
 
@@ -276,7 +276,7 @@ export function LiveClassEnroll({
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#1ebe5a]"
             >
               <MessageCircle className="h-5 w-5" />
-              WhatsApp par confirm karein
+              Confirm on WhatsApp
             </a>
 
             <div className="rounded-lg border bg-muted/40 p-3 text-left text-xs text-muted-foreground">
@@ -294,7 +294,7 @@ export function LiveClassEnroll({
               onClick={() => setOpen(false)}
               className="text-xs text-muted-foreground hover:text-primary"
             >
-              Band karein
+              Close
             </button>
           </div>
         ) : isOnBatchStep ? (
@@ -355,11 +355,11 @@ export function LiveClassEnroll({
               /* Batch cards list */
               <div className="space-y-3">
                 <Label className="text-lg font-medium">
-                  Batch choose karein
+                  Choose your batch
                 </Label>
                 {batches.length === 0 ? (
                   <p className="py-4 text-center text-sm text-muted-foreground">
-                    Abhi koi batch available nahi hai.
+                    No batches are open right now.
                   </p>
                 ) : (
                   batches.map((batch) => (
@@ -415,7 +415,7 @@ export function LiveClassEnroll({
                       {submitting && (
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       )}
-                      Submit Registration
+                      Send Registration
                     </Button>
                   </div>
                 )}

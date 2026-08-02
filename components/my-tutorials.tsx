@@ -30,10 +30,10 @@ export function MyTutorials({
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="mb-6">
           <h2 className="font-display text-2xl font-bold text-charcoal md:text-3xl">
-            {firstName ? `Namaste, ${firstName}!` : "Aapke tutorials"}
+            {firstName ? `Hello, ${firstName}!` : "Your tutorials"}
           </h2>
           <p className="mt-1 text-muted-foreground">
-            Aapke workshop tutorials — seedha yahan se dekhiye.
+            Your workshop tutorials — watch them right here.
           </p>
         </div>
 

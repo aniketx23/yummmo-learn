@@ -17,7 +17,7 @@ import { formatDate } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Live Baking Classes by Akta Mahajan | Yummmo",
   description:
-    "Akta Mahajan ke saath hands-on baking workshop — chhoti batch, healthy ingredients, eggless. Recipe PDF aur video recording bhi milti hai.",
+    "Hands-on baking workshop with Akta Mahajan. Small batches, healthy eggless recipes. Recipe PDF and video recording included.",
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -69,38 +69,38 @@ const DESIGNER_CAKE =
   "https://wexwculvefhficxhbbby.supabase.co/storage/v1/object/public/media/WhatsApp%20Image%202024-05-01%20at%2001.41.52_4395e100.jpg";
 
 const features = [
-  { emoji: "🥣", title: "Healthy Recipes", desc: "Maida-free, sugar-free alternatives" },
-  { emoji: "👩‍🍳", title: "Live Demonstration", desc: "Akta ke saath step-by-step seekho" },
-  { emoji: "🎂", title: "Hands-on Practice", desc: "Khud banao, ghar le jaao" },
-  { emoji: "📖", title: "Recipe Booklet", desc: "Saari recipes written form mein" },
+  { emoji: "🥣", title: "Healthy Recipes", desc: "No refined flour, no refined sugar" },
+  { emoji: "👩‍🍳", title: "Live Demonstration", desc: "Learn step by step with Akta" },
+  { emoji: "🎂", title: "Hands-on Practice", desc: "Make it yourself, take it home" },
+  { emoji: "📖", title: "Recipe Booklet", desc: "All the recipes in writing" },
   { emoji: "👥", title: "Small Batches", desc: "Personal attention guaranteed" },
-  { emoji: "🏠", title: "Home Setup Tips", desc: "Ghar ki basic equipment se bano" },
+  { emoji: "🏠", title: "Home Setup Tips", desc: "Bake with basic home equipment" },
 ];
 
 const faqs = [
   {
-    q: "Kya beginners ke liye suitable hai?",
-    a: "Bilkul! Koi experience zaruri nahi. Akta aapko zero se sikhati hain — basic oven operation se lekar final plating tak.",
+    q: "Is this class good for beginners?",
+    a: "Yes. You do not need any experience. Akta teaches you from zero — from basic oven use to the final plating.",
   },
   {
-    q: "Class mein kya lana hoga?",
-    a: "Kuch nahi! Saare ingredients, equipment aur recipe cards Yummmo provide karega. Aap sirf seekhne ka mann lekar aao.",
+    q: "What do I have to bring to class?",
+    a: "Nothing. All the ingredients, equipment and recipe cards are given by Yummmo. Just come ready to learn.",
   },
   {
-    q: "Kya main kuch ghar le ja sakti hoon?",
-    a: "Haan zaroor! Jo bhi aap class mein banate hain woh sab aap ghar le jaate hain — packaging ke saath.",
+    q: "Can I take something home?",
+    a: "Yes. Everything you make in class goes home with you, neatly packed.",
   },
   {
-    q: "Registration fee refundable hai?",
-    a: "₹500 registration fee non-refundable hai, lekin valid reason pe next batch mein transfer ho sakti hai. Remaining class fee sirf class ke din collect hoti hai.",
+    q: "Is the registration fee refundable?",
+    a: "The ₹500 registration fee is non-refundable, but for a valid reason it can be moved to the next batch. The rest of the class fee is collected only on the day of the class.",
   },
   {
-    q: "Class ka exact time kya hoga?",
-    a: "Registration ke baad WhatsApp pe exact timing confirm ki jaati hai. Generally morning 10 AM se 1 PM ya 11 AM se 2 PM hoti hain.",
+    q: "What is the exact class timing?",
+    a: "The exact timing is confirmed on WhatsApp after you register. Classes are usually 10 AM to 1 PM or 11 AM to 2 PM.",
   },
   {
-    q: "Kitne log hote hain ek class mein?",
-    a: "Maximum 5-8 log per batch. Small batches ensure karte hain ki har student ko personal attention mile.",
+    q: "How many people are there in one class?",
+    a: "Maximum 5-8 people per batch. Small batches make sure every student gets personal attention.",
   },
 ];
 
@@ -111,7 +111,7 @@ const marqueeItems = [
   "👩‍🍳 Akta is the best teacher",
   "🏠 Took my cake home same day",
   "✨ Worth every rupee",
-  "✨ Chhoti batch, poora attention",
+  "✨ Small batch, full attention",
 ];
 
 export default async function LiveClassesLandingPage() {
@@ -156,14 +156,14 @@ export default async function LiveClassesLandingPage() {
             <Badge className="px-4 py-1.5 text-sm">🎂 Limited Seats Per Batch</Badge>
 
             <h1 className="font-display text-4xl font-bold leading-tight text-charcoal md:text-5xl lg:text-6xl">
-              Ghar Pe Banao{" "}
-              <span className="text-primary">Professional Cakes.</span>
+              Bake Professional Cakes{" "}
+              <span className="text-primary">at Home.</span>
             </h1>
 
             <p className="text-lg leading-relaxed text-muted-foreground">
-              Akta Mahajan ke saath seekho — healthy ingredients, professional
-              techniques, multiple cities mein. Ghar jaao apna khud banaya
-              hua cake lekar.
+              Learn with Akta Mahajan — healthy ingredients, professional
+              techniques, in more than one city. Go home with the cake you
+              made yourself.
             </p>
 
             <div className="flex flex-wrap gap-4 text-sm font-medium text-charcoal/80">
@@ -185,7 +185,7 @@ export default async function LiveClassesLandingPage() {
             </div>
 
             <p className="text-sm text-muted-foreground">
-              📍 Delhi NCR &nbsp;•&nbsp; ⏰ Multiple Batches
+              📍 Multiple cities &nbsp;•&nbsp; ⏰ Multiple Batches
             </p>
           </div>
 
@@ -267,30 +267,30 @@ export default async function LiveClassesLandingPage() {
             </h2>
 
             <p className="leading-relaxed text-muted-foreground">
-              Akta Mahajan ne kabhi culinary school nahi dekha — 25+ saal apni
-              ghar ki rasoi mein seekha. 2017 mein unke bade bachche ka weight
-              120 kg tha; khaane aur lifestyle badal kar teen saal mein woh
-              54 kg par aa gaye.
+              Akta Mahajan never went to culinary school. She learnt
+              everything in her own kitchen over 25+ years. In 2017 her elder
+              child weighed 120 kg; with changes in food and lifestyle, that
+              came down to 54 kg in three years.
             </p>
 
             <p className="leading-relaxed text-muted-foreground">
-              Ab woh yahi expertise aapke saath share karna chahti hain.
-              In-person workshops mein woh sirf recipe nahi — ek complete
-              healthy baking philosophy sikhati hain.
+              Now she wants to share the same knowledge with you. In her
+              in-person workshops she teaches more than a recipe — she teaches
+              a complete healthy baking approach.
             </p>
 
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700">
-                👩‍🍳 25+ saal home baking
+                👩‍🍳 25+ years of home baking
               </span>
               <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
-                🎓 Self-taught, ghar se seekha
+                🎓 Self-taught, learnt at home
               </span>
               <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-700">
                 🌱 Eggless &amp; preservative-free
               </span>
               <span className="rounded-full border border-purple-200 bg-purple-50 px-3 py-1.5 text-xs font-semibold text-purple-700">
-                🍯 Gud aur dates — no refined sugar
+                🍯 Jaggery and dates — no refined sugar
               </span>
             </div>
           </div>
@@ -301,23 +301,23 @@ export default async function LiveClassesLandingPage() {
       <section className="py-16" id="batches">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl font-bold">Aane Wali Classes</h2>
+            <h2 className="font-display text-3xl font-bold">Upcoming Classes</h2>
             <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-              Har batch mein sirf 5-8 students — personal attention guaranteed
+              Only 5-8 students in every batch — personal attention guaranteed
             </p>
-            <Badge className="mt-3" variant="herb">Abhi Register Karein</Badge>
+            <Badge className="mt-3" variant="herb">Register Now</Badge>
           </div>
 
           {activeBatches.length === 0 ? (
             <Card className="border-dashed">
               <CardContent className="py-12 text-center">
                 <p className="text-lg text-muted-foreground">
-                  Naye batches jaldi aane wale hain — WhatsApp pe updates ke liye{" "}
+                  New batches are coming soon — for updates,{" "}
                   <a
                     href="https://wa.me/918459999991"
                     className="font-medium text-primary underline"
                   >
-                    message karein
+                    message us on WhatsApp
                   </a>
                 </p>
               </CardContent>
@@ -371,12 +371,7 @@ export default async function LiveClassesLandingPage() {
                           {(batch.location_city || batch.location) && (
                             <div className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-primary">
                               <span>📍</span>
-                              <span>{batch.location_city || "Noida"}</span>
-                              {batch.location_city && batch.location_city !== "Noida" && (
-                                <span className="ml-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-bold text-primary">
-                                  NEW CITY
-                                </span>
-                              )}
+                              <span>{batch.location_city || batch.location}</span>
                             </div>
                           )}
                         </div>
@@ -429,7 +424,7 @@ export default async function LiveClassesLandingPage() {
               See What Happens Inside
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-              Yeh sirf ek class nahi hai — yeh ek experience hai. Students come
+              This is not just a class, it is an experience. Students come
               as beginners and leave as bakers.
             </p>
           </div>
@@ -488,11 +483,11 @@ export default async function LiveClassesLandingPage() {
               Student Creations
             </p>
             <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">
-              Yeh Sab Banaya Hamari Students Ne
+              Made by Our Students
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-              First class mein. In their very first workshop. Koi prior
-              experience nahi tha.
+              All of this in their very first workshop. They had no baking
+              experience before this.
             </p>
           </div>
 
@@ -529,11 +524,11 @@ export default async function LiveClassesLandingPage() {
 
           <div className="mt-10 text-center">
             <p className="mb-3 text-muted-foreground">
-              Aap bhi yahi banana chahte hain?
+              Want to make these too?
             </p>
             <LiveClassEnroll
               batches={activeBatches}
-              buttonLabel="Abhi Register Karein — ₹500 →"
+              buttonLabel="Register Now — ₹500 →"
             />
           </div>
         </div>
@@ -543,7 +538,7 @@ export default async function LiveClassesLandingPage() {
       <section className="bg-cream py-16">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="mb-10 text-center font-display text-3xl font-bold">
-            Is Class Mein Kya Milega?
+            What You Get in This Class
           </h2>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {features.map((f) => (
@@ -563,27 +558,27 @@ export default async function LiveClassesLandingPage() {
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="mb-10 text-center font-display text-3xl font-bold">
-            Register Karna Kitna Aasaan Hai
+            Registering Is Simple
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               {
                 number: "01",
                 icon: "📝",
-                title: "Register Karein",
-                desc: "₹500 registration fee pay karke apni spot confirm karein. Baaki class fee workshop ke din pay karni hogi.",
+                title: "Register",
+                desc: "Pay the ₹500 registration fee and confirm your spot. The rest of the class fee is paid on the day of the workshop.",
               },
               {
                 number: "02",
                 icon: "📲",
-                title: "Details Aayengi",
-                desc: "Class se 24 ghante pehle exact timing, address aur what to expect ka message aayega.",
+                title: "Get the Details",
+                desc: "24 hours before the class you get a message with the exact timing, the address and what to expect.",
               },
               {
                 number: "03",
                 icon: "🎂",
-                title: "Seekho & Banao",
-                desc: "3-4 ghante ki hands-on class. Ghar jaao apna banaya hua healthy cake lekar!",
+                title: "Learn and Bake",
+                desc: "A 3-4 hour hands-on class. Go home with the healthy cake you made yourself.",
               },
             ].map((step) => (
               <div
@@ -610,7 +605,7 @@ export default async function LiveClassesLandingPage() {
       <section className="bg-cream py-16">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="mb-8 text-center font-display text-3xl font-bold">
-            Kahan Hogi Class?
+            Where Is the Class?
           </h2>
           <Card className="border-primary/20">
             <CardContent className="space-y-4 p-6 md:p-8">
@@ -618,7 +613,10 @@ export default async function LiveClassesLandingPage() {
                 <div className="space-y-3">
                   <p className="flex items-start gap-2">
                     <span className="shrink-0">📍</span>
-                    <span>B2 1602, Cleo County, Sector 121, Noida</span>
+                    <span>
+                      The exact address is shared on WhatsApp after you
+                      register. Workshops run in more than one city.
+                    </span>
                   </p>
                   <p className="flex items-center gap-2">
                     <span>💬</span>
@@ -642,7 +640,7 @@ export default async function LiveClassesLandingPage() {
                 <div className="space-y-3">
                   <p className="flex items-center gap-2">
                     <span>💰</span>
-                    <span className="font-semibold">₹500 se spot confirm</span>
+                    <span className="font-semibold">₹500 confirms your spot</span>
                   </p>
                   <p className="flex items-center gap-2">
                     <span>⏰</span>
@@ -657,7 +655,7 @@ export default async function LiveClassesLandingPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-herb bg-herb/10 px-6 py-3 text-sm font-semibold text-herb transition hover:bg-herb/20"
                 >
-                  💬 WhatsApp Karein
+                  💬 Message on WhatsApp
                 </a>
                 <LiveClassEnroll batches={activeBatches} buttonLabel="Register Now →" />
               </div>
@@ -670,7 +668,7 @@ export default async function LiveClassesLandingPage() {
       <section className="bg-white py-16">
         <div className="mx-auto max-w-3xl px-4">
           <h2 className="mb-8 text-center font-display text-3xl font-bold">
-            Kuch Sawaal?
+            Questions?
           </h2>
           <Accordion type="single" collapsible className="w-full space-y-3">
             {faqs.map((faq, i) => (
@@ -711,9 +709,9 @@ export default async function LiveClassesLandingPage() {
             Limited Seats Available
           </p>
           <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
-            Aaj Hi Book Karein.
+            Book Today.
             <br />
-            <span className="text-primary">Seats Bhar Jaati Hain.</span>
+            <span className="text-primary">Seats Fill Up Fast.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-white/80">
             Every batch fills up fast. Don&apos;t miss the chance to bake with

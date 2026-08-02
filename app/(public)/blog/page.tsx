@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const posts = [
   {
     slug: "atta-cake-recipes",
-    title: "5 Atta Cake Recipes That Actually Taste Amazing",
+    title: "5 Whole Wheat Cake Recipes That Actually Taste Amazing",
     excerpt:
       "Think whole wheat cakes are dry and bland? These recipes will change your mind.",
     date: "15/04/2026",
@@ -23,9 +23,9 @@ const posts = [
   },
   {
     slug: "sugar-free-mithai",
-    title: "Sugar-Free Mithai for Every Festival",
+    title: "Sugar-Free Indian Sweets for Every Festival",
     excerpt:
-      "Diwali, Holi, Rakhi — make sweets your family will love without refined sugar.",
+      "Diwali, Holi, Raksha Bandhan — make sweets your family will love, without refined sugar.",
     date: "10/04/2026",
     readTime: "6 min",
     emoji: "🪔",
@@ -35,7 +35,7 @@ const posts = [
     slug: "healthy-oil-swaps",
     title: "The Complete Guide to Healthy Oil Swaps",
     excerpt:
-      "Mustard oil vs coconut oil vs olive oil — which one to use when.",
+      "Mustard oil, coconut oil or olive oil — here is which one to use when.",
     date: "05/04/2026",
     readTime: "7 min",
     emoji: "🫒",
@@ -45,7 +45,7 @@ const posts = [
     slug: "kids-eat-healthy",
     title: "How to Get Kids to Eat Healthy (Without Them Knowing)",
     excerpt:
-      "Sneak spinach into smoothies, cauliflower into pasta, ragi into cookies.",
+      "Hide spinach in smoothies, cauliflower in pasta and ragi in cookies.",
     date: "28/03/2026",
     readTime: "6 min",
     emoji: "🥗",

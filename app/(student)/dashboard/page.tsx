@@ -177,7 +177,7 @@ export default async function DashboardPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold">
-            Namaste{profile?.full_name ? `, ${profile.full_name}` : ""}!
+            Hello{profile?.full_name ? `, ${profile.full_name}` : ""}!
           </h1>
           <p className="text-muted-foreground">
             Continue your healthy cooking journey.
@@ -193,10 +193,10 @@ export default async function DashboardPage() {
         <div className="flex flex-col items-start gap-3 rounded-xl border border-primary/30 bg-primary/5 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-display font-semibold text-primary">
-              Phone number add karein
+              Add your phone number
             </p>
             <p className="text-sm text-muted-foreground">
-              Class updates aur important notifications ke liye aapka number chahiye.
+              We need your number for class updates and important notifications.
             </p>
           </div>
           <Button asChild size="sm">

@@ -36,10 +36,10 @@ export function CoursePurchase({ courseSlug, isLoggedIn, enrolled }: Props) {
   return (
     <div className="rounded-lg border border-dashed bg-muted/40 p-4 text-center">
       <Lock className="mx-auto mb-2 h-5 w-5 text-muted-foreground" />
-      <p className="text-sm font-semibold">Access workshop ke baad milta hai</p>
+      <p className="text-sm font-semibold">Access is given after the workshop</p>
       <p className="mt-1 text-xs text-muted-foreground">
-        Yeh tutorial humare workshop attend karne wale students ke liye hai.
-        Access ke liye humse contact karein.
+        This tutorial is for students who attend our workshop. Please contact us
+        to get access.
       </p>
     </div>
   );
