@@ -1,194 +1,135 @@
 import Link from "next/link";
-import { BookOpen, Plus, Receipt, Users } from "lucide-react";
+import { KeyRound, Pencil, Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { formatDate, formatPrice } from "@/lib/utils";
+import { QuickGrant, type GrantCourse } from "@/components/admin/quick-grant";
 
 export default async function AdminHomePage() {
   const supabase = await createClient();
 
-  const [
-    { count: courseCount },
-    { count: studentCount },
-    { count: enrollmentCount },
-    paymentsRes,
-    recentRes,
-  ] = await Promise.all([
-    supabase.from("courses").select("id", { count: "exact", head: true }),
+  const [{ data: courses }, { data: enrollments }] = await Promise.all([
     supabase
-      .from("profiles")
-      .select("id", { count: "exact", head: true })
-      .eq("role", "student"),
-    supabase.from("enrollments").select("id", { count: "exact", head: true }),
-    supabase.from("payments").select("amount").eq("status", "completed"),
-    supabase
-      .from("enrollments")
-      .select("enrolled_at, student_id, course_id")
-      .order("enrolled_at", { ascending: false })
-      .limit(8),
+      .from("courses")
+      .select("id, title, slug, is_published, created_at")
+      .order("created_at", { ascending: false }),
+    supabase.from("enrollments").select("course_id"),
   ]);
 
-  const monthStart = new Date();
-  monthStart.setDate(1);
-  monthStart.setHours(0, 0, 0, 0);
+  const list = courses ?? [];
+  const accessBy = new Map<string, number>();
+  for (const e of enrollments ?? []) {
+    accessBy.set(e.course_id, (accessBy.get(e.course_id) ?? 0) + 1);
+  }
 
-  const { data: monthPayments } = await supabase
-    .from("payments")
-    .select("amount")
-    .eq("status", "completed")
-    .gte("created_at", monthStart.toISOString());
-
-  const sum = (rows: { amount: string | number }[] | null) =>
-    (rows ?? []).reduce((acc, r) => acc + parseFloat(String(r.amount)), 0);
-
-  const revenueMonth = sum(monthPayments);
-  const revenueAll = sum(paymentsRes.data ?? []);
-
-  const recent = recentRes.data ?? [];
-  const studentIds = [...new Set(recent.map((r) => r.student_id))];
-  const courseIds = [...new Set(recent.map((r) => r.course_id))];
-  const [{ data: profs }, { data: crs }] = await Promise.all([
-    studentIds.length
-      ? supabase.from("profiles").select("id, full_name").in("id", studentIds)
-      : Promise.resolve({
-          data: [] as { id: string; full_name: string | null }[],
-        }),
-    courseIds.length
-      ? supabase.from("courses").select("id, title").in("id", courseIds)
-      : Promise.resolve({ data: [] as { id: string; title: string }[] }),
-  ]);
-  const nameBy = new Map((profs ?? []).map((p) => [p.id, p.full_name]));
-  const titleBy = new Map((crs ?? []).map((c) => [c.id, c.title]));
+  const grantCourses: GrantCourse[] = list.map((c) => ({
+    id: c.id,
+    title: c.title,
+  }));
+  const totalAccess = enrollments?.length ?? 0;
 
   return (
     <div className="space-y-8">
-      <h1 className="font-display text-3xl font-bold">Dashboard</h1>
-
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Courses
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-3xl font-bold">
-            {courseCount ?? 0}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Students
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-3xl font-bold">
-            {studentCount ?? 0}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
-              <BookOpen className="h-4 w-4" />
-              Enrollments
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-3xl font-bold">
-            {enrollmentCount ?? 0}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Revenue (this month)
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-3xl font-bold">
-            {formatPrice(revenueMonth)}
-          </CardContent>
-        </Card>
-      </div>
-
-      <p className="text-sm text-muted-foreground">
-        All-time revenue:{" "}
-        <span className="font-semibold text-foreground">
-          {formatPrice(revenueAll)}
-        </span>
-      </p>
-
-      {/* ── Quick actions ──────────────────────────────────────────── */}
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Button variant="outline" className="h-auto py-4" asChild>
-          <Link href="/admin/courses/new" className="flex flex-col items-center gap-1">
-            <Plus className="h-5 w-5" />
-            <span className="text-sm font-medium">New Course</span>
-          </Link>
-        </Button>
-        <Button variant="outline" className="h-auto py-4" asChild>
-          <Link href="/admin/students" className="flex flex-col items-center gap-1">
-            <Users className="h-5 w-5" />
-            <span className="text-sm font-medium">View Students</span>
-          </Link>
-        </Button>
-        <Button variant="outline" className="h-auto py-4" asChild>
-          <Link href="/admin/enrollments" className="flex flex-col items-center gap-1">
-            <Receipt className="h-5 w-5" />
-            <span className="text-sm font-medium">View Enrollments</span>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl font-bold">Dashboard</h1>
+          <p className="text-muted-foreground">
+            {list.length} cake {list.length === 1 ? "tutorial" : "tutorials"} ·{" "}
+            {totalAccess} {totalAccess === 1 ? "person has" : "people have"}{" "}
+            access
+          </p>
+        </div>
+        <Button size="lg" asChild>
+          <Link href="/admin/courses/new">
+            <Plus className="mr-2 h-4 w-4" />
+            New cake tutorial
           </Link>
         </Button>
       </div>
 
-      {/* ── Recent enrollments ─────────────────────────────────────── */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent enrollments</CardTitle>
+      {/* ── Grant access (primary daily action) ─────────────── */}
+      <Card className="border-primary/30">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2">
+            <KeyRound className="h-5 w-5 text-primary" />
+            Grant access
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Workshop attend karne wale student ko video ka access do. Unka
+            account pehle bana hona chahiye.
+          </p>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table className="min-w-[400px]">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Student</TableHead>
-                  <TableHead>Course</TableHead>
-                  <TableHead>Date</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {recent.length === 0 ? (
-                  <TableRow>
-                    <TableCell
-                      colSpan={3}
-                      className="text-center text-muted-foreground"
-                    >
-                      No enrollments yet
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  recent.map((row) => (
-                    <TableRow key={`${row.student_id}-${row.course_id}`}>
-                      <TableCell>
-                        {nameBy.get(row.student_id) ?? "—"}
-                      </TableCell>
-                      <TableCell>
-                        {titleBy.get(row.course_id) ?? "—"}
-                      </TableCell>
-                      <TableCell>
-                        {formatDate(row.enrolled_at)}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
+          <QuickGrant courses={grantCourses} />
+        </CardContent>
+      </Card>
+
+      {/* ── Cake tutorials ──────────────────────────────────── */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle>Your cake tutorials</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {list.length === 0 ? (
+            <div className="rounded-xl border border-dashed bg-cream p-8 text-center">
+              <p className="text-muted-foreground">
+                Abhi koi tutorial nahi hai.
+              </p>
+              <Button className="mt-4" asChild>
+                <Link href="/admin/courses/new">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create your first one
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {list.map((c) => {
+                const count = accessBy.get(c.id) ?? 0;
+                return (
+                  <div
+                    key={c.id}
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-lg border bg-white p-4"
+                  >
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="font-medium">{c.title}</p>
+                        {c.is_published ? (
+                          <Badge variant="herb">Published</Badge>
+                        ) : (
+                          <Badge variant="secondary">Draft</Badge>
+                        )}
+                      </div>
+                      <p className="mt-0.5 text-sm text-muted-foreground">
+                        {count} {count === 1 ? "person has" : "people have"}{" "}
+                        access
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/admin/courses/${c.id}/access`}>
+                          <KeyRound className="mr-2 h-3.5 w-3.5" />
+                          Manage access
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/admin/courses/${c.id}/edit`}>
+                          <Pencil className="mr-2 h-3.5 w-3.5" />
+                          Edit
+                        </Link>
+                      </Button>
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link href={`/courses/${c.slug}`} target="_blank">
+                          View
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

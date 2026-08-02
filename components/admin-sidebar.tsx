@@ -6,9 +6,6 @@ import { useState } from "react";
 import {
   LayoutDashboard,
   BookOpen,
-  Users,
-  Receipt,
-  LineChart,
   Radio,
   Menu,
   LogOut,
@@ -27,10 +24,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const items = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/courses", label: "Courses", icon: BookOpen },
-  { href: "/admin/students", label: "Students", icon: Users },
-  { href: "/admin/enrollments", label: "Enrollments", icon: Receipt },
-  { href: "/admin/revenue", label: "Revenue", icon: LineChart },
+  { href: "/admin/courses", label: "Cake tutorials", icon: BookOpen },
   { href: "/admin/live-classes", label: "Live Classes", icon: Radio },
 ];
 
