@@ -7,6 +7,7 @@ import { CourseCard } from "@/components/course-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { FadeInSection } from "@/components/fade-in-section";
 import { HeroSlideshow } from "@/components/hero-slideshow";
+import { MyTutorials, type MyTutorial } from "@/components/my-tutorials";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -131,6 +132,51 @@ export default async function HomePage() {
     : { data: [] as { course_id: string }[] };
   const enrolledIds = new Set((enrollments ?? []).map((e) => e.course_id));
 
+  // Granted tutorials for the signed-in student, shown right under the hero.
+  const { data: myCourses } = user && enrolledIds.size > 0
+    ? await supabase
+        .from("courses")
+        .select("id, slug, title, short_description, thumbnail_url, total_lessons")
+        .in("id", [...enrolledIds])
+        .eq("is_published", true)
+    : { data: [] as {
+        id: string; slug: string; title: string;
+        short_description: string | null; thumbnail_url: string | null;
+        total_lessons: number;
+      }[] };
+
+  const { data: myProgress } = user && enrolledIds.size > 0
+    ? await supabase
+        .from("progress")
+        .select("course_id")
+        .eq("student_id", user.id)
+        .eq("is_completed", true)
+    : { data: [] as { course_id: string }[] };
+
+  const doneBy = new Map<string, number>();
+  for (const p of myProgress ?? []) {
+    doneBy.set(p.course_id, (doneBy.get(p.course_id) ?? 0) + 1);
+  }
+
+  const myTutorials: MyTutorial[] = (myCourses ?? []).map((c) => ({
+    id: c.id,
+    slug: c.slug,
+    title: c.title,
+    short_description: c.short_description,
+    thumbnail_url: c.thumbnail_url,
+    completed:
+      c.total_lessons > 0 && (doneBy.get(c.id) ?? 0) >= c.total_lessons,
+  }));
+
+  const { data: myProfile } = user
+    ? await supabase
+        .from("profiles")
+        .select("full_name")
+        .eq("id", user.id)
+        .maybeSingle()
+    : { data: null };
+  const firstName = myProfile?.full_name?.trim().split(/\s+/)[0] ?? null;
+
   return (
     <div>
       {/* ── Hero ─────────────────────────────────────────────── */}
@@ -196,6 +242,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Your granted tutorials (signed-in students only) ── */}
+      <MyTutorials tutorials={myTutorials} firstName={firstName} />
 
       {/* ── Marquee trust strip ──────────────────────────────── */}
       <div className="overflow-hidden border-y bg-white/60 py-3">
